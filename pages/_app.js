@@ -4,7 +4,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Head from "next/head";
 import MobileDetect from "mobile-detect";
 import {isMobile} from "react-device-detect";
-import { wrapper } from "../redux/store";
+import { wrapper } from "../modules/store";
+//
 
 const  MyApp = ({Component, pageProps}) => {
     useEffect(() => {
@@ -32,7 +33,7 @@ const  MyApp = ({Component, pageProps}) => {
 }
 
 // 모든 해당 컴포넌트를 열때 store 값을 전달하기위한 메서드
-MyApp.getInitialProps = async ({Component, ctx}) => {
+MyApp.getInitialProps = async ({ Component, ctx }) => {
     let pageProps = {};
     let mobile;
     // const dispatch = ctx.store.dispatch;
@@ -49,10 +50,6 @@ MyApp.getInitialProps = async ({Component, ctx}) => {
 
     if (Component.getInitialProps) {
       pageProps = (await Component.getInitialProps(ctx)) || {}
-      //   pageProps = {
-      //       ...(Component.getInitialProps ? await  Component.getInitialProps(ctx) : {}),
-      //       pathname: ctx.pathname
-      //   }
     }
 
     return {

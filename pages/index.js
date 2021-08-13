@@ -5,7 +5,8 @@ import Union from "../components/UnionMain/Union";
 import MobileDetect from "mobile-detect";
 import {isMobile} from "react-device-detect";
 
-function Home({ isMobile }) {
+function Index() {
+    const isMobile = false;
     return (
         <div>
             <Head>
@@ -20,8 +21,8 @@ function Home({ isMobile }) {
     )
 }
 
-Home.getInitialProps = async (ctx) => {
+Index.getInitialProps = async (ctx) => {
 
 }
 
-export default Home;
+export default Index;
