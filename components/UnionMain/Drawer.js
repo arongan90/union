@@ -14,12 +14,12 @@ const Wrap = styled.div`
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
-  ${({isMobile}) => isMobile && css`
-    width: auto;
-    opacity: 1;
-    visibility: visible;
-    overflow: visible;
-  `};
+  @media only screen and (max-width: 768px) {
+       width: auto;
+       opacity: 1;
+       visibility: visible;
+       overflow: visible;
+  }
 `;
 
 const DrawerMenu = styled(List)`
@@ -45,7 +45,7 @@ const AppImage = styled.img`
   ${({ close }) => close && css`
     position: absolute;
     top: 25px;
-    right: 77px;
+    right: 20px;
     cursor: pointer;
   `}
 `;
@@ -62,7 +62,7 @@ const TabMenu = styled(ListItem)`
   background: ${colors.whiteColor};
 `;
 
-const Drawer = ({ isMobile }) => {
+const Drawer = () => {
     const [drawer, setDrawer] = useState(false);
 
     const toggleDrawer = (open) => (event) => {
@@ -72,9 +72,7 @@ const Drawer = ({ isMobile }) => {
         setDrawer(open);
     };
     const list = () => (
-        <DrawerMenu
-            onKeyDown={toggleDrawer(false)}
-        >
+        <DrawerMenu onKeyDown={toggleDrawer(false)}>
             <DrawerTop>
                 <LogoBox>
                     <AppImage src={logoImage} />
@@ -100,7 +98,7 @@ const Drawer = ({ isMobile }) => {
     );
 
     return (
-        <>
+        <Wrap>
             <HamburgerMenu onClick={toggleDrawer(true)} />
             <SwipeableDrawer
                 anchor={'right'}
@@ -110,7 +108,7 @@ const Drawer = ({ isMobile }) => {
             >
                 {list()}
             </SwipeableDrawer>
-        </>
+        </Wrap>
     );
 }
 

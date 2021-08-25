@@ -1,6 +1,8 @@
-const IS_MOBILE = "isMobile/IS_MOBILE";
+const MOBILE_VERSION = "isMobile/IS_MOBILE";
+const WEB_VERSION = "isMobile/IS_WEB";
 
-export const flexible = (mobile) => ({type: IS_MOBILE, mobile});
+export const mobileVersion = (mobile) => ({type: MOBILE_VERSION, mobile});
+export const webVersion = (mobile) => ({type: WEB_VERSION, mobile});
 
 const initialState = {
     isMobile: false,
@@ -8,7 +10,11 @@ const initialState = {
 
 export default function isMobileReducer(state = initialState, action) {
     switch (action.type) {
-        case IS_MOBILE:
+        case MOBILE_VERSION:
+            return {
+                isMobile: action.mobile,
+            }
+        case WEB_VERSION:
             return {
                 isMobile: action.mobile,
             }

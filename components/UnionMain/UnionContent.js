@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, { useRef } from 'react';
 import styled, {css} from "styled-components";
 import colors from "../../styles/colors";
 import Link from 'next/link';
-
+import { useSelector } from "react-redux";
 // Image
 import content1_1 from "/public/images/union/화상회의.svg";
 import content1_2 from "/public/images/union/product_recommendations.svg";
@@ -11,8 +11,10 @@ import content2 from "/public/images/union/menu1.png";
 import content3 from "/public/images/union/conference.png";
 import content4 from "/public/images/union/onair.png";
 import content5 from "/public/images/union/linkbinder2.png";
+import content5_reverse from "/public/images/union/linkbinder_mobile.png";
 import content6 from "/public/images/union/videos.png";
 import content7 from "/public/images/union/shoppingmall.png";
+import content7_mobile from "/public/images/union/shoppingmall_mobile.png";
 import content8 from "/public/images/union/info_bg.png";
 import {lighten, darken} from "polished";
 import MobileSwiperSection from "./MobileSwiperSection";
@@ -23,23 +25,20 @@ const Wrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({bgColor}) => bgColor ? bgColor : colors.whiteColor}
-}
+  background-color: ${({bgColor}) => bgColor ? bgColor : colors.whiteColor}};
+  ${({bgImage}) => bgImage && css`
+    background: url(${bgImage});
+    background-size: 100% 100%;
+  `}
 
-;
-${({bgImage}) => bgImage && css`
-  background: url(${bgImage});
-  background-size: 100% 100%;
-`}
+    @media only screen and (max-width: 768px) {
+      height: auto;
+      padding: 100px 0;
+    }
 
-@media only screen and (max-width: 768px) {
-  height: auto;
-  padding: 100px 0;
-}
-
-${({isModule}) => isModule && css`
-  display: none;
-`}
+    ${({isModule}) => isModule && css`
+      display: none;
+    `}
 `;
 const Content = styled.div`
   width: ${({width}) => width ? width : 1000}px;
@@ -58,11 +57,11 @@ const SubContentBox = styled.div`
   width: 100%;
   display: flex;
   justify-content: ${({justifyContent}) => justifyContent ? justifyContent : 'space-around'};
-  align-items: center;
-  flex-direction: ${({flexDirection}) => flexDirection ? 'column' : 'row'};
-
+  align-items: ${({alignItems}) => alignItems ? alignItems : 'center'};
+  flex-direction: ${({flexDirection}) => flexDirection ? flexDirection : 'row'};
+  
   @media only screen and (max-width: 768px) {
-    flex-direction: ${({flexDirection}) => flexDirection ? 'column' : 'row'};
+    flex-direction: ${({flexDirection}) => flexDirection ? flexDirection : 'row'};
     ${({Sec3_isMobile}) => Sec3_isMobile && css`
       max-width: 375px;
       align-items: flex-start;
@@ -70,6 +69,11 @@ const SubContentBox = styled.div`
     ${({Sec4_isMobile}) => Sec4_isMobile && css`
       max-width: 375px;
     `};
+    ${({Sec5_isMobile}) => Sec5_isMobile && css`
+      flex-direction: column-reverse;
+      align-items: flex-end;
+      padding: 0 20px;
+    `}
   }
 
   @media only screen and (max-width: 375px) {
@@ -96,7 +100,7 @@ const SubContent = styled.div`
 
   @media only screen and (max-width: 768px) {
     ${({Sec3_isMobile}) => Sec3_isMobile && css`
-      margin-bottom: 55px;
+      margin: 0 0 55px 35px;      
     `};
   }
 `;
@@ -118,12 +122,13 @@ const Title = styled.div`
       right: 60px;
       background: ${colors.skyGreen};
     }
-  `} @media only screen and (max-width: 768px) {
-  ${({Sec3_isMobile}) => Sec3_isMobile && css`
-    font-size: 25px;
-    margin-bottom: 15px;
-  `};
-}
+  `} 
+  @media only screen and (max-width: 768px) {
+      ${({Sec3_isMobile}) => Sec3_isMobile && css`
+        font-size: 25px;
+        margin-bottom: 15px;
+      `};
+    }
 `;
 const SubTitle = styled.div`
   font-size: ${({fontSize}) => fontSize ? fontSize : 18}px;
@@ -136,6 +141,12 @@ const SubTitle = styled.div`
   ${({Sec3_isMobile}) => Sec3_isMobile && css`
     margin-bottom: 5px;
     font-size: 14px;
+  `}
+
+  ${({Sec8_isMobile}) => Sec8_isMobile && css`
+    font-size: 14px;
+    word-break: keep-all;
+    white-space: pre-line;
   `}
 `;
 const PointText = styled.div`
@@ -170,7 +181,8 @@ const MailText = styled.span`
 `;
 
 const UnionContent = ({isMobile}) => {
-    // console.info('유니온 콘텐트 isMobile :: ', isMobile);
+    const isMobile2 = useSelector(state => state.isMobile.isMobile);
+
     return (
         <>
             {/* Section 1 */}
@@ -179,7 +191,7 @@ const UnionContent = ({isMobile}) => {
                     <Title fontColor={colors.lightBlack} fontSize={28} marginBottom={90} sector_1>
                         최적의 고객관리
                     </Title>
-                    <SubContentBox flexDirection={isMobile}>
+                    <SubContentBox flexDirection={isMobile && 'column'}>
                         <SubContent>
                             <ImageBox width={'200px'} height={150}>
                                 <AppImage src={content1_1}/>
@@ -229,9 +241,9 @@ const UnionContent = ({isMobile}) => {
 
 
             {/* Section 3 */}
-            <Wrap height={620}>
+            <Wrap height={620} id="conference">
                 <Content width={isMobile ? '100%' : 'auto'}>
-                    <SubContentBox flexDirection={isMobile} Sec3_isMobile={isMobile}>
+                    <SubContentBox flexDirection={isMobile && 'column'} Sec3_isMobile={isMobile}>
                         <SubContent Sec3_isMobile={isMobile}>
                             <Title fontSize={36} marginBottom={33} textAlign={"left"} Sec3_isMobile={!!isMobile}>
                                 맞춤형 고객관리,<br/>
@@ -256,9 +268,9 @@ const UnionContent = ({isMobile}) => {
             </Wrap>
 
             {/* Section 4 */}
-            <Wrap height={734} bgColor={colors.deepWhite}>
+            <Wrap height={734} bgColor={colors.deepWhite} id="onAir">
                 <Content flexDirection={"column"}>
-                    <Title fontSize={24} fontColor={colors.normalBlack2} marginBottom={41}>
+                    <Title fontSize={isMobile ? 16 : 24} fontColor={colors.normalBlack2} marginBottom={41}>
                         이제 화상회의도 라이브로 스트리밍하세요!
                     </Title>
                     <SubContentBox Sec4_isMobile={isMobile}>
@@ -266,27 +278,28 @@ const UnionContent = ({isMobile}) => {
                             <AppImage src={content4}/>
                         </ImageBox>
                     </SubContentBox>
+                    <PointText fontSize={14} fontColor={colors.activeRed}>※ 개별문의</PointText>
                 </Content>
             </Wrap>
 
             {/* Section 5 */}
-            <Wrap height={620}>
-                <Content width={isMobile ? 375 :1170} paddingRight={10}>
-                    <SubContentBox flexDirection={isMobile && 'column-reverse'}>
-                        <ImageBox maxWidth={680}>
-                            <AppImage src={content5}/>
+            <Wrap height={620} id="linkBinder">
+                <Content width={isMobile ? 375 :1170} paddingRight={isMobile ? 0 : 10}>
+                    <SubContentBox Sec5_isMobile={isMobile}>
+                        <ImageBox maxWidth={isMobile ? 300 : 680}>
+                            <AppImage src={isMobile ? content5_reverse : content5}/>
                         </ImageBox>
                         <SubContent>
-                            <Title fontSize={36} fontColor={colors.lightBlack} textAlign={"right"} marginBottom={33}>
+                            <Title fontSize={isMobile ? 25 :36} fontColor={colors.lightBlack} textAlign={"right"} marginBottom={33}>
                                 흩어져 있는 판매 채널 <br/>
                                 통합 솔루션
                             </Title>
-                            <SubTitle fontcolor={colors.normalBlack} textAlign={"right"} marginBottom={12}>
+                            <SubTitle fontcolor={colors.normalBlack} textAlign={"right"} marginBottom={12} fontSize={14}>
                                 매출을 극대화하기 위해서는<br/>
                                 더 많은, 더 다양한 고객과 마주해야 합니다.
                             </SubTitle>
 
-                            <SubTitle fontcolor={colors.normalBlack} textAlign={"right"} marginBottom={140}>
+                            <SubTitle fontcolor={colors.normalBlack} textAlign={"right"} marginBottom={isMobile ? 35 : 140} fontSize={14}>
                                 매출 극대화를 위해<br/>
                                 흩어져 있는 오픈마켓 링크들을 한데<br/>
                                 모아보세요.
@@ -297,20 +310,20 @@ const UnionContent = ({isMobile}) => {
             </Wrap>
 
             {/* Section 6 */}
-            <Wrap height={584} bgColor={colors.deepWhite}>
-                <Content width={1200} paddingLeft={10}>
-                    <SubContentBox justifyContent={"flex-end"}>
+            <Wrap height={584} bgColor={colors.deepWhite} id="uploadVideo">
+                <Content width={1200} paddingLeft={isMobile ? 0 : 10}>
+                    <SubContentBox flexDirection={isMobile && "column"} justifyContent={"flex-end"}>
                         <SubContent marginRight={50}>
-                            <Title fontSize={36} marginBottom={33} fontColor={colors.lightBlack} textAlign={"left"}>
+                            <Title fontSize={isMobile ? 25 : 36} marginBottom={33} fontColor={colors.lightBlack} textAlign={"left"}>
                                 판매 제품과 관련된<br/>
                                 홍보 영상 클립 추가
                             </Title>
-                            <SubTitle fontcolor={colors.normalBlack} marginBottom={8} textAlign={"left"}>
+                            <SubTitle fontcolor={colors.normalBlack} marginBottom={8} textAlign={"left"} fontSize={14}>
                                 판매 중인 제품과 관련된 홍보 영상을 모아서<br/>
-                                보여주고 싶다면 <PointText fontSize={19} display={"inline-block"}
+                                보여주고 싶다면 <PointText fontSize={isMobile ? 15 :19} display={"inline-block"}
                                                     fontColor={colors.activeRed}>임베드기능</PointText>을 활용해 보세요.
                             </SubTitle>
-                            <SubTitle fontcolor={colors.normalBlack} textAlign={"left"}>
+                            <SubTitle fontcolor={colors.normalBlack} textAlign={"left"} fontSize={14} marginBottom={isMobile && 50}>
                                 추가적인 비용 지출 없이<br/>
                                 효과적인 마케팅 효과를 누릴 수 있습니다.
                             </SubTitle>
@@ -323,24 +336,24 @@ const UnionContent = ({isMobile}) => {
             </Wrap>
 
             {/* Section 7 */}
-            <Wrap height={620}>
-                <Content width={1170} paddingRight={10}>
-                    <SubContentBox>
+            <Wrap height={620} id="shoppingMall">
+                <Content width={1170} paddingRight={isMobile ? 0 :10}>
+                    <SubContentBox flexDirection={isMobile && "column-reverse"}>
                         <ImageBox>
-                            <AppImage src={content7}/>
+                            <AppImage src={isMobile ? content7_mobile : content7} />
                         </ImageBox>
                         <SubContent>
-                            <Title fontSize={36} fontColor={colors.lightBlack} marginBottom={33} textAlign={"right"}>
+                            <Title fontSize={isMobile ? 25 : 36} fontColor={colors.lightBlack} marginBottom={33} textAlign={"right"}>
                                 독자적인 판매 채널<br/>
                                 쇼핑몰 서비스 지원
                             </Title>
-                            <SubTitle marginBottom={12} textAlign={"right"}>
+                            <SubTitle marginBottom={12} textAlign={"right"} fontSize={14}>
                                 판매 중인 제품군이 유통 채널을 이용하기 힘들거나, <br/>
                                 판매 제품이 너무 많아 통합할 필요가 있는 경우, <br/>
                                 캣벨 유니온 솔루션의 쇼핑몰 서비스를 이용해보세요.
                             </SubTitle>
-                            <SubTitle marginBottom={80} textAlign={"right"}>
-                                <PointText display={"inline-block"} fontColor={colors.activeBlue} fontSize={19}>독자적인 판매
+                            <SubTitle marginBottom={80} textAlign={"right"} fontSize={14}>
+                                <PointText display={"inline-block"} fontColor={colors.activeBlue} fontSize={isMobile ? 15 : 19}>독자적인 판매
                                     채널 확보</PointText>를 통해<br/>
                                 효과적인 제품 노출 및 고객 이벤트&프로모션 진행에도<br/>
                                 용이합니다.
@@ -357,7 +370,7 @@ const UnionContent = ({isMobile}) => {
                         CATBELL UNION<br/>
                         솔루션 가격제안
                     </Title>
-                    <SubTitle fontSize={16} fontcolor={colors.normalBlack} marginBottom={10}>
+                    <SubTitle fontSize={16} fontcolor={colors.normalBlack} marginBottom={10} Sec8_isMobile={isMobile}>
                         고객관리와 고객 응대를 위한 화상회의는 기본,<br/>
                         저렴한 비용으로 제품 홍보/마케팅 및 쇼핑몰까지 캣벨 유니온 솔루션으로 한 번에 이용해보세요.
                     </SubTitle>

@@ -3,15 +3,19 @@ export default {
     whiteColor: "#ffffff",
 
     // Point
+    loginPoint: "#6E9ABC",
 
     // Background
     deepGray: "#434343",
     deepWhite: "#F7F9FB",
     tabMenu: "#F3F5F7",
+    footerBackground: "#2F2F2F",
 
     // Border
     skyGreen: "#125594",
     borderLightGray: "#EEEEEE",
+    loginTabBorder: "#AAAAAA",
+    inputBorder: "#CCCCCC",
 
     // Text
     skyBlue: "#1872B9",
@@ -23,6 +27,9 @@ export default {
     activeRed: "#E12B03",
     normalBlack: "#343434",
     normalBlack2: "#1C3847",
+    footerText: "#BBBBBB",
+    loginFont: "#264E6D",
+    loginDefaultFont: "#888888",
 
     // Button
     deepYellow: "#FF9F0E",

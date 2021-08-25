@@ -14,9 +14,17 @@ const GlobalStyles = createGlobalStyle`
   button {
     cursor: pointer;
   }
+  
+  ul {
+    padding: 0;
+  }
+
+  li {
+    list-style: none;
+  }
 
   #__next {
-    height: 100%;
+    
   }
 `;
 

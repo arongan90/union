@@ -19,6 +19,8 @@ const SwiperWrap = styled.div`
   width: 100%;
   .swiper-container {
     height: 100%;
+    overflow-y: visible;
+    overflow-x: hidden;
   }
   .swiper-pagination {
     bottom: -15px;
@@ -28,7 +30,14 @@ const SwiperWrap = styled.div`
   }
   .swiper-slide {
     width: 100%;
-    
+  }
+`;
+const AppImageBox = styled.div`
+  width: 100%;
+  height: 100%;
+  @media only screen and (max-width: 768px) {
+    width: 280px;
+    margin: 0 auto;
   }
 `;
 const AppImage = styled.img`
@@ -45,7 +54,7 @@ const MobileSwiperSection = () => {
                 navigation
                 spaceBetween={50}
                 slidesPerView={1}
-                scrollbar={{ draggable: true }}
+                scrollbar={{draggable: true}}
                 pagination={{"clickable": true}}
                 style={{
                     width: '100%',
@@ -54,22 +63,34 @@ const MobileSwiperSection = () => {
                 }}
             >
                 <SwiperSlide>
-                    <AppImage src={slideMenu1} alt="slide1"/>
+                    <AppImageBox>
+                        <AppImage src={slideMenu1} alt="slide1"/>
+                    </AppImageBox>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <AppImage src={slideMenu2} alt="slide2"/>
+                    <AppImageBox>
+                        <AppImage src={slideMenu2} alt="slide2"/>
+                    </AppImageBox>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <AppImage src={slideMenu3} alt="slide3"/>
+                    <AppImageBox>
+                        <AppImage src={slideMenu3} alt="slide3"/>
+                    </AppImageBox>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <AppImage src={slideMenu4} alt="slide4"/>
+                    <AppImageBox>
+                        <AppImage src={slideMenu4} alt="slide4"/>
+                    </AppImageBox>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <AppImage src={slideMenu5} alt="slide5"/>
+                    <AppImageBox>
+                        <AppImage src={slideMenu5} alt="slide5"/>
+                    </AppImageBox>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <AppImage src={slideMenu6} alt="slide6"/>
+                    <AppImageBox>
+                        <AppImage src={slideMenu6} alt="slide6"/>
+                    </AppImageBox>
                 </SwiperSlide>
             </Swiper>
         </SwiperWrap>

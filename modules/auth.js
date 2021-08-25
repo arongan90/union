@@ -1,8 +1,17 @@
+import Router from "next/router";
+
 const IS_LOGIN = "IS_LOGIN";
 const IS_LOGOUT = "IS_LOGOUT";
 
-export const isLogin = () => ({ type: IS_LOGIN });
-export const isLogout = () => ({ type: IS_LOGOUT });
+export const isLogin = loginInfo => dispatch => {
+    try {
+        dispatch({type: IS_LOGIN, payload: { loginInfo: loginInfo}});
+        Router.push(`/`);
+    } catch (e) {
+        console.info('isLogin Error: ', e);
+    }
+}
+export const isLogout = () => async dispatch => ({ type: IS_LOGOUT });
 
 const initialState = {
     token: null,
@@ -14,7 +23,8 @@ export default function auth(state = initialState, action) {
         case IS_LOGIN:
             return {
                 ...state,
-                token: action.payload,
+                userInfo: action.payload.loginInfo,
+                token: 'token'
             };
         case IS_LOGOUT:
             return {
