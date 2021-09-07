@@ -7,9 +7,9 @@ const useInput = (initialForm) => {
         const { name, value } = e.target;
         setForm(form => ({...form, [name]: value}));
     },[]);
-    const reset = useCallback(() => setForm(initialForm), [initialForm]);
+    const onReset = useCallback(() => setForm(initialForm), [initialForm]);
 
-    return [form, onChange, reset];
+    return [form, onChange, onReset];
 }
 
 export default useInput;

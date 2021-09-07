@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import LivePresentational from "../../components/Live/LivePresentational";
+import LivePresentational from "../../components/live/LivePresentation";
 
 const Live = () => {
     return (

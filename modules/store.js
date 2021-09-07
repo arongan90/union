@@ -3,13 +3,17 @@ import {createWrapper, HYDRATE} from "next-redux-wrapper";
 import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 import {composeWithDevTools} from "redux-devtools-extension";
-
 import auth from "./auth";
 import isMobile from "./isMobile";
+import chat from "./chat";
+import corpInfo from "./corpInfo";
+
 
 const reducer = combineReducers({
     auth: auth,
-    isMobile: isMobile
+    isMobile: isMobile,
+    chat: chat,
+    corpInfo: corpInfo
 });
 
 const rootReducer = (state, action) => {
@@ -25,7 +29,7 @@ const rootReducer = (state, action) => {
 }
 
 const makeStore = () => {
-    return createStore(rootReducer, composeWithDevTools(compose(applyMiddleware(ReduxThunk, logger))));
+    return createStore(rootReducer, composeWithDevTools(compose(applyMiddleware(ReduxThunk))));
 }
 
 export const wrapper = createWrapper(makeStore, {

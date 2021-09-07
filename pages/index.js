@@ -1,14 +1,15 @@
 import Head from 'next/head'
 import React, {useState, useEffect, useRef, useCallback, useLayoutEffect} from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import {darken, lighten} from "polished";
 import colors from "../styles/colors";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import UnionContent from "../components/UnionMain/UnionContent";
-import Drawer from "../components/UnionMain/Drawer";
+import UnionContent from "../components/unionMain/UnionContent";
+import Drawer from "../components/unionMain/Drawer";
 import { useMediaQuery } from "react-responsive";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 // Image
 import mainBgImage from "/public/images/union/Mainview_bg.png"
 import catbellLogo from "/public/images/union/logo_catbellunion.svg"
@@ -16,8 +17,9 @@ import bannerImage from "/public/images/union/CATBELL_UNION.png";
 import iphoneImage from "/public/images/union/iphoneImage.png";
 import arrowDownImage from "/public/images/union/arrow-down.svg";
 import footerImage from "/public/images/union/logo_footer.svg";
+import {isLogout} from "../modules/auth";
 
-const Wrap = styled.div`
+const Wrapper = styled.div`
   width: 100vw;
   height: 100%;
 `;
@@ -34,7 +36,7 @@ const MainBanner = styled.div`
   }
 `;
 const HeaderBox = styled.div`
-  max-width: 1065px;
+  max-width: 1200px;
   height: 65px;
   padding: 10px;
   box-sizing: border-box;
@@ -95,14 +97,16 @@ const LoginButton = styled.button`
   color: ${colors.whiteColor};
   border-radius: 8px;
   border: none;
-  background: ${colors.deepYellow};
   
-  &:hover {
-    background: ${lighten(0.1, colors.deepYellow)};  
-  }
-  &:active {
-    background: ${darken(0.1, colors.deepYellow)};
-  }
+  ${({ bgColor }) => bgColor && css`
+    background: ${bgColor};
+    &:hover {
+      background: lighten(0.1, bgColor);
+    }
+    &:active {
+      background: darken(0.1, bgColor);
+    }
+  `}
 `;
 const BannerContent = styled.div`
   max-width: 900px;
@@ -231,6 +235,9 @@ const HeaderRight = styled.div`
 function Index() {
     const [tabValue, setTabValue] = useState(0);
     const router = useRouter();
+    const dispatch = useDispatch();
+    const { userInfo } = useSelector(state => state.auth);
+
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
     };
@@ -244,6 +251,9 @@ function Index() {
     });
 
     const onLogin = () => router.push(`/login`);
+    const onLogout = () => {
+        dispatch(isLogout());
+    }
 
     const handleScrollClick = useCallback(() => {
         console.info('윈도우 ?:: ', window.scrollTo)
@@ -253,7 +263,7 @@ function Index() {
     useEffect(() => {
         window.addEventListener('scroll', handleScrollClick);
         return () => window.removeEventListener('scroll', handleScrollClick);
-    }, [handleScrollClick])
+    }, [handleScrollClick]);
 
     return (
         <div>
@@ -264,7 +274,7 @@ function Index() {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
 
-            <Wrap>
+            <Wrapper>
                 <MainBanner>
                     <HeaderBox>
                         <HeaderLeft>
@@ -284,7 +294,10 @@ function Index() {
                             </TabBar>
                         </HeaderLeft>
                         <HeaderRight>
-                            <LoginButton onClick={onLogin}>LOGIN</LoginButton>
+                            {userInfo
+                                ? <LoginButton bgColor={colors.activeRed} onClick={onLogout}>LOGOUT</LoginButton>
+                                : <LoginButton bgColor={colors.deepYellow} onClick={onLogin}>LOGIN</LoginButton>
+                            }
                             <Drawer isMobile={isMobile} />
                         </HeaderRight>
                     </HeaderBox>
@@ -330,7 +343,7 @@ function Index() {
                         </FooterLogo>
                     </FooterContent>
                 </FooterBox>
-            </Wrap>
+            </Wrapper>
         </div>
     )
 }

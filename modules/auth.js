@@ -1,17 +1,62 @@
+import axios from "axios";
 import Router from "next/router";
+import {setCookie, removeCookie} from "../utils/cookie";
 
-const IS_LOGIN = "IS_LOGIN";
-const IS_LOGOUT = "IS_LOGOUT";
+const IS_LOGIN = "auth/IS_LOGIN";
+const IS_LOGOUT = "auth/IS_LOGOUT";
+const RESET_TOKEN = "auth/RESET_TOKEN";
+const SET_USER_INFO = "auth/SET_USER_INFO";
 
-export const isLogin = loginInfo => dispatch => {
+export const isLogin = loginInfo => async dispatch => {
+    const requestOptions = {
+        method: 'POST',
+        mode: 'cors',
+        headers: {'Content-Type': 'application/json'},
+        // withCredentials: true,
+    }
     try {
-        dispatch({type: IS_LOGIN, payload: { loginInfo: loginInfo}});
-        Router.push(`/`);
+        const res = await axios.post('https://reqres.in/api/login', {
+            email: loginInfo.userId,
+            password: loginInfo.password
+        });
+
+        if (res.status === 200) {
+            dispatch({
+                type: IS_LOGIN,
+                payload: {
+                    token: res.data,
+                }
+            });
+            setCookie('token', res.data);
+            setUserInfo(res.data);
+            await Router.push(`/odeng`);
+        }
     } catch (e) {
-        console.info('isLogin Error: ', e);
+        throw new Error(e);
     }
 }
-export const isLogout = () => async dispatch => ({ type: IS_LOGOUT });
+
+export const isLogout = () => dispatch => {
+    let uri = window.location;
+    removeCookie('token');
+    dispatch({type: IS_LOGOUT});
+    Router.push(uri);
+};
+
+export const resetToken = token => dispatch => dispatch({type: RESET_TOKEN, token});
+
+export const setUserInfo = token => async dispatch => {
+    let headers = {
+        'Authorization': 'Bearer ' + token,
+    }
+
+    try {
+        let res = await axios.get('http://localhost:4000/user');
+        dispatch({type: SET_USER_INFO, userInfo: res.data});
+    } catch (e) {
+        throw new Error(e);
+    }
+}
 
 const initialState = {
     token: null,
@@ -23,14 +68,23 @@ export default function auth(state = initialState, action) {
         case IS_LOGIN:
             return {
                 ...state,
-                userInfo: action.payload.loginInfo,
-                token: 'token'
+                token: action.payload.token
             };
         case IS_LOGOUT:
             return {
                 token: null,
                 userInfo: null,
             };
+        case RESET_TOKEN:
+            return {
+                ...state,
+                token: action.token
+            }
+        case SET_USER_INFO:
+            return {
+                ...state,
+                userInfo: action.userInfo
+            }
         default:
             return state;
     }

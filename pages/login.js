@@ -11,9 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 // Image
 import catbellImage from "/public/images/union/logo_catbellunion.svg";
 
-const Wrap = styled.div`
+const Wrapper = styled.div`
   max-width: 350px;
-  margin: 15% auto;
+  margin: 12% auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -121,9 +121,10 @@ const Button = styled.button`
 `;
 
 const Login = () => {
-    const [visible, setVisible] = useState(true);
     const router = useRouter();
     const dispatch = useDispatch();
+    const { userInfo } = useSelector(state => state.auth);
+    const [visible, setVisible] = useState(true);
     const [tabActive, setTabActive] = useState({
         login: true,
         store: false,
@@ -141,29 +142,36 @@ const Login = () => {
         });
     }
 
-    const [{ userId, passWd, corpName }, onChange] = useInput({
+    const [{ userId, password, corpInput }, onChange] = useInput({
         userId: '',
-        passWd: '',
-        corpName: ''
+        password: '',
+        corpInput: ''
     });
 
+    const moveCorpHome = () => {
+        console.info('moveCorpHome', userInfo);
+        if (!!userInfo) {
+            router.push(`/${userInfo.corp_name}`)
+        }
+    }
     const handleVisible = () => setVisible(visible => !visible);
     const goBack = () => router.back();
-    const onLogin = () => {
+    const onLogin = async () => {
         let loginInfo = {};
-        if (userId === '' || passWd === '') {
+        if (userId === '' || password === '') {
            alert('아이디와 비밀번호를 입력해주세요.');
         } else {
             loginInfo = {
                 userId: userId,
-                passWd: passWd,
+                password: password,
             }
             dispatch(isLogin(loginInfo));
+            moveCorpHome();
         }
     }
 
     return (
-        <Wrap>
+        <Wrapper>
             <AppImageBox width={'142px'} height={'63px'}>
                 <AppImage src={catbellImage} />
             </AppImageBox>
@@ -186,8 +194,8 @@ const Login = () => {
                     <InputLabel>
                         <Inputs
                             type={visible ? "password" : "text"}
-                            name="passWd"
-                            value={passWd}
+                            name="password"
+                            value={password}
                             onChange={onChange}
                             placeholder="비밀번호"
                         />
@@ -201,8 +209,8 @@ const Login = () => {
                     <InputLabel>
                         <Inputs
                             type="text"
-                            name="corpName"
-                            value={corpName}
+                            name="corpInput"
+                            value={corpInput}
                             onChange={onChange}
                             placeholder="회사명을 입력해주세요."
                         />
@@ -215,7 +223,7 @@ const Login = () => {
             <Button bgColor={colors.whiteColor} border fontColor={colors.loginPoint} onClick={goBack}>
                 취소
             </Button>
-        </Wrap>
+        </Wrapper>
     )
 }
 

@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { lighten, darken } from 'polished';
 import error404Image from '/public/images/share/error404.svg';
 
-const Wrap = styled.div`
+const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
@@ -79,7 +79,7 @@ const Page404 = () => {
         router.back();
     }
     return (
-        <Wrap>
+        <Wrapper>
             <LeftBox>
                 <MainText>요청하신 페이지를 찾을 수 없습니다.</MainText>
                 <SubText>
@@ -91,7 +91,7 @@ const Page404 = () => {
             <RightBox>
                 <AppImage src={error404Image} alt="ErrorImage" />
             </RightBox>
-        </Wrap>
+        </Wrapper>
     )
 }
 

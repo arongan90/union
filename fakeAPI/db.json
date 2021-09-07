@@ -1,0 +1,203 @@
+{
+  "user": {
+    "id": 398,
+    "cp_id": "18",
+    "mb_id": null,
+    "name": "박동한",
+    "email": "edgar@catbellcompany.com",
+    "nickname": "Edgar",
+    "user_type": "admin",
+    "corp_name": "odeng",
+    "conference": 1,
+    "board": 1,
+    "embed": 0,
+    "linkbinder": 0,
+    "streaming": 1,
+    "image_path": "upload/images/link/20210428010145_GettyImages-jv10963997.jpeg",
+    "cp_type": "union",
+    "register_state": "2",
+    "tel": "01098110022"
+  },
+  "cpInfo": {
+    "id": 18,
+    "corp_name": "odeng",
+    "owner_name": "임하늘",
+    "tel": "02-222-0022",
+    "charge_name": "test",
+    "email": "odeng@odeng.com",
+    "recommender": "23423r",
+    "biznum": "136-12-78647",
+    "bizcert": null,
+    "taxcert": null,
+    "taxcert2": null,
+    "bizcert2": null,
+    "conference": 1,
+    "board": 1,
+    "embed": 0,
+    "linkbinder": 0,
+    "streaming": 1,
+    "callmodule": 1,
+    "sn": "undefined",
+    "register_state": "2",
+    "image_path": "upload/images/link/20210428010145_GettyImages-jv10963997.jpeg",
+    "cp_url": "odeng",
+    "cp_type": "union",
+    "order": "162,136,158,154",
+    "catbellpass": 0,
+    "first_connect": "N",
+    "main_order": "449,448,444,446,488",
+    "certification": 1,
+    "introduction": "안녕하세요. 오뎅입니다."
+  },
+  "member": [
+    {
+      "id": 1,
+      "name": "임하늘",
+      "nickname": "sky",
+      "phone_no": "010-0000-1111",
+      "recommender": "박동한",
+      "reg_dt": "2010217203908183"
+    },
+    {
+      "id": 2,
+      "name": "박가온",
+      "nickname": "celine",
+      "phone_no": "010-3333-2222",
+      "recommender": "박동한",
+      "reg_dt": "2010217203908183"
+    },
+    {
+      "id": 3,
+      "name": "박동한",
+      "nickname": "edgar",
+      "phone_no": "010-3333-2222",
+      "recommender": "박동한",
+      "reg_dt": "2010217203908183"
+    },
+    {
+      "id": 4,
+      "name": "김준연",
+      "nickname": "june",
+      "phone_no": "010-5555-1111",
+      "recommender": "임하늘",
+      "reg_dt": "2010217203908183"
+    }
+  ],
+  "linkbinder": [
+    {
+      "id": 1,
+      "address": "https://www.naver.com",
+      "image_path": "http://via.placeholder.com/150/92c952",
+      "title": "네이버",
+      "secure": 1,
+      "link_count": "51",
+      "link_type": "blog"
+    },
+    {
+      "id": 2,
+      "address": "https://www.google.com",
+      "image_path": "http://via.placeholder.com/150/771796",
+      "title": "구글",
+      "secure": 0,
+      "link_count": "22",
+      "link_type": "shopping"
+    },
+    {
+      "id": 3,
+      "address": "https://m.stock.naver.com/index.nhn",
+      "image_path": "http://via.placeholder.com/150/24f355",
+      "title": "증권",
+      "secure": 0,
+      "link_count": "3",
+      "link_type": "contents"
+    }
+  ],
+  "videoLink": [
+    {
+      "id": 1,
+      "title": "강호동 라면 먹방",
+      "count": 0,
+      "video_link": "http://www.youtube.com/embed/YGZ9HdlzI4A",
+      "cp_id": 18,
+      "title_sub": "가리비 라면",
+      "video_index": 0,
+      "youtubeId": "YGZ9HdlzI4A",
+      "link": "http://www.youtube.com/watch?v=YGZ9HdlzI4A"
+    },
+    {
+      "id": 2,
+      "title": "test",
+      "count": 0,
+      "video_link": "http://www.youtube.com/embedNOHLbtlCMwQ",
+      "cp_id": 18,
+      "title_sub": "test",
+      "video_index": 1,
+      "youtubeId": "NOHLbtlCMwQ",
+      "link": "http://youtu.be/NOHLbtlCMwQ"
+    },
+    {
+      "id": 3,
+      "title": "링크 추가 테스트",
+      "count": 0,
+      "video_link": "http://www.youtube.com/embed/jxdmx6Cu0bY",
+      "cp_id": 18,
+      "title_sub": "테스트 입니다 ~~ 조금만 더 길게 써볼게요 ~~",
+      "video_index": 2,
+      "youtubeId": "jxdmx6Cu0bY",
+      "link": "http://www.youtube.com/watch?v=jxdmx6Cu0bY"
+    },
+    {
+      "id": 4,
+      "title": "장범준",
+      "count": 0,
+      "video_link": "http://www.youtube.com/embed/KV5xCWgDiZs",
+      "cp_id": 18,
+      "title_sub": "장범준 cover 곡",
+      "video_index": 3,
+      "youtubeId": "KV5xCWgDiZs",
+      "link": "http://www.youtube.com/watch?v=KV5xCWgDiZs"
+    }
+  ],
+  "mainSetting": [
+    {
+      "id": 444,
+      "link_address": "http://www.youtube.com/watch?v=h03n0ULt_Rs",
+      "mb_id": null,
+      "image_path": null,
+      "link_state": "video",
+      "cp_id": 18
+    },
+    {
+      "id": 446,
+      "link_address": "http://youtu.be/nWc_IBuKsOQ",
+      "mb_id": null,
+      "image_path": null,
+      "link_state": "video",
+      "cp_id": 18
+    },
+    {
+      "id": 448,
+      "link_address": null,
+      "mb_id": null,
+      "image_path": "/upload/images/mainView/20210716175809_IMG_6586.jpg",
+      "link_state": "image",
+      "cp_id": 18
+    },
+    {
+      "id": 449,
+      "link_address": "http://www.youtube.com/watch?v=jxdmx6Cu0bY",
+      "mb_id": null,
+      "image_path": null,
+      "link_state": "video",
+      "cp_id": 18
+    },
+    {
+     "id": 488,
+     "link_address": null,
+     "mb_id": null,
+     "image_path": "/upload/images/mainView/20210802155807_img.png",
+     "link_state": "image",
+     "cp_id": 18
+    }
+  ]
+}

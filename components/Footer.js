@@ -1,8 +1,9 @@
 import React from 'react';
 import styled, { css } from "styled-components";
 import colors from "../styles/colors";
+import {useSelector} from "react-redux";
 
-const Wrap = styled.div`
+const Wrapper = styled.div`
   max-width: 530px;
   margin: 0 auto;
   padding: 35px 25px 25px;
@@ -35,15 +36,17 @@ const IconBox = styled.div`
 `;
 
 const Footer = () => {
+    const corpInfo = useSelector(state => state.corpInfo);
+
     return (
-        <Wrap>
+        <Wrapper>
             <Logo>
                 <AppImage alt={"logo"}/>
             </Logo>
-            <InfoText>Ut malesuada et, netus viverra.</InfoText>
-            <InfoText> Massa 010-1234-1234</InfoText>
-            <InfoText>commodo pharetra placerat.</InfoText>
-            <InfoText>Cras vitae sagittis, elementum</InfoText>
+            <InfoText>{corpInfo.introduction}</InfoText>
+            <InfoText>대표자 : {corpInfo.owner_name}</InfoText>
+            <InfoText>전화번호 : {corpInfo.tel}</InfoText>
+            <InfoText>사업자번호 : {corpInfo.biznum}</InfoText>
 
             <IconBox>
                 <AppImage/>
@@ -51,8 +54,8 @@ const Footer = () => {
                 <AppImage/>
             </IconBox>
 
-            <InfoText textAlign>Copyrights 2021 힐링타임즈. All rights reserved</InfoText>
-        </Wrap>
+            <InfoText textAlign>Copyrights 2021 {corpInfo.corp_name}. All rights reserved</InfoText>
+        </Wrapper>
     )
 }
 
