@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, {css} from "styled-components";
 import colors from "../../styles/colors";
+import {darken, lighten} from "polished";
+import {dark} from "@material-ui/core/styles/createPalette";
 
 const Wrapper = styled.div`
   max-width: 530px;
@@ -47,7 +49,7 @@ const TabMenu = styled.li`
     font-weight: 500;
   `}
 `;
-const UploadImageBox = styled.div`
+const UploadBox = styled.div`
   width: 100%;
   height: 100px;
   display: flex;
@@ -104,7 +106,59 @@ const DeleteButton = styled.div`
   }
 `;
 
-const AddMainSettingModal = ({tabActive, onImageTab, onVideoTab, imageFileList, handleUploadImage, handleDeleteImage}) => {
+const UrlInput = styled.input`
+  width: 80%;
+  outline: none;
+  height: 40px;
+  padding: 0 10px;
+  border: none;
+  background: inherit;
+`;
+
+const ButtonGroup = styled.div`
+  margin-top: 72px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Button = styled.button`
+  width: 49%;
+  height: 50px;
+  border-radius: 7px;
+  font-size: 16px;
+  color: ${({ fontColor }) => fontColor};
+  
+  ${({ border }) => border && css`
+    border: ${border};
+  `}
+  
+  ${({ bgColor }) => bgColor && css`
+    background: ${bgColor};
+    
+    &:hover {
+      background: ${lighten(0.1, bgColor)}
+    }
+    &:active {
+      background: ${darken(0.1, bgColor)}
+    }
+  `}
+`;
+
+const AddMainSettingModal = ({
+                                 handleAddLinkClose,
+                                 tabActive,
+                                 onImageTab,
+                                 onVideoTab,
+                                 imageFileList,
+                                 handleUploadImage,
+                                 handleDeleteImage,
+                                 videoUrl_1,
+                                 videoUrl_2,
+                                 videoUrl_3,
+                                 onVideoUrlChange,
+                                 handleImageUpload,
+                                 handleVideoUpload,
+                             }) => {
     const {file, previewUrl} = imageFileList;
 
     return (
@@ -113,81 +167,81 @@ const AddMainSettingModal = ({tabActive, onImageTab, onVideoTab, imageFileList, 
                 <TabMenu active={tabActive.image} onClick={onImageTab}>이미지 추가</TabMenu>
                 <TabMenu active={tabActive.video} onClick={onVideoTab}>동영상 추가</TabMenu>
             </TabMenuBox>
-            <UploadImageBox>
-                <PreviewBox>
-                    {file[0] ?
-                        <PreviewImage
-                            src={previewUrl[0]}
-                        />
-                        :
-                        <FileInput
-                            type="file"
-                            accept='image/jpg,image/png,image/jpeg'
-                            onChange={handleUploadImage}
-                        />
-                    }
-                </PreviewBox>
-                {file[0] &&
-                    <>
-                        <FileTitle>
-                            {file[0].name}
-                        </FileTitle>
-                        <DeleteButton
-                            onClick={() => handleDeleteImage(file[0])}
-                        />
-                    </>
-                }
-            </UploadImageBox>
-            <UploadImageBox>
-                <PreviewBox>
-                    {file[1] ?
-                        <PreviewImage
-                            src={previewUrl[1]}
-                        />
-                        :
-                        <FileInput
-                            type="file"
-                            accept='image/jpg,image/png,image/jpeg'
-                            onChange={handleUploadImage}
-                        />
-                    }
-                </PreviewBox>
-                {file[1] &&
+            {tabActive.image ?
+                [...Array(3)].map((num, index) => (
+                    <UploadBox
+                        key={index}
+                    >
+                        <PreviewBox>
+                            {file[index] ?
+                                <PreviewImage
+                                    src={previewUrl[index]}
+                                />
+                                :
+                                <FileInput
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleUploadImage}
+                                />
+                            }
+                        </PreviewBox>
+                        {file[index] &&
+                        <>
+                            <FileTitle>
+                                {file[index].name}
+                            </FileTitle>
+                            <DeleteButton
+                                onClick={() => handleDeleteImage(file[index])}
+                            />
+                        </>
+                        }
+                    </UploadBox>
+                ))
+                :
                 <>
-                    <FileTitle>
-                        {file[1].name}
-                    </FileTitle>
-                    <DeleteButton
-                        onClick={handleDeleteImage}
-                    />
-                </>
-                }
-            </UploadImageBox>
-            <UploadImageBox>
-                <PreviewBox>
-                    {file[2] ?
-                        <PreviewImage
-                            src={previewUrl[2]}
+                    <UploadBox>
+                        <UrlInput
+                            name="videoUrl_1"
+                            placeholder="url를 입력해주세요."
+                            value={videoUrl_1}
+                            onChange={onVideoUrlChange}
                         />
-                        :
-                        <FileInput
-                            type="file"
-                            accept='image/jpg,image/png,image/jpeg'
-                            onChange={handleUploadImage}
+                        <DeleteButton/>
+                    </UploadBox>
+                    <UploadBox>
+                        <UrlInput
+                            name="videoUrl_2"
+                            placeholder="url를 입력해주세요."
+                            value={videoUrl_2}
+                            onChange={onVideoUrlChange}
                         />
-                    }
-                </PreviewBox>
-                {file[2] &&
-                <>
-                    <FileTitle>
-                        {file[2].name}
-                    </FileTitle>
-                    <DeleteButton
-                        onClick={handleDeleteImage}
-                    />
+                        <DeleteButton/>
+                    </UploadBox>
+                    <UploadBox>
+                        <UrlInput
+                            name="videoUrl_3"
+                            placeholder="url를 입력해주세요."
+                            value={videoUrl_3}
+                            onChange={onVideoUrlChange}
+                        />
+                        <DeleteButton/>
+                    </UploadBox>
                 </>
-                }
-            </UploadImageBox>
+            }
+            <ButtonGroup>
+                <Button
+                    border={`1px solid ${colors.footerText}`}
+                    fontColor={colors.loginDefaultFont}
+                    bgColor={colors.whiteColor}
+                    onClick={handleAddLinkClose}
+                >취 소</Button>
+                <Button
+                    border="none"
+                    fontColor={colors.whiteColor}
+                    bgColor={colors.deepDarkBlue}
+                    onClick={tabActive.image ? handleImageUpload : handleVideoUpload}
+                >업 로 드</Button>
+            </ButtonGroup>
         </Wrapper>
     )
 }

@@ -2,8 +2,11 @@ import React, {useState, useCallback, useEffect} from 'react';
 import SettingMainPresentation from "../../components/settingMain/settingMainPresentation";
 import initialize from "../../utils/initialize";
 import axios from "axios";
+import useInput from "../../hooks/useInput";
+import {useRouter} from "next/router";
 
 const SettingMain = ({settingData}) => {
+    const router = useRouter();
     const [imageFileList, setImageFileList] = useState({
         file: [],
         previewUrl: [],
@@ -19,6 +22,13 @@ const SettingMain = ({settingData}) => {
     const onImageTab = () => setTabActive({image: true, video: false});
     const onVideoTab = () => setTabActive({image: false, video: true});
 
+    const [{ introduction }, onIntroductionChange] = useInput('');
+    const [{ videoUrl_1, videoUrl_2, videoUrl_3}, onVideoUrlChange, onReset] = useInput({
+        videoUrl_1: '',
+        videoUrl_2: '',
+        videoUrl_3: ''
+    })
+
     const handleUploadImage = useCallback(e => {
         let reader = new FileReader();
         let img = e.target.files[0];
@@ -29,16 +39,52 @@ const SettingMain = ({settingData}) => {
                 previewUrl: [...imageFileList.previewUrl, reader.result]
             });
         }
-
         reader.readAsDataURL(img);
-    }, [imageFileList]);
+    }, [imageFileList.file]);
 
     const handleDeleteImage = useCallback((file) => {
-        console.info('imageFileList ::: ', imageFileList);
-        imageFileList.file.filter(img => img.name === file.name);
-        console.info('imageFileList ::: ', imageFileList);
-    }, []);
+        imageFileList.file.filter(item => item.name !== file.name);
 
+        // imageFileList.file.filter((item) => {
+        //     console.info('item.type ::: ', item.name);
+        //     console.info('file.name ::: ', file.name);
+        //     console.info('===== ::: ', item.name !== file.name);
+        //     return item.name !== file.name;
+        // });
+    }, [imageFileList.file]);
+
+    useEffect(() => {
+        console.info(imageFileList.file);
+    }, [imageFileList.file]);
+
+    const handleImageUpload = () => {
+        const formData = new FormData();
+
+        // formData.append('image', imageFileList.file[0]);
+        console.info('image data: ');
+        handleAddLinkClose();
+    }
+
+    const handleVideoUpload = () => {
+        let params = {
+            videoUrl_1: videoUrl_1,
+            videoUrl_2: videoUrl_2,
+            videoUrl_3: videoUrl_3,
+        }
+
+        console.info('url data: ', params);
+        // handleAddLinkClose();
+    }
+
+    const handleDeleteUrl = (index) => {
+
+    }
+
+    const handleMainSettingComplete = () => {
+        console.info('완료');
+    }
+
+    const goBack = () => router.back();
 
     return (
         <>
@@ -52,6 +98,21 @@ const SettingMain = ({settingData}) => {
                 imageFileList={imageFileList}
                 handleUploadImage={handleUploadImage}
                 handleDeleteImage={handleDeleteImage}
+
+                videoUrl_1={videoUrl_1}
+                videoUrl_2={videoUrl_2}
+                videoUrl_3={videoUrl_3}
+                onVideoUrlChange={onVideoUrlChange}
+                onReset={onReset}
+
+                handleImageUpload={handleImageUpload}
+                handleVideoUpload={handleVideoUpload}
+
+                introduction={introduction}
+                onIntroductionChange={onIntroductionChange}
+
+                handleMainSettingComplete={handleMainSettingComplete}
+                goBack={goBack}
             />
         </>
     )

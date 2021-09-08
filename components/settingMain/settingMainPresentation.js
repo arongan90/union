@@ -57,6 +57,17 @@ const SettingMainPresentation = ({
                                      imageFileList,
                                      handleUploadImage,
                                      handleDeleteImage,
+                                     videoUrl_1,
+                                     videoUrl_2,
+                                     videoUrl_3,
+                                     onVideoUrlChange,
+                                     onReset,
+                                     handleImageUpload,
+                                     handleVideoUpload,
+                                     introduction,
+                                     onIntroductionChange,
+                                     handleMainSettingComplete,
+                                     goBack,
                                  }) => {
     return (
         <Wrapper>
@@ -86,8 +97,11 @@ const SettingMainPresentation = ({
                 <ContentTitle padding="0 0 0 10px">소개글</ContentTitle>
                 <Subtitle>소개글을 등록하시면 메인화면에 보여집니다. (300자 이내)</Subtitle>
                 <TextArea
-                    maxLength={300}
+                    name="introduction"
                     placeholder="소개글을 등록해주세요."
+                    maxLength={300}
+                    value={introduction}
+                    onChange={onIntroductionChange}
                 >
                 </TextArea>
             </ContentBox>
@@ -95,11 +109,13 @@ const SettingMainPresentation = ({
                 <LongButton
                     fontColor={colors.whiteColor}
                     bgColor={colors.deepDarkBlue}
+                    onClick={handleMainSettingComplete}
                 >완 료</LongButton>
                 <LongButton
                     fontColor={colors.loginDefaultFont}
                     border={`1px solid ${colors.footerText}`}
                     bgColor={colors.whiteColor}
+                    onClick={goBack}
                 >취 소</LongButton>
             </ButtonGroup>
 
@@ -111,12 +127,20 @@ const SettingMainPresentation = ({
             >
                 <>
                     <AddMainSettingModal
+                        handleAddLinkClose={handleAddLinkClose}
                         tabActive={tabActive}
                         onImageTab={onImageTab}
                         onVideoTab={onVideoTab}
                         imageFileList={imageFileList}
                         handleUploadImage={handleUploadImage}
                         handleDeleteImage={handleDeleteImage}
+                        videoUrl_1={videoUrl_1}
+                        videoUrl_2={videoUrl_2}
+                        videoUrl_3={videoUrl_3}
+                        onVideoUrlChange={onVideoUrlChange}
+                        onReset={onReset}
+                        handleImageUpload={handleImageUpload}
+                        handleVideoUpload={handleVideoUpload}
                     />
                 </>
             </Modal>
