@@ -9,6 +9,7 @@ import initialize from "../../../utils/initialize";
 const LinkBinder = ({linkData}) => {
     const router = useRouter();
     const [linkList, setLinkList] = useState(linkData);
+    const [copyLinkList, setCopyLinkList] = useState([]);
     const [editOrder, setEditOrder] = useState(false);
     const [linkIndex, setLinkIndex] = useState([]);
     const {userInfo} = useSelector(state => state.auth);
@@ -27,6 +28,8 @@ const LinkBinder = ({linkData}) => {
     }
 
     const onSortEnd = ({oldIndex, newIndex}) => {
+        setCopyLinkList(linkList);
+
         let sortResult = arrayMove(linkList, oldIndex, newIndex);
         let reSortData = sortResult.map((value) => {
             return value.link_id
@@ -34,18 +37,14 @@ const LinkBinder = ({linkData}) => {
 
         setLinkIndex(reSortData);
         setLinkList(sortResult);
+
+        console.info('sortResult ::: ', sortResult);
+        console.info('바꾸는 중 ::: ', linkList);
     };
 
     const updateOrder = async () => {
-        let params = {
-            cp_id: userInfo.cp_id,
-            list_index: linkIndex
-        }
-        try {
-            // await bsApi.post(`/link/updateIndex`, params);
-        } catch (e) {
-            throw new Error(e);
-        }
+
+
     }
 
     const deleteCard = async (link_id) => {
@@ -64,7 +63,26 @@ const LinkBinder = ({linkData}) => {
         }
     }
 
-    const handleEditOrder = () =>setEditOrder(!editOrder);
+    const handleEditOpen = () => {
+        setEditOrder(true);
+    }
+    const handleEditCancel = () => {
+        setLinkList(copyLinkList);
+        setEditOrder(false);
+    }
+    const handleEditComplete = async () => {
+        let params = {
+            cp_id: userInfo.cp_id,
+            list_index: linkIndex
+        }
+        try {
+            // await bsApi.post(`/link/updateIndex`, params);
+        } catch (e) {
+            throw new Error(e);
+        }
+        setEditOrder(false);
+    }
+
 
     return (
         <LinkBinderPresentation
@@ -74,9 +92,10 @@ const LinkBinder = ({linkData}) => {
             router={router}
             goPage={goPage}
             onSortEnd={onSortEnd}
-            updateOrder={updateOrder}
             deleteCard={deleteCard}
-            handleEditOrder={handleEditOrder}
+            handleEditOpen={handleEditOpen}
+            handleEditCancel={handleEditCancel}
+            handleEditComplete={handleEditComplete}
         />
     );
 }

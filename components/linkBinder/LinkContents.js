@@ -4,6 +4,7 @@ import {BsFillQuestionCircleFill} from "react-icons/bs";
 import Sortable from "../../share/sortable/Sortable";
 import colors from "../../styles/colors";
 import plus from '/public/images/linkBinder/plus.png';
+import LongButton from "../../share/components/LongButton";
 
 const ContentBox = styled.div`
   max-width: 530px;
@@ -17,28 +18,34 @@ const Title = styled.div`
   font-size: 16px;
   color: ${colors.chatDefaultColor};
   position: relative;
+  margin-bottom: 10px;
 `;
 const SubText = styled.span`
   font-size: 12px;
   color: ${colors.normalGray};
 `;
-const LinkButton = styled.button`
+const ButtonGroup = styled.div`
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: -5px;
+`;
+const SmallButton = styled.button`
   width: ${({width}) => width};
   height: ${({height}) => height}px;
   background: ${props => props.editOrder ? colors.deepDarkGray : props.bgColor};
   border-radius: 5px;
-  margin: 10px 0 40px;
   color: ${props => props.editOrder ? colors.whiteColor : props.color};
   font-size: 14px;
   font-weight: ${props => props.editOrder ? 'bold' : props.fontWeight};
   border: ${props => props.editOrder ? '1px solid ' + colors.deepDarkGray : 'none'};
   cursor: pointer;
-  ${props => props.position && css`
-    position: absolute;
-    right: 0;
-    margin: 0;
-  `}
+  
+  & + & {
+    margin-left: 10px;
+  }
 `;
+
 const IconSvg = styled.img`
   margin: 0 5px;
 `;
@@ -92,25 +99,25 @@ function LinkContents({
                           router,
                           goPage,
                           onSortEnd,
-                          updateOrder,
                           deleteCard,
-                          handleEditOrder
+                          handleEditOpen,
+                          handleEditCancel,
+                          handleEditComplete
                       }) {
     return (
         <ContentBox>
             {userInfo && userInfo.user_type === 'admin' &&
             <>
                 <Title>링크추가</Title>
-                <LinkButton
+                <LongButton
+                    fontSize={14}
+                    marginBottom={40}
+                    costumeBgColor="linear-gradient(94.85deg, #2054A5 -10.42%, #1B3A6A 94.56%)"
+                    fontColor={colors.whiteColor}
                     onClick={() => router.push(`/${userInfo.corp_name}/linkbinder/addlink`)}
-                    width="100%"
-                    height={54}
-                    color={colors.whiteColor}
-                    fontWeight="bold"
-                    bgColor="linear-gradient(94.85deg, #2054A5 -10.42%, #1B3A6A 94.56%)"
                 >
                     <IconSvg src={plus}/>포스트 추가하기
-                </LinkButton>
+                </LongButton>
                 <Title>
                     링크수정&nbsp;
                     <SubText>(링크를 눌러 수정하세요.)
@@ -122,33 +129,48 @@ function LinkContents({
                             </ToolTipBox>
                         </ToolTip>
                     </SubText>
-                    {editOrder
-                        ? <LinkButton
-                            width={"100px"}
-                            height={30}
-                            color={colors.chatDefaultColor}
-                            bgColor={colors.ultraLightGray}
-                            position
-                            editOrder={editOrder}
-                            onClick={() => {
-                                handleEditOrder();
-                                updateOrder();
-                            }}
-                        >
-                            수정완료
-                        </LinkButton>
-                        : <LinkButton
-                            width={"100px"}
-                            height={30}
-                            color={colors.chatDefaultColor}
-                            bgColor={colors.ultraLightGray}
-                            position
-                            editOrder={editOrder}
-                            onClick={() => handleEditOrder()}
-                        >
-                            수정하기
-                        </LinkButton>
-                    }
+                    <ButtonGroup>
+                        {editOrder
+                            ?
+                            <>
+                                <SmallButton
+                                    width={"100px"}
+                                    height={30}
+                                    color={colors.chatDefaultColor}
+                                    bgColor={colors.orangeColor}
+                                    onClick={handleEditCancel}
+                                >
+                                    취 소
+                                </SmallButton>
+                                <SmallButton
+                                    width={"100px"}
+                                    height={30}
+                                    color={colors.chatDefaultColor}
+                                    bgColor={colors.ultraLightGray}
+                                    position
+                                    editOrder={editOrder}
+                                    onClick={() => {
+                                        handleEditComplete();
+                                    }}
+                                >
+                                    수정완료
+                                </SmallButton>
+                            </>
+                            : <SmallButton
+                                width={"100px"}
+                                height={30}
+                                color={colors.chatDefaultColor}
+                                bgColor={colors.ultraLightGray}
+                                position
+                                editOrder={editOrder}
+                                onClick={() => {
+                                    handleEditOpen();
+                                }}
+                            >
+                                수정하기
+                            </SmallButton>
+                        }
+                    </ButtonGroup>
                 </Title>
             </>
             }

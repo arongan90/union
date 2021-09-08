@@ -130,7 +130,7 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo }) => {
                         </a>
                     </Link>
 
-                    <Link href={`/${corpName}/livechat`}>
+                    {/*<Link href={`/${corpName}/livechat`}>
                         <a>
                             <DrawerLinkBox button>
                                 <ListItemIcon>
@@ -139,7 +139,7 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo }) => {
                                 라이브 채팅
                             </DrawerLinkBox>
                         </a>
-                    </Link>
+                    </Link>*/}
 
                     <Link href={`/${corpName}/conference`}>
                         <a>

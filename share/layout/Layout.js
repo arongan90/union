@@ -61,13 +61,15 @@ const Layout = ({ children }) => {
         setDrawerOpen(true);
     };
 
+    console.info(corpInfo);
+
     return (
         <>
             <HeaderTop>
                 <ToolBox/>
                 <ToolBox>
-                    <LogoBox>
-                        <LogoImage alt={"corpLogo"} />
+                    <LogoBox onClick={() => router.push(`/${corpInfo.corp_name}`)} >
+                        <LogoImage src={`http://imagescdn.gettyimagesbank.com/500/201708/a10913676.jpg`} alt={"corpLogo"} />
                     </LogoBox>
                 </ToolBox>
                 <ToolBox justifyContent={"flex-end"}>
