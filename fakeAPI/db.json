@@ -122,7 +122,8 @@
       "title_sub": "가리비 라면",
       "video_index": 0,
       "youtubeId": "YGZ9HdlzI4A",
-      "link": "http://www.youtube.com/watch?v=YGZ9HdlzI4A"
+      "link": "http://www.youtube.com/watch?v=YGZ9HdlzI4A",
+      "secure": 1
     },
     {
       "id": 2,
@@ -133,7 +134,8 @@
       "title_sub": "test",
       "video_index": 1,
       "youtubeId": "NOHLbtlCMwQ",
-      "link": "http://youtu.be/NOHLbtlCMwQ"
+      "link": "http://youtu.be/NOHLbtlCMwQ",
+      "secure": 1
     },
     {
       "id": 3,
@@ -144,7 +146,8 @@
       "title_sub": "테스트 입니다 ~~ 조금만 더 길게 써볼게요 ~~",
       "video_index": 2,
       "youtubeId": "jxdmx6Cu0bY",
-      "link": "http://www.youtube.com/watch?v=jxdmx6Cu0bY"
+      "link": "http://www.youtube.com/watch?v=jxdmx6Cu0bY",
+      "secure": 0
     },
     {
       "id": 4,
@@ -155,7 +158,8 @@
       "title_sub": "장범준 cover 곡",
       "video_index": 3,
       "youtubeId": "KV5xCWgDiZs",
-      "link": "http://www.youtube.com/watch?v=KV5xCWgDiZs"
+      "link": "http://www.youtube.com/watch?v=KV5xCWgDiZs",
+      "secure": 0
     }
   ],
   "mainSetting": [

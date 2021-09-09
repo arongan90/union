@@ -3,10 +3,12 @@ import styled, { css } from "styled-components";
 import colors from "../../styles/colors";
 import { lighten, darken } from "polished";
 import { Modal } from "@material-ui/core";
-import MakeQuiz from "./MakeQuiz";
-import EnterAnswer from "./EnterAnswer";
-import QuizStats from "./QuizStats";
 import BanUser from "./BanUser.,js";
+import * as constants from "../../utils/constants";
+import {useSelector} from "react-redux";
+
+const serverProtocol = constants.config.chatServer.PROTOCOL;
+const serverURL = constants.config.chatServer.URL;
 
 const Wrapper = styled.div`
   width: 200px;
@@ -41,12 +43,13 @@ const Button = styled.button`
 
 const Index = () => {
     const [banOpen, setBanOpen] = useState(false);
+    const { corpInfo } = useSelector(state => state);
 
     const handleBanOpen = () => setBanOpen(true);
     const handleBanClose = () => setBanOpen(false);
 
     const openLiveChat = () => {
-        window.open(`http://localhost:3000/odeng/livechat`, "실시간 채팅", "_blank");
+        window.open(`${serverProtocol}172.16.1.192:3000/${corpInfo.corp_name}/livechat`, "실시간 채팅","width=400, height=600, left=500, top=100, _blank"   );
     }
 
     return (

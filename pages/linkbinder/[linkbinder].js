@@ -1,19 +1,32 @@
 import React, {useState, useEffect} from 'react';
-import LinkBinderPresentation from "../../../components/linkBinder/LinkBinderPresentation";
+import LinkBinderPresentation from "../../components/linkBinder/LinkBinderPresentation";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import arrayMove from "array-move";
 import {useRouter} from "next/router";
-import initialize from "../../../utils/initialize";
+import * as constants from "../../utils/constants";
+import initialize from "../../utils/initialize";
+import {setCorp} from "../../modules/corpInfo";
 
-const LinkBinder = ({linkData}) => {
+const serverProtocol = constants.config.chatServer.PROTOCOL;
+const serverURL = constants.config.chatServer.URL;
+
+const LinkBinder = ({linkData, corpName}) => {
     const router = useRouter();
     const [linkList, setLinkList] = useState(linkData);
-    const [copyLinkList, setCopyLinkList] = useState([]);
     const [editOrder, setEditOrder] = useState(false);
     const [linkIndex, setLinkIndex] = useState([]);
+    const [secureList, setSecureList] = useState();
+    const [copyLinkList, setCopyLinkList] = useState([]);
     const {userInfo} = useSelector(state => state.auth);
+
     let deleteLink = [];
+
+    useEffect(() => {
+        setCopyLinkList(linkList);
+
+        return () => setSecureList(undefined);
+    }, []);
 
     const goPage = async (value) => {
         let parameter = {
@@ -37,35 +50,45 @@ const LinkBinder = ({linkData}) => {
 
         setLinkIndex(reSortData);
         setLinkList(sortResult);
-
-        console.info('sortResult ::: ', sortResult);
-        console.info('바꾸는 중 ::: ', linkList);
     };
-
-    const updateOrder = async () => {
-
-
-    }
 
     const deleteCard = async (link_id) => {
         if (confirm('정말로 삭제하시겠습니까?')) {
             deleteLink.push(link_id);
 
             try {
-                const resultData = await bsApi.post("/link/deleteLink", deleteLink);
-                if (resultData.data.success === true) {
-                    router.reload();
-                    deleteLink = [];
-                }
+                // const resultData = await bsApi.post("/link/deleteLink", deleteLink);
+                // if (resultData.data.success === true) {
+                //     router.reload();
+                //     deleteLink = [];
+                // }
             } catch (e) {
                 throw new Error(e);
             }
         }
     }
 
-    const handleEditOpen = () => {
-        setEditOrder(true);
+    const onChangeSecure = (secure, id) => {
+        let changeSecure;
+
+        if (secure === 1) {
+            changeSecure = 0;
+        } else {
+            changeSecure = 1;
+        }
+
+        setSecureList({
+            ...secureList,
+            [id]: changeSecure
+        });
     }
+
+    useEffect(() => {
+        console.info('보자보자 ::: ', secureList);
+    }, [secureList]);
+
+
+    const handleEditOpen = () => setEditOrder(true);
     const handleEditCancel = () => {
         setLinkList(copyLinkList);
         setEditOrder(false);
@@ -80,9 +103,9 @@ const LinkBinder = ({linkData}) => {
         } catch (e) {
             throw new Error(e);
         }
+        setCopyLinkList(linkList);
         setEditOrder(false);
     }
-
 
     return (
         <LinkBinderPresentation
@@ -96,16 +119,19 @@ const LinkBinder = ({linkData}) => {
             handleEditOpen={handleEditOpen}
             handleEditCancel={handleEditCancel}
             handleEditComplete={handleEditComplete}
+            onChangeSecure={onChangeSecure}
         />
     );
 }
 
 LinkBinder.getInitialProps = async (ctx) => {
-    const res = await axios.get('http://localhost:4000/linkbinder');
+
+    const res = await axios.get(`${serverProtocol}${serverURL}/linkbinder`);
     const linkData = res.data;
 
+
     return {
-        linkData
+        linkData,
     }
 };
 

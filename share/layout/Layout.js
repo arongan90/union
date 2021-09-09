@@ -31,6 +31,7 @@ const ToolBox = styled.div`
 const LogoBox = styled.div`
   width: 100px;
   height: 30px;
+  cursor: pointer;
 `;
 const LogoImage = styled.img`
   width: 100%;
@@ -60,8 +61,6 @@ const Layout = ({ children }) => {
         }
         setDrawerOpen(true);
     };
-
-    console.info(corpInfo);
 
     return (
         <>

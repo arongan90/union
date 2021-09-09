@@ -13,6 +13,7 @@ const Videoembed = ({ videoList }) => {
     const [editOrder, setEditOrder] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [linkIndex, setLinkIndex] = useState([]);
+    const [secureList, setSecureList] = useState();
     const [{ subject, explain, videoUrl}, onChange, onReset] = useInput({
         subject: '',
         explain: '',
@@ -62,7 +63,6 @@ const Videoembed = ({ videoList }) => {
     const handleEditOrder = () => setEditOrder(!editOrder);
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
-    const goBack = () => router.back();
 
     const onVideoUpload = () => {
         if (subject === '') {
@@ -76,6 +76,23 @@ const Videoembed = ({ videoList }) => {
         }
     }
 
+    const onChangeSecure = (secure, id) => {
+        let changeSecure;
+
+        if (secure === 1) {
+            changeSecure = 0;
+        } else {
+            changeSecure = 1;
+        }
+
+        setSecureList({
+            ...secureList,
+            [id]: changeSecure
+        });
+
+        console.info(secureList);
+    }
+
     return (
         <>
             <VideoEmbedPresentation
@@ -86,7 +103,6 @@ const Videoembed = ({ videoList }) => {
                 updateOrder={updateOrder}
                 deleteCard={deleteCard}
                 handleEditOrder={handleEditOrder}
-                goBack={goBack}
                 openModal={openModal}
                 handleOpenModal={handleOpenModal}
                 handleCloseModal={handleCloseModal}
@@ -95,6 +111,7 @@ const Videoembed = ({ videoList }) => {
                 videoUrl={videoUrl}
                 modalInputOnChange={onChange}
                 onVideoUpload={onVideoUpload}
+                onChangeSecure={onChangeSecure}
             />
         </>
     )

@@ -10,6 +10,7 @@ import AddVideoEmbedModal from "../../share/modal/AddVideoEmbedModal";
 
 const Wrapper = styled.div`
   width: 100%;
+  min-height: calc(100vh - 60px);
   padding-top: 16px;
   background: ${colors.tabMenu};
 `;
@@ -45,11 +46,6 @@ const NonePost = styled.div`
   font-weight: bold;
   background: #fff;
 `;
-const ButtonGroup = styled.div`
-  max-width: 500px;
-  margin: 30px auto 0;
-`;
-
 
 const VideoEmbedPresentation = ({
                                     videoList,
@@ -57,25 +53,32 @@ const VideoEmbedPresentation = ({
                                     deleteCard,
                                     onSortEnd,
                                     userInfo,
-                                    updateOrder,
                                     handleEditOrder,
                                     openModal,
                                     handleOpenModal,
                                     handleCloseModal,
-                                    goBack,
                                     subject,
                                     explain,
                                     videoUrl,
                                     modalInputOnChange,
-                                    onVideoUpload
+                                    onVideoUpload,
+                                    onChangeSecure
                                 }) => {
     return (
         <Wrapper>
             <ContentTitle
-                height="80px"
+                height="150px"
                 padding="20px 30px"
                 beforePosition
-            >동영상 임베드</ContentTitle>
+            >동영상 임베드
+                <LongButton
+                    fontColor={colors.whiteColor}
+                    bgColor={colors.deepDarkBlue}
+                    marginTop={30}
+                    onClick={handleOpenModal}
+                >영상등록하기 +
+                </LongButton>
+            </ContentTitle>
             <ContentBox>
                 <ContentTop>
                     <SubTitle>영상링크를 등록하시면 메인화면에 자동으로 보여집니다.</SubTitle>
@@ -87,7 +90,17 @@ const VideoEmbedPresentation = ({
                         editOrder={editOrder}
                         handleEditOrder={handleEditOrder}
                     >
-                        {editOrder ? '순서 저장' : '순서 변경'}
+                       순서 변경
+                    </OrderButton>
+                    <OrderButton
+                        width={95}
+                        height={30}
+                        bgColor={colors.deepDarkGray}
+                        fontColor={colors.whiteColor}
+                        editOrder={editOrder}
+                        handleEditOrder={handleEditOrder}
+                    >
+                        순서 저장
                     </OrderButton>
                 </ContentTop>
                 <SortableBox>
@@ -98,6 +111,7 @@ const VideoEmbedPresentation = ({
                             deleteCard={deleteCard}
                             onSortEnd={onSortEnd}
                             userInfo={userInfo}
+                            onChangeSecure={onChangeSecure}
                             videoEmbed
                         />
                         :
@@ -105,27 +119,7 @@ const VideoEmbedPresentation = ({
                     }
                 </SortableBox>
             </ContentBox>
-            <ButtonGroup>
-                <LongButton
-                    fontColor={colors.deepDarkBlue}
-                    border={`1px solid ${colors.deepDarkBlue}`}
-                    bgColor={colors.whiteColor}
-                    onClick={handleOpenModal}
-                >영상등록하기 +
-                </LongButton>
-                <LongButton
-                    fontColor={colors.whiteColor}
-                    bgColor={colors.deepDarkBlue}
-                >완료
-                </LongButton>
-                <LongButton
-                    fontColor={colors.normalGray}
-                    border={`1px solid ${colors.loginDefaultFont}`}
-                    bgColor={colors.whiteColor}
-                    onClick={goBack}
-                >취소
-                </LongButton>
-            </ButtonGroup>
+
             <Modal
                 open={openModal}
                 onClose={handleCloseModal}

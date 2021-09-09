@@ -5,6 +5,10 @@ import Sortable from "../../share/sortable/Sortable";
 import colors from "../../styles/colors";
 import plus from '/public/images/linkBinder/plus.png';
 import LongButton from "../../share/components/LongButton";
+import * as constants from "../../utils/constants";
+
+const serverProtocol = constants.config.chatServer.PROTOCOL;
+const serverURL = constants.config.chatServer.URL;
 
 const ContentBox = styled.div`
   max-width: 530px;
@@ -73,7 +77,6 @@ const ToolTip = styled.span`
 `;
 const ToolTipBox = styled.div`
   width: 220px;
-  height: 90px;
   font-size: 12px;
   color: ${colors.lightBlack};
   border-radius: 5px;
@@ -102,7 +105,8 @@ function LinkContents({
                           deleteCard,
                           handleEditOpen,
                           handleEditCancel,
-                          handleEditComplete
+                          handleEditComplete,
+                          onChangeSecure,
                       }) {
     return (
         <ContentBox>
@@ -114,7 +118,7 @@ function LinkContents({
                     marginBottom={40}
                     costumeBgColor="linear-gradient(94.85deg, #2054A5 -10.42%, #1B3A6A 94.56%)"
                     fontColor={colors.whiteColor}
-                    onClick={() => router.push(`/${userInfo.corp_name}/linkbinder/addlink`)}
+                    onClick={() => router.push(`/linkbinder/${userInfo.corp_name}/addlink`)}
                 >
                     <IconSvg src={plus}/>포스트 추가하기
                 </LongButton>
@@ -125,7 +129,8 @@ function LinkContents({
                             <BsFillQuestionCircleFill/>
                             <ToolTipBox>
                                 수정하기를 클릭 후 링크를 누르시면 수정페이지로 이동됩니다.<br/>
-                                오른쪽 위,아래 아이콘을 드래그하시면 순서가 변경됩니다.
+                                오른쪽 위,아래 아이콘을 드래그하시면 순서가 변경됩니다.<br/>
+                                등록한 링크는 최대 10개까지 노출됩니다.
                             </ToolTipBox>
                         </ToolTip>
                     </SubText>
@@ -184,6 +189,7 @@ function LinkContents({
                         deleteCard={deleteCard}
                         onSortEnd={onSortEnd}
                         userInfo={userInfo}
+                        onChangeSecure={onChangeSecure}
                         linkBinder
                     />
                     :

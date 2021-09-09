@@ -24,6 +24,7 @@ const LinkBinderPresentation = ({
                                     handleEditOpen,
                                     handleEditCancel,
                                     handleEditComplete,
+                                    onChangeSecure,
                                 }) => {
     return (
         <Wrapper>
@@ -40,6 +41,7 @@ const LinkBinderPresentation = ({
                 handleEditOpen={handleEditOpen}
                 handleEditCancel={handleEditCancel}
                 handleEditComplete={handleEditComplete}
+                onChangeSecure={onChangeSecure}
             />
 
         </Wrapper>

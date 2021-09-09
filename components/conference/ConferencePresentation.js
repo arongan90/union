@@ -86,6 +86,7 @@ const ConferencePresentation = () => {
             <Head>
                 <script async src="https://meet.jit.si/external_api.js"></script>
             </Head>
+
             <Wrapper>
                 <ScreenBox chatDrawer={chatDrawer}>
                     {!chatDrawer &&

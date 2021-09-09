@@ -67,7 +67,6 @@ const SettingMainPresentation = ({
                                      introduction,
                                      onIntroductionChange,
                                      handleMainSettingComplete,
-                                     goBack,
                                  }) => {
     return (
         <Wrapper>
@@ -110,13 +109,7 @@ const SettingMainPresentation = ({
                     fontColor={colors.whiteColor}
                     bgColor={colors.deepDarkBlue}
                     onClick={handleMainSettingComplete}
-                >완 료</LongButton>
-                <LongButton
-                    fontColor={colors.loginDefaultFont}
-                    border={`1px solid ${colors.footerText}`}
-                    bgColor={colors.whiteColor}
-                    onClick={goBack}
-                >취 소</LongButton>
+                >저 장</LongButton>
             </ButtonGroup>
 
             <Modal

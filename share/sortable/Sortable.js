@@ -100,9 +100,6 @@ const OnOff = styled.div`
   line-height: 1.8;
   border-radius: 11px;
   color: ${colors.whiteColor};
-  position: absolute;
-  top: -5px;
-  right: -35px;
   background: ${props => props.secure ? '#8DC89D' : '#838081'}
 `;
 const RightBox = styled.div`
@@ -129,7 +126,7 @@ const VideoTitleBox = styled.div`
 
 const DragHandle = SortableHandle(() => <SortIconImage src={sortSvg}/>);
 const SortableItem = SortableElement((props) => {
-    const { list, sort, deleteCard, corpName, userInfo, router, linkBinder } = props;
+    const { list, sort, deleteCard, corpName, userInfo, router, linkBinder, onChangeSecure, linkSecure } = props;
 
     return (
         <SortableBox>
@@ -138,15 +135,15 @@ const SortableItem = SortableElement((props) => {
                 {/*<EmbedImage src={`${serverProtocol}/${serverURL}/${list.image_path}`} alt="Image" />*/}
             </ImageBox>
 
+            <OnOff secure={list.secure} onClick={() => onChangeSecure(list.secure, list.id)} linkSecure={linkSecure}>
+                {list.secure ? 'On' : 'Off'}
+            </OnOff>
             {linkBinder ?
-                <Link href={sort ? `/${corpName}/linkbinder/addlink/${list.id}` : `${list.address}`}>
+                <Link href={sort ? `/linkbinder/${corpName}/addlink/${list.id}` : `${list.address}`}>
                     <a target={!sort ? "_blank" : null} style={{width: '50%'}}>
                         <LinkTitleBox>
                             <LinkTitle>
                                 {list.title}
-                                <OnOff secure={list.secure}>
-                                    {list.secure ? 'On' : 'Off'}
-                                </OnOff>
                             </LinkTitle>
                             <ViewCountBox>
                                 <ViewCountImage src={viewIcon}/>
@@ -185,7 +182,7 @@ const SortableItem = SortableElement((props) => {
     )
 });
 
-const SortableContainerBox = SortableContainer(({itemList, sort, deleteCard, corpName, userInfo, router, linkBinder}) => {
+const SortableContainerBox = SortableContainer(({itemList, sort, deleteCard, corpName, userInfo, router, linkBinder, onChangeSecure}) => {
     return (
         <div>
             {itemList.map((list, index) => (
@@ -199,6 +196,7 @@ const SortableContainerBox = SortableContainer(({itemList, sort, deleteCard, cor
                     userInfo={userInfo}
                     router={router}
                     linkBinder={linkBinder}
+                    onChangeSecure={onChangeSecure}
                 />
             ))}
         </div>
@@ -206,7 +204,8 @@ const SortableContainerBox = SortableContainer(({itemList, sort, deleteCard, cor
 });
 
 const LinkSortable = (props) => {
-    const {itemList, onSortEnd, sort, deleteCard, userInfo, linkBinder} = props;
+    const {itemList, onSortEnd, sort, deleteCard, userInfo, linkBinder, onChangeSecure} = props;
+
     return (
         <SortableWrap>
             <SortableContainerBox
@@ -219,6 +218,7 @@ const LinkSortable = (props) => {
                 userInfo={userInfo}
                 router={Router}
                 linkBinder={linkBinder}
+                onChangeSecure={onChangeSecure}
             />
         </SortableWrap>
 

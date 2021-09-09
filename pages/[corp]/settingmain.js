@@ -84,8 +84,6 @@ const SettingMain = ({settingData}) => {
         console.info('완료');
     }
 
-    const goBack = () => router.back();
-
     return (
         <>
             <SettingMainPresentation
@@ -112,7 +110,6 @@ const SettingMain = ({settingData}) => {
                 onIntroductionChange={onIntroductionChange}
 
                 handleMainSettingComplete={handleMainSettingComplete}
-                goBack={goBack}
             />
         </>
     )

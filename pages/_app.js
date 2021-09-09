@@ -15,6 +15,10 @@ import {setUserInfo} from "../modules/auth";
 import {removeCookie} from "../utils/cookie";
 import axios from "axios";
 import {setCorp} from "../modules/corpInfo";
+import * as constants from "../utils/constants";
+
+const serverProtocol = constants.config.chatServer.PROTOCOL;
+const serverURL = constants.config.chatServer.URL;
 
 const ComponentWrapper = styled.div`
   padding-top: 60px;
@@ -75,8 +79,9 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     let mobile;
 
     if (!!token) await dispatch(setUserInfo(token));
-    if (!!ctx.query.corp) {
-        let res = await axios.get('http://localhost:4000/cpInfo');
+    if (!!ctx.query.corp || ctx.query.linkbinder) {
+        // let res = await axios.get(`http://localhost:4000/cpInfo`);
+        let res = await axios.get(`${serverProtocol}${serverURL}/cpInfo`);
         corpInfo = res.data;
         dispatch(setCorp(corpInfo));
     }

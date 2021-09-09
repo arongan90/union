@@ -13,6 +13,10 @@ const Button = styled.button`
   font-weight: ${({fontWeight}) => fontWeight ? fontWeight : 500};
   border: ${({border}) => border ? border : 'none'};
 
+  ${({marginTop}) => marginTop && css`
+    margin-top: ${marginTop}px;
+  `}
+
   ${({marginBottom}) => marginBottom && css`
     margin-bottom: ${marginBottom}px;
   `}
@@ -50,7 +54,8 @@ const LongButton = ({
                         fontWeight,
                         onClick,
                         costumeBgColor,
-                        marginBottom
+                        marginBottom,
+                        marginTop
                     }) => {
     return (
         <Button
@@ -65,6 +70,7 @@ const LongButton = ({
             onClick={onClick}
             costumeBgColor={costumeBgColor}
             marginBottom={marginBottom}
+            marginTop={marginTop}
         >
             {children}
         </Button>

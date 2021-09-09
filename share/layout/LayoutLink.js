@@ -152,7 +152,7 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo }) => {
                         </a>
                     </Link>
 
-                    <Link href={`/${corpName}/linkbinder/${corpName}`}>
+                    <Link href={`/linkbinder/${corpName}`}>
                         <a>
                             <DrawerLinkBox button>
                                 <ListItemIcon>
