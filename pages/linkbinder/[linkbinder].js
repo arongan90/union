@@ -16,16 +16,26 @@ const LinkBinder = ({linkData, corpName}) => {
     const [linkList, setLinkList] = useState(linkData);
     const [editOrder, setEditOrder] = useState(false);
     const [linkIndex, setLinkIndex] = useState([]);
-    const [secureList, setSecureList] = useState();
+    const [secureValue, setSecureValue] = useState(new Set());
     const [copyLinkList, setCopyLinkList] = useState([]);
     const {userInfo} = useSelector(state => state.auth);
+
+    const secureSwitchHandler = (id, isChecked) => {
+        if (isChecked) {
+            secureValue.add(id);
+            setSecureValue(secureValue);
+        } else if (!isChecked && secureValue.has(id)) {
+            secureValue.delete(id);
+            setSecureValue(secureValue);
+        }
+        console.info(':!!!!!', secureValue);
+    }
 
     let deleteLink = [];
 
     useEffect(() => {
         setCopyLinkList(linkList);
 
-        return () => setSecureList(undefined);
     }, []);
 
     const goPage = async (value) => {
@@ -68,27 +78,12 @@ const LinkBinder = ({linkData, corpName}) => {
         }
     }
 
-    const onChangeSecure = (secure, id) => {
-        let changeSecure;
 
-        if (secure === 1) {
-            changeSecure = 0;
-        } else {
-            changeSecure = 1;
-        }
 
-        setSecureList({
-            ...secureList,
-            [id]: changeSecure
-        });
+
+    const handleEditOpen = () => {
+        setEditOrder(true);
     }
-
-    useEffect(() => {
-        console.info('보자보자 ::: ', secureList);
-    }, [secureList]);
-
-
-    const handleEditOpen = () => setEditOrder(true);
     const handleEditCancel = () => {
         setLinkList(copyLinkList);
         setEditOrder(false);
@@ -119,7 +114,7 @@ const LinkBinder = ({linkData, corpName}) => {
             handleEditOpen={handleEditOpen}
             handleEditCancel={handleEditCancel}
             handleEditComplete={handleEditComplete}
-            onChangeSecure={onChangeSecure}
+            secureSwitchHandler={secureSwitchHandler}
         />
     );
 }

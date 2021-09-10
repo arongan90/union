@@ -6,9 +6,15 @@ import {ServerStyleSheet, createGlobalStyle} from 'styled-components'
 const GlobalStyles = createGlobalStyle`
   html, body {
     height: 100%;
-    overflow: auto;
     margin: 0 !important;
     padding: 0;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   button {

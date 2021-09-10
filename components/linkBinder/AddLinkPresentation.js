@@ -9,10 +9,9 @@ import selectArrowImage from "/public/images/share/selectArrow.svg";
 import {darken, lighten} from "polished";
 import ContentTitle from "../../share/components/ContentTitle";
 
-
 const Wrapper = styled.div`
   width: 100%;
-  padding-top: 16px;
+  padding: 16px 0 50px;
   background: ${colors.tabMenu};
 `;
 const UploadBox = styled.div`

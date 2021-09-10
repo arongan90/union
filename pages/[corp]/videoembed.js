@@ -6,6 +6,11 @@ import {useSelector} from "react-redux";
 import arrayMove from "array-move";
 import {useRouter} from "next/router";
 import useInput from "../../hooks/useInput";
+import * as constants from "../../utils/constants";
+
+const serverProtocol = constants.config.chatServer.PROTOCOL;
+const serverURL = constants.config.chatServer.URL;
+
 
 const Videoembed = ({ videoList }) => {
     const router = useRouter();
@@ -120,7 +125,7 @@ const Videoembed = ({ videoList }) => {
 Videoembed.getInitialProps = async (ctx) => {
     initialize(ctx);
 
-    const res = await axios.get(`http://localhost:4000/videoLink`);
+    const res = await axios.get(`${serverProtocol}${serverURL}/videoLink`);
 
     return {
         videoList: res.data,

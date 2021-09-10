@@ -6,6 +6,7 @@ import colors from "../../styles/colors";
 import plus from '/public/images/linkBinder/plus.png';
 import LongButton from "../../share/components/LongButton";
 import * as constants from "../../utils/constants";
+import OrderButton from "../../share/components/OrderButton";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
@@ -17,6 +18,14 @@ const ContentBox = styled.div`
   padding: 24px 16px 30px;
   text-align: left;
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  
+  
 `;
 const Title = styled.div`
   font-size: 16px;
@@ -34,22 +43,6 @@ const ButtonGroup = styled.div`
   right: 0;
   top: -5px;
 `;
-const SmallButton = styled.button`
-  width: ${({width}) => width};
-  height: ${({height}) => height}px;
-  background: ${props => props.editOrder ? colors.deepDarkGray : props.bgColor};
-  border-radius: 5px;
-  color: ${props => props.editOrder ? colors.whiteColor : props.color};
-  font-size: 14px;
-  font-weight: ${props => props.editOrder ? 'bold' : props.fontWeight};
-  border: ${props => props.editOrder ? '1px solid ' + colors.deepDarkGray : 'none'};
-  cursor: pointer;
-  
-  & + & {
-    margin-left: 10px;
-  }
-`;
-
 const IconSvg = styled.img`
   margin: 0 5px;
 `;
@@ -106,8 +99,9 @@ function LinkContents({
                           handleEditOpen,
                           handleEditCancel,
                           handleEditComplete,
-                          onChangeSecure,
+                          secureSwitchHandler
                       }) {
+
     return (
         <ContentBox>
             {userInfo && userInfo.user_type === 'admin' &&
@@ -138,42 +132,37 @@ function LinkContents({
                         {editOrder
                             ?
                             <>
-                                <SmallButton
-                                    width={"100px"}
+                                <OrderButton
+                                    width={100}
                                     height={30}
-                                    color={colors.chatDefaultColor}
-                                    bgColor={colors.orangeColor}
+                                    fontColor={colors.whiteColor}
+                                    bgColor={colors.heartColor}
                                     onClick={handleEditCancel}
                                 >
                                     취 소
-                                </SmallButton>
-                                <SmallButton
-                                    width={"100px"}
+                                </OrderButton>
+                                <OrderButton
+                                    width={100}
                                     height={30}
-                                    color={colors.chatDefaultColor}
-                                    bgColor={colors.ultraLightGray}
-                                    position
+                                    fontColor={colors.whiteColor}
+                                    bgColor={colors.chatDefaultColor}
                                     editOrder={editOrder}
-                                    onClick={() => {
-                                        handleEditComplete();
-                                    }}
+                                    onClick={handleEditComplete}
                                 >
                                     수정완료
-                                </SmallButton>
+                                </OrderButton>
                             </>
-                            : <SmallButton
-                                width={"100px"}
+                            : <OrderButton
+                                width={100}
                                 height={30}
-                                color={colors.chatDefaultColor}
-                                bgColor={colors.ultraLightGray}
-                                position
+                                fontColor={colors.chatDefaultColor}
+                                bgColor={colors.whiteColor}
+                                border={`1px solid ${colors.chatDefaultColor}`}
                                 editOrder={editOrder}
-                                onClick={() => {
-                                    handleEditOpen();
-                                }}
+                                onClick={handleEditOpen}
                             >
                                 수정하기
-                            </SmallButton>
+                            </OrderButton>
                         }
                     </ButtonGroup>
                 </Title>
@@ -184,13 +173,13 @@ function LinkContents({
                 {linkList && linkList.length !== 0
                     ?
                     <Sortable
+                        linkBinder
                         itemList={linkList}
                         sort={editOrder}
                         deleteCard={deleteCard}
                         onSortEnd={onSortEnd}
                         userInfo={userInfo}
-                        onChangeSecure={onChangeSecure}
-                        linkBinder
+                        secureSwitchHandler={secureSwitchHandler}
                     />
                     :
                     <NonePost>등록된 포스트가 없습니다.</NonePost>

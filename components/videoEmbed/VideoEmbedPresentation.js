@@ -24,9 +24,8 @@ const ContentBox = styled.div`
   background: ${colors.whiteColor};
 `;
 const ContentTop = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+   margin: 10px 0 20px;
+  text-align: right;
 `;
 const SubTitle = styled.div`
   color: ${colors.deepDarkGray};
@@ -80,8 +79,8 @@ const VideoEmbedPresentation = ({
                 </LongButton>
             </ContentTitle>
             <ContentBox>
+                <SubTitle>영상링크를 등록하시면 메인화면에 자동으로 보여집니다.</SubTitle>
                 <ContentTop>
-                    <SubTitle>영상링크를 등록하시면 메인화면에 자동으로 보여집니다.</SubTitle>
                     <OrderButton
                         width={95}
                         height={30}

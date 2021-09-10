@@ -49,7 +49,7 @@ const TabMenu = styled.li`
     font-weight: 500;
   `}
 `;
-const UploadBox = styled.div`
+const UploadBox = styled.label`
   width: 100%;
   height: 100px;
   display: flex;
@@ -58,19 +58,21 @@ const UploadBox = styled.div`
   padding: 15px 30px 15px 15px;
   border-radius: 12px;
   border: 1px solid ${colors.ultraLightGray};
-  background: ${colors.borderLightGray};
+
+  ${({file}) => file && css`
+    background: ${colors.borderLightGray};
+  `};
 
   & + & {
     margin-top: 10px;
   }
 `;
-const PreviewBox = styled.label`
+const PreviewBox = styled.div`
   width: 70px;
   height: 70px;
   border-radius: 7px;
   position: relative;
   overflow: hidden;
-
   background: ${colors.borderLightGray};
   border: 1px solid lightgray;
 `;
@@ -83,12 +85,21 @@ const FileInput = styled.input`
   height: 100%;
   opacity: 0;
   position: absolute;
+  top: 0;
+  left: 0;
   cursor: pointer;
 `;
 const FileTitle = styled.div`
   width: 70%;
   font-size: 16px;
   color: ${colors.deepGray}
+`;
+const Placeholder = styled.div`
+  width: 80%;
+  height: 100%;
+  position: relative;
+  line-height: 3.6;
+  color: ${colors.inputBorder};
 `;
 const DeleteButton = styled.div`
   width: 25px;
@@ -126,18 +137,19 @@ const Button = styled.button`
   height: 50px;
   border-radius: 7px;
   font-size: 16px;
-  color: ${({ fontColor }) => fontColor};
-  
-  ${({ border }) => border && css`
+  color: ${({fontColor}) => fontColor};
+
+  ${({border}) => border && css`
     border: ${border};
   `}
-  
-  ${({ bgColor }) => bgColor && css`
+
+  ${({bgColor}) => bgColor && css`
     background: ${bgColor};
-    
+
     &:hover {
       background: ${lighten(0.1, bgColor)}
     }
+
     &:active {
       background: ${darken(0.1, bgColor)}
     }
@@ -161,6 +173,8 @@ const AddMainSettingModal = ({
                              }) => {
     const {file, previewUrl} = imageFileList;
 
+    console.info(file);
+
     return (
         <Wrapper>
             <TabMenuBox active={tabActive}>
@@ -171,29 +185,35 @@ const AddMainSettingModal = ({
                 [...Array(3)].map((num, index) => (
                     <UploadBox
                         key={index}
+                        file={file[index]}
+                        htmlFor={`file_${index}`}
                     >
                         <PreviewBox>
-                            {file[index] ?
-                                <PreviewImage
-                                    src={previewUrl[index]}
+                            {file[index] &&
+                            <PreviewImage
+                                src={previewUrl[index]}
+                            />
+                            }
+                        </PreviewBox>
+                        {file[index] ?
+                            <>
+                                <FileTitle>
+                                    {file[index].name}
+                                </FileTitle>
+                                <DeleteButton
+                                    onClick={() => handleDeleteImage(file[index])}
                                 />
-                                :
+                            </>
+                            :
+                            <Placeholder>
+                                이미지 업로드 하기
                                 <FileInput
+                                    id={`file_${index}`}
                                     type="file"
                                     accept="image/*"
                                     onChange={handleUploadImage}
                                 />
-                            }
-                        </PreviewBox>
-                        {file[index] &&
-                        <>
-                            <FileTitle>
-                                {file[index].name}
-                            </FileTitle>
-                            <DeleteButton
-                                onClick={() => handleDeleteImage(file[index])}
-                            />
-                        </>
+                            </Placeholder>
                         }
                     </UploadBox>
                 ))

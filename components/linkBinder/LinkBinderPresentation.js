@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   width: 100%;
   min-height: 100vh;
   padding-bottom: 30px;
-  background: ${colors.linkBgColor};
+  background: ${colors.tabMenu};
 `;
 
 
@@ -24,7 +24,7 @@ const LinkBinderPresentation = ({
                                     handleEditOpen,
                                     handleEditCancel,
                                     handleEditComplete,
-                                    onChangeSecure,
+                                    secureSwitchHandler,
                                 }) => {
     return (
         <Wrapper>
@@ -41,7 +41,7 @@ const LinkBinderPresentation = ({
                 handleEditOpen={handleEditOpen}
                 handleEditCancel={handleEditCancel}
                 handleEditComplete={handleEditComplete}
-                onChangeSecure={onChangeSecure}
+                secureSwitchHandler={secureSwitchHandler}
             />
 
         </Wrapper>

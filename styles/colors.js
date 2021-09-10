@@ -15,7 +15,7 @@ export default {
     deepWhite: "#F7F9FB",
     tabMenu: "#F3F5F7",
     footerBackground: "#2F2F2F",
-    linkBgColor: "#E5E5E5",
+    // linkBgColor: "#E5E5E5",
     lightSkyBlue: "#DCE4ED",
     deepDarkGray: "#555555",
 

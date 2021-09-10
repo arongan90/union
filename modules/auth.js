@@ -1,6 +1,10 @@
 import axios from "axios";
 import Router from "next/router";
 import {setCookie, removeCookie} from "../utils/cookie";
+import * as constants from "../utils/constants";
+
+const serverProtocol = constants.config.chatServer.PROTOCOL;
+const serverURL = constants.config.chatServer.URL;
 
 const IS_LOGIN = "auth/IS_LOGIN";
 const IS_LOGOUT = "auth/IS_LOGOUT";
@@ -51,7 +55,7 @@ export const setUserInfo = token => async dispatch => {
     }
 
     try {
-        let res = await axios.get('http://localhost:4000/user');
+        let res = await axios.get(`${serverProtocol}${serverURL}/user`);
         dispatch({type: SET_USER_INFO, userInfo: res.data});
     } catch (e) {
         throw new Error(e);

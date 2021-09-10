@@ -80,7 +80,6 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
 
     if (!!token) await dispatch(setUserInfo(token));
     if (!!ctx.query.corp || ctx.query.linkbinder) {
-        // let res = await axios.get(`http://localhost:4000/cpInfo`);
         let res = await axios.get(`${serverProtocol}${serverURL}/cpInfo`);
         corpInfo = res.data;
         dispatch(setCorp(corpInfo));

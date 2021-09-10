@@ -5,6 +5,10 @@ import UpdateLinkPresentation from "../../../../components/linkBinder/UpdateLink
 import {useSelector} from "react-redux";
 import initialize from "../../../../utils/initialize";
 import axios from "axios";
+import * as constants from "../../../../utils/constants";
+
+const serverProtocol = constants.config.chatServer.PROTOCOL;
+const serverURL = constants.config.chatServer.URL;
 
 const LinkId = ({ linkData }) => {
     const router = useRouter();
@@ -102,7 +106,7 @@ LinkId.getInitialProps = async (ctx) => {
     initialize(ctx);
 
     let linkId = ctx.query.linkid
-    const res = await axios.get(`http://localhost:4000/linkbinder/${linkId}`);
+    const res = await axios.get(`${serverProtocol}${serverURL}/linkbinder/${linkId}`);
 
     return {
         linkData: res.data,

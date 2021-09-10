@@ -21,7 +21,7 @@ const MemberListWrap = styled.div`
 const MemberListBox = styled.div`
   max-width: 530px;
   margin: 25px auto;
-  padding: 40px 15px 70px;
+  padding: 40px 10px 70px;
   background: #fff;
   box-shadow: 0 0 8px #E3E2E2;
 `;
