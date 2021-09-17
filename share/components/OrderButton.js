@@ -6,11 +6,10 @@ import colors from "../../styles/colors";
 const Button = styled.button`
   width: ${({width}) => width}px;
   height: ${({height}) => height}px;
-  border-radius: 5px;
+  border-radius: ${({borderRadius}) => borderRadius ? borderRadius : '5px'};
   display: inline-block;
   color: ${({fontColor}) => fontColor};
   border: ${({border}) => border ? border : 'none'};
-  font-weight: bold;
 
   ${({bgColor}) => bgColor && css`
     background: ${bgColor};
@@ -40,7 +39,7 @@ const Button = styled.button`
   }
 `;
 
-const OrderButton = ({ children, width, height, bgColor, fontColor, border, editOrder, onClick }) => {
+const OrderButton = ({ children, width, height, bgColor, fontColor, border, editOrder, borderRadius, onClick }) => {
     return (
         <Button
             width={width}
@@ -50,6 +49,7 @@ const OrderButton = ({ children, width, height, bgColor, fontColor, border, edit
             border={border}
             onClick={onClick}
             editOrder={editOrder}
+            borderRadius={borderRadius}
         >
             {children}
         </Button>

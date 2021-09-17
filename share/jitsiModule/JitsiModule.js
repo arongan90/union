@@ -1,5 +1,21 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import useJitsi from './UseJitsi';
+import styled from "styled-components";
+
+const JitsiWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+const JitsiContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  
+  display: ${({ loading }) => loading ? 'none' : 'block'};
+
+  @media screen and (max-width: 768px) {
+    
+  }
+`;
 
 const JitsiModule = ({
                          loadingComponent,
@@ -24,19 +40,15 @@ const JitsiModule = ({
     }, [error])
 
     return (
-        <div style={{ ...{ width: '100%', height: '100%' }, ...containerStyles }}>
+        <JitsiWrapper style={{...containerStyles}}>
             {error && (errorComponent || <p>{error}</p>)}
             {!error && loading && (loadingComponent || <p>Loading ...</p>)}
-            <div
+            <JitsiContainer
                 id='jitsi-container'
-                style={{ ...{
-                        display: loading ? 'none' : 'block',
-                        width: '100%',
-                        height: '100%'
-                    },
-                    ...jitsiContainerStyles }}
+                loading={loading}
+                style={{...jitsiContainerStyles}}
             />
-        </div>
+        </JitsiWrapper>
     );
 }
 

@@ -51,14 +51,14 @@ const MyApp = ({Component, pageProps, mobile, userInfo, corpInfo}) => {
                             <ComponentWrapper>
                                 <Component
                                     {...pageProps}
-                                    mobile={mobile}
+                                    isMobile={mobile}
                                     userInfo={userInfo}
                                     corpInfo={corpInfo}
                                 />
                             </ComponentWrapper>
                         </Layout>
                         :
-                        <Component {...pageProps} mobile={mobile} />
+                        <Component {...pageProps} isMobile={mobile} />
                     }
                 </CookiesProvider>
             </StylesProvider>
@@ -72,13 +72,15 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     initialize(ctx);
 
     const dispatch = ctx.store.dispatch;
-    const userInfo = ctx.store.getState().auth.userInfo;
     const token = ctx.store.getState().auth.token;
     let corpInfo;
     let pageProps;
     let mobile;
 
     if (!!token) await dispatch(setUserInfo(token));
+
+    const userInfo = ctx.store.getState().auth.userInfo;
+
     if (!!ctx.query.corp || ctx.query.linkbinder) {
         let res = await axios.get(`${serverProtocol}${serverURL}/cpInfo`);
         corpInfo = res.data;

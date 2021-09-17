@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import styled, {css} from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import colors from "../../styles/colors";
-// Image
+
+import unlockSvg from "/public/images/layout/TopUnlock.svg";
 import lockSvg from "/public/images/layout/lock.svg";
 import memberSvg from "/public/images/layout/member.svg";
 import homeSvg from "/public/images/layout/home.svg";
@@ -22,17 +23,17 @@ import {isLogout} from "../../modules/auth";
 
 const DrawerWrapper = styled.div`
   width: 250px;
+  padding-top: 30px;
 `;
 
 const DrawerBox = styled.div`
   width: 100%;
-  margin-top: 30px;
 `;
 
 const DrawerIcon = styled.img`
   ${({position}) => position && css`
     position: relative;
-    top: 16px;
+    top: -10px;
     left: 210px;
     cursor: pointer;
   `}
@@ -44,18 +45,24 @@ const DrawerLinkBox = styled(ListItem)`
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
-  ${({ boldText }) => boldText && css`
+  ${({boldText}) => boldText && css`
     color: ${colors.blackColor};
     font-weight: 700;
     cursor: Default;
   `}
 `;
+const LinkTitle = styled.div`
+  padding: 13px 0 13px 30px;
+  color: ${colors.chatDefaultColor};
+  font-size: 15px;
+  font-weight: 500;
+`;
 
-const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo }) => {
+const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo}) => {
     const dispatch = useDispatch();
     const router = useRouter();
-    const { userInfo } = useSelector(state => state.auth);
-    const { corp_name } = corpInfo;
+    const {userInfo, token} = useSelector(state => state.auth);
+    const {corp_name} = corpInfo;
     let corpName = corp_name;
 
     const onLogout = () => {
@@ -64,20 +71,26 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo }) => {
     };
 
     return (
-        <DrawerWrapper>
-            <DrawerIcon src={closeSvg} position onClick={() => setDrawerOpen(false)}/>
-            <DrawerBox
-                onClick={() => {
-                    toggleDrawer();
-                    setDrawerOpen(false);
-                }}
-                onKeyDown={() => toggleDrawer()}
-            >
-                <List>
-                    { !!userInfo ?
+        <>
+
+            <DrawerWrapper>
+                <DrawerIcon src={closeSvg} position onClick={() => setDrawerOpen(false)}/>
+                <DrawerBox
+                    onClick={() => {
+                        toggleDrawer();
+                        setDrawerOpen(false);
+                    }}
+                    onKeyDown={() => toggleDrawer()}
+                >
+                    {/*<List>*/}
+                    {!!userInfo ?
                         <DrawerLinkBox button onClick={onLogout}>
                             <ListItemIcon>
-                                <DrawerIcon src={lockSvg}/>
+                                {!!token ?
+                                    <DrawerIcon src={lockSvg}/>
+                                    :
+                                    <DrawerIcon src={unlockSvg}/>
+                                }
                             </ListItemIcon>
                             로그아웃
                         </DrawerLinkBox>
@@ -103,11 +116,18 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo }) => {
                         </a>
                     </Link>
                     }
+                </DrawerBox>
 
-                    <DrawerLinkBox button>
-                        <b>Menu</b>
-                    </DrawerLinkBox>
-
+                <LinkTitle>
+                    <b>Menu</b>
+                </LinkTitle>
+                <DrawerBox
+                    onClick={() => {
+                        toggleDrawer();
+                        setDrawerOpen(false);
+                    }}
+                    onKeyDown={() => toggleDrawer()}
+                >
                     <Link href={`/${corpName}`}>
                         <a>
                             <DrawerLinkBox button>
@@ -162,10 +182,20 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo }) => {
                             </DrawerLinkBox>
                         </a>
                     </Link>
-
-                    {!!userInfo
-                        ? userInfo.user_type === 'admin' &&
-                        <>
+                </DrawerBox>
+                {!!userInfo
+                    ? userInfo.user_type === 'admin' &&
+                    <>
+                        <LinkTitle>
+                            <b>Setting</b>
+                        </LinkTitle>
+                        <DrawerBox
+                            onClick={() => {
+                                toggleDrawer();
+                                setDrawerOpen(false);
+                            }}
+                            onKeyDown={() => toggleDrawer()}
+                        >
                             <Link href={`/${corpName}/videoembed`}>
                                 <a>
                                     <DrawerLinkBox button>
@@ -196,12 +226,13 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo }) => {
                                     </DrawerLinkBox>
                                 </a>
                             </Link>
-                        </>
-                        : null
-                    }
-                </List>
-            </DrawerBox>
-        </DrawerWrapper>
+                        </DrawerBox>
+                    </>
+                    : null
+                }
+                {/*</List>*/}
+            </DrawerWrapper>
+        </>
     )
 }
 

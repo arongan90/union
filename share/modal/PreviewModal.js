@@ -19,7 +19,7 @@ const ModalBox = styled.div`
   height: 650px;
   padding: 10px;
   background: white;
-  margin: 15% auto;
+  margin: 50px auto;
 `;
 
 const IframeBox = styled.iframe`
@@ -49,7 +49,9 @@ const PreviewModal = ({ imagePath, youtubeId, videoModal, handleClose }) => {
                 />
                 }
                 {!!imagePath &&
-                    <ImageBox alt={"이미지"} />
+                    <ImageBox
+                        src={`http://172.16.1.192:3000` + imagePath}
+                        alt={"이미지"} />
                 // <ImageBox src={`${serverProtocol}${serverURL}` + imagePath} />
                 }
 

@@ -1,8 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled, {css} from "styled-components";
 import colors from "../../styles/colors";
 import {darken, lighten} from "polished";
-import {dark} from "@material-ui/core/styles/createPalette";
 
 const Wrapper = styled.div`
   max-width: 530px;
@@ -49,7 +48,7 @@ const TabMenu = styled.li`
     font-weight: 500;
   `}
 `;
-const UploadBox = styled.label`
+const UploadBox = styled.div`
   width: 100%;
   height: 100px;
   display: flex;
@@ -161,9 +160,10 @@ const AddMainSettingModal = ({
                                  tabActive,
                                  onImageTab,
                                  onVideoTab,
-                                 imageFileList,
+                                 fileList,
                                  handleUploadImage,
                                  handleDeleteImage,
+                                 handleDeleteUrl,
                                  videoUrl_1,
                                  videoUrl_2,
                                  videoUrl_3,
@@ -171,9 +171,16 @@ const AddMainSettingModal = ({
                                  handleImageUpload,
                                  handleVideoUpload,
                              }) => {
-    const {file, previewUrl} = imageFileList;
 
-    console.info(file);
+    const {file, previewUrl, videoList} = fileList;
+
+    useEffect(() => {
+        window.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") handleAddLinkClose();
+        });
+    }, []);
+
+    // console.info('프리뷰 유알엘 : ', videoList);
 
     return (
         <Wrapper>
@@ -182,41 +189,35 @@ const AddMainSettingModal = ({
                 <TabMenu active={tabActive.video} onClick={onVideoTab}>동영상 추가</TabMenu>
             </TabMenuBox>
             {tabActive.image ?
-                [...Array(3)].map((num, index) => (
-                    <UploadBox
-                        key={index}
-                        file={file[index]}
-                        htmlFor={`file_${index}`}
-                    >
-                        <PreviewBox>
-                            {file[index] &&
-                            <PreviewImage
-                                src={previewUrl[index]}
-                            />
+                [...Array(3)].map((num, index) => {
+                    return (
+                        <UploadBox
+                            key={index}
+                            file={file[index]}
+                        >
+                            <PreviewBox>
+                                {file[index] && <PreviewImage src={previewUrl[index]}/>}
+                            </PreviewBox>
+                            {file[index] ?
+                                <>
+                                    <FileTitle>
+                                        {file[index].name}
+                                    </FileTitle>
+                                    <DeleteButton onClick={() => handleDeleteImage(file[index])}/>
+                                </>
+                                :
+                                <Placeholder>
+                                    이미지 업로드 하기
+                                    <FileInput
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleUploadImage}
+                                    />
+                                </Placeholder>
                             }
-                        </PreviewBox>
-                        {file[index] ?
-                            <>
-                                <FileTitle>
-                                    {file[index].name}
-                                </FileTitle>
-                                <DeleteButton
-                                    onClick={() => handleDeleteImage(file[index])}
-                                />
-                            </>
-                            :
-                            <Placeholder>
-                                이미지 업로드 하기
-                                <FileInput
-                                    id={`file_${index}`}
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleUploadImage}
-                                />
-                            </Placeholder>
-                        }
-                    </UploadBox>
-                ))
+                        </UploadBox>
+                    )
+                })
                 :
                 <>
                     <UploadBox>
@@ -226,7 +227,9 @@ const AddMainSettingModal = ({
                             value={videoUrl_1}
                             onChange={onVideoUrlChange}
                         />
-                        <DeleteButton/>
+                        <DeleteButton
+                            onClick={() => handleDeleteUrl(0)}
+                        />
                     </UploadBox>
                     <UploadBox>
                         <UrlInput
@@ -235,7 +238,9 @@ const AddMainSettingModal = ({
                             value={videoUrl_2}
                             onChange={onVideoUrlChange}
                         />
-                        <DeleteButton/>
+                        <DeleteButton
+                            onClick={() => handleDeleteUrl(1)}
+                        />
                     </UploadBox>
                     <UploadBox>
                         <UrlInput
@@ -244,7 +249,9 @@ const AddMainSettingModal = ({
                             value={videoUrl_3}
                             onChange={onVideoUrlChange}
                         />
-                        <DeleteButton/>
+                        <DeleteButton
+                            onClick={() => handleDeleteUrl(2)}
+                        />
                     </UploadBox>
                 </>
             }

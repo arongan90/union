@@ -4,7 +4,6 @@ import LayoutLink from "./LayoutLink";
 import {useDispatch, useSelector} from "react-redux";
 import { Drawer } from "@material-ui/core";
 import {useRouter} from "next/router";
-// Image
 import hamburgerImage from "/public/images/layout/TopHamburger.svg";
 import topLockImage from "/public/images/layout/TopLock.svg";
 import topUnlockImage from "/public/images/layout/TopUnlock.svg";
@@ -74,12 +73,12 @@ const Layout = ({ children }) => {
                 <ToolBox justifyContent={"flex-end"}>
                     {!!token
                         ?
-                        <NavIconBox onClick={() => dispatch(isLogout())}>
-                            <NavIconImg src={topUnlockImage}/>
-                        </NavIconBox>
-                        :
                         <NavIconBox onClick={() => router.push(`/login`)}>
                             <NavIconImg src={topLockImage}/>
+                        </NavIconBox>
+                        :
+                        <NavIconBox onClick={() => dispatch(isLogout())}>
+                            <NavIconImg src={topUnlockImage}/>
                         </NavIconBox>
                     }
 

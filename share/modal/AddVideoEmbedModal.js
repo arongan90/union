@@ -2,6 +2,9 @@ import React from 'react';
 import styled from "styled-components";
 import colors from "../../styles/colors";
 import LongButton from "../components/LongButton";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Radio from "@material-ui/core/Radio";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const ModalWrapper = styled.div`
   width: 500px;
@@ -49,15 +52,47 @@ const Inputs = styled.input`
   border: none;
   outline: none;
 `;
+const RadioBox = styled(RadioGroup)`
+  width: 55%;
+  margin: 20px 10px 30px;
+
+  .MuiRadio-root {
+    color: ${colors.inputBorder};
+  }
+
+  .MuiFormGroup-root {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .MuiRadio-colorSecondary.Mui-checked {
+    color: ${colors.deepDarkBlue};
+  }
+
+  .MuiTypography-body1 {
+    font-size: 14px;
+  }
+`;
 const ButtonGroup = styled.div`
-  margin-top: 50px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 `;
 
+const AddVideoEmbedModal = ({
+                                subject,
+                                explain,
+                                videoUrl,
+                                handleCloseModal,
+                                modalInputOnChange,
+                                onVideoUpload,
+                                handleRadioChange,
+                                isOpen,
+                                editOrder,
+                                editData
+                            }) => {
 
-const AddVideoEmbedModal = ({subject, explain, videoUrl, handleCloseModal, modalInputOnChange, onVideoUpload}) => {
+    console.info(editData);
     return (
         <ModalWrapper>
             <Title>동영상 링크 추가</Title>
@@ -66,7 +101,7 @@ const AddVideoEmbedModal = ({subject, explain, videoUrl, handleCloseModal, modal
                 <Inputs
                     type="text"
                     name="subject"
-                    value={subject}
+                    value={editOrder ? editData.title : subject}
                     onChange={modalInputOnChange}
                     placeholder="제목을 입력해주세요."
                 />
@@ -76,7 +111,7 @@ const AddVideoEmbedModal = ({subject, explain, videoUrl, handleCloseModal, modal
                 <Inputs
                     type="text"
                     name="explain"
-                    value={explain}
+                    value={editOrder ? editData.title_sub : explain}
                     onChange={modalInputOnChange}
                     placeholder="설명을 간단히 입력해주세요."
                 />
@@ -86,11 +121,17 @@ const AddVideoEmbedModal = ({subject, explain, videoUrl, handleCloseModal, modal
                 <Inputs
                     type="text"
                     name="videoUrl"
-                    value={videoUrl}
+                    value={editOrder ? editData.link : videoUrl}
                     onChange={modalInputOnChange}
                     placeholder="동영상 url주소를 입력해주세요."
                 />
             </InputBox>
+            <RadioBox>
+                <RadioGroup onChange={handleRadioChange} value={editOrder ? editData.secure : isOpen} name="isOpen">
+                    <FormControlLabel value={1} control={<Radio/>} label="공개(ON)"/>
+                    <FormControlLabel value={0} control={<Radio/>} label="비공개(OFF)"/>
+                </RadioGroup>
+            </RadioBox>
             <ButtonGroup>
                 <LongButton
                     width="48%"

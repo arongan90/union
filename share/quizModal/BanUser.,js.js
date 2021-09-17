@@ -11,7 +11,7 @@ import {darken, lighten} from "polished";
 import {banUser} from "../../modules/chat";
 
 const Wrapper = styled.div`
-  width: 400px;
+  max-width: 400px;
   height: 380px;
   border-radius: 10px;
   padding: 20px;

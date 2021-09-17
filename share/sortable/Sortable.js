@@ -5,8 +5,10 @@ import Link from 'next/link';
 import Router from "next/router";
 import * as constants from "../../utils/Constants";
 import colors from "../../styles/colors";
-import Switch from '@material-ui/core/Switch';
-// Image
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import deleteSvg from "/public/images/share/delete.svg";
 import sortSvg from "/public/images/share/sort.svg";
 import viewIcon from "/public/images/share/viewIcon.png";
@@ -25,8 +27,8 @@ const SortableBox = styled.div`
   border-radius: 5px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 10px 5px;
+  justify-content: center;
+  padding: 10px;
   position: relative;
   background: ${colors.whiteColor};
   border: 1px solid ${colors.borderLightGray};
@@ -76,32 +78,44 @@ const EmbedImage = styled.img`
   object-fit: contain;
 `;
 const LinkTitleBox = styled.div`
-  width: 100%;
-  font-size: 16px;
-  color: #444444;
-  text-align: left;
-  cursor: pointer;
+  width: 70%;
+  margin: 0 10px 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 20px;
+  color: ${colors.chatDefaultColor};
 `;
 const LinkTitle = styled.div`
-  display: inline-block;
-  position: relative;
-  margin-bottom: 10px;
+  font-size: 15px;
+  color: ${colors.chatDefaultColor};
 `;
 const ViewCountBox = styled.div`
   font-size: 12px;
 `;
+const VisibleIcon = styled.span`
+  font-size: 16px;
+  color: ${colors.loginDefaultFont};
+  vertical-align: middle;
+  margin-right: 10px;
+
+  ${({userType}) => userType && css`
+    &:hover {
+      color: ${colors.loginPoint};
+    }
+
+    cursor: pointer;
+  `}
+`;
 const ViewCountImage = styled.img`
   margin-right: 5px;
-`;
-const SwitchBox = styled.div`
-
 `;
 const RightBox = styled.div`
   position: relative;
 `;
 const BuyButton = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 55px;
+  height: 55px;
   border-radius: 13px;
   display: flex;
   flex-grow: 1;
@@ -115,56 +129,76 @@ const CartImage = styled.img`
   font-size: 13px;
 `;
 const VideoTitleBox = styled.div`
-  width: 50%;
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 10px 0 20px;
 `;
 
 const DragHandle = SortableHandle(() => <SortIconImage src={sortSvg}/>);
 const SortableItem = SortableElement((props) => {
-        const {list, sort, deleteCard, corpName, userInfo, router, linkBinder, secureSwitchHandler} = props;
+        const {list, sort, deleteCard, corpName, userInfo, router, linkBinder, handleUpdateOpen} = props;
 
-        const [secureChecked, setSecureChecked] = useState(false);
-
-        const checkHandler = e => {
-            setSecureChecked(e.target.value);
-
+        const [testSecure, setTestSecure] = useState(false);
+        const handleClick = () => {
+            if (testSecure) {
+                toast.info("비공개로 설정 되었습니다.");
+            } else {
+                toast.info("공개로 설정 되었습니다.");
+            }
+            setTestSecure(!testSecure);
         }
 
-
         return (
-            <SortableBox>
+            <SortableBox id={list.id}>
+                <ToastContainer autoClose={3000} />
                 <ImageBox>
-                    <EmbedImage src={`${list.image_path || 'http://img.youtube.com/vi/' + list.youtubeId + '/0.jpg'}`}
+                    <EmbedImage src={`${list.image_path ? 'http://172.16.1.192:3000' + list.image_path : 'http://img.youtube.com/vi/' + list.youtubeId + '/0.jpg'}`}
                                 alt="image"/>
                     {/*<EmbedImage src={`${serverProtocol}/${serverURL}/${list.image_path}`} alt="Image" />*/}
                 </ImageBox>
 
                 {linkBinder ?
                     <>
-                        <Link href={sort ? `/linkbinder/${corpName}/addlink/${list.id}` : `${list.address}`}>
-                            <a target={!sort ? "_blank" : null} style={{width: '30%'}}>
-                                <LinkTitleBox>
+                        <LinkTitleBox>
+                            <Link href={sort ? `/linkbinder/${corpName}/addlink/${list.id}` : `${list.address}`}>
+                                <a target={!sort ? "_blank" : null}>
                                     <LinkTitle>
                                         {list.title}
                                     </LinkTitle>
-                                    <ViewCountBox>
-                                        <ViewCountImage src={viewIcon}/>
-                                        {list.link_count}
-                                    </ViewCountBox>
-                                </LinkTitleBox>
-                            </a>
-                        </Link>
-                        <SwitchBox>
-                            비공개<Switch checked={secureChecked} onChange={checkHandler} name={`secure_${list.id}`}/>공개
-                        </SwitchBox>
-
+                                </a>
+                            </Link>
+                            <ViewCountBox>
+                                {userInfo && userInfo.user_type === 'admin'
+                                    ? <VisibleIcon userType={userInfo.user_type} onClick={() => handleClick(list.secure)}>
+                                        {testSecure ? <VisibilityIcon/> : <VisibilityOffIcon/>}
+                                        {/*{list.secure ? <VisibilityIcon/> : <VisibilityOffIcon/>}*/}
+                                    </VisibleIcon>
+                                    : <VisibleIcon>
+                                        <VisibilityIcon/>
+                                    </VisibleIcon>
+                                }
+                                {list.link_count}
+                            </ViewCountBox>
+                        </LinkTitleBox>
                     </>
                     :
                     <VideoTitleBox>
-                        <LinkTitleBox>
-                            <LinkTitle>
-                                {list.title}
-                            </LinkTitle>
-                        </LinkTitleBox>
+                        <LinkTitle onClick={() => sort &&  handleUpdateOpen(list.id)}>
+                            {list.title}
+                        </LinkTitle>
+                        <ViewCountBox>
+                            {userInfo && userInfo.user_type === 'admin'
+                                ? <VisibleIcon userType={userInfo.user_type} onClick={() => handleClick(list.secure)}>
+                                    {testSecure ? <VisibilityIcon/> : <VisibilityOffIcon/>}
+                                    {/*{list.secure ? <VisibilityIcon/> : <VisibilityOffIcon/>}*/}
+                                </VisibleIcon>
+                                : <VisibleIcon>
+                                    <VisibilityIcon/>
+                                </VisibleIcon>
+                            }
+                        </ViewCountBox>
                     </VideoTitleBox>
                 }
 
@@ -190,8 +224,15 @@ const SortableItem = SortableElement((props) => {
 );
 
 const SortableContainerBox = SortableContainer(({
-        itemList, sort, deleteCard, corpName, userInfo, router, linkBinder, secureSwitchHandler
-    }) => {
+                                                    itemList,
+                                                    sort,
+                                                    deleteCard,
+                                                    corpName,
+                                                    userInfo,
+                                                    router,
+                                                    linkBinder,
+                                                    handleUpdateOpen,
+                                                }) => {
         return (
             <div>
                 {itemList.map((list, index) => (
@@ -205,7 +246,7 @@ const SortableContainerBox = SortableContainer(({
                         userInfo={userInfo}
                         router={router}
                         linkBinder={linkBinder}
-                        secureSwitchHandler={secureSwitchHandler}
+                        handleUpdateOpen={handleUpdateOpen}
                     />
                 ))}
             </div>
@@ -214,7 +255,7 @@ const SortableContainerBox = SortableContainer(({
 );
 
 const LinkSortable = (props) => {
-    const {itemList, onSortEnd, sort, deleteCard, userInfo, linkBinder, secureSwitchHandler} = props;
+    const {itemList, onSortEnd, sort, deleteCard, userInfo, linkBinder, handleUpdateOpen} = props;
 
     return (
         <SortableWrap>
@@ -228,10 +269,9 @@ const LinkSortable = (props) => {
                 userInfo={userInfo}
                 router={Router}
                 linkBinder={linkBinder}
-                secureSwitchHandler={secureSwitchHandler}
+                handleUpdateOpen={handleUpdateOpen && handleUpdateOpen}
             />
         </SortableWrap>
-
     )
 }
 

@@ -4,19 +4,17 @@ const LOAD_HISTORY = "chat/LOAD_HISTORY";
 const SEND_MESSAGE = "chat/SEND_MESSAGE";
 const BAN_USER = "chat/BAN_USER";
 const SET_USER_INFO = "chat/SET_USER_INFO";
-const SET_QUIZ_END = "chat/SET_QUIZ_END";
 const SET_NOTICE = "chat/SET_NOTICE";
 const CLEAR_CHAT = "chat/CLEAR_CHAT";
 
-const writeMessage = (type, name, text, time, color) => {
-    return {
-        type: type,
-        name: name,
-        text: text,
-        time: time,
-        color: color,
-    }
-}
+const writeMessage = (type, name, text, time, color) => ({
+    type: type,
+    name: name,
+    text: text,
+    time: time,
+    color: color,
+});
+
 function* reversKeys(arr) {
     let key = arr.length - 1;
 
@@ -26,27 +24,26 @@ function* reversKeys(arr) {
     }
 }
 
-export const initSocket = socket => ({ type: INIT_SOCKET, socket });
-export const closeSocket = () => ({ type: CLOSE_SOCKET });
-export const setQuizEnd = () => ({ type: SET_QUIZ_END });
-export const setNotice = notice => ({ type: SET_NOTICE, notice });
-export const clearChat = () => ({ type: CLEAR_CHAT });
-export const banUser = user => ({ type: BAN_USER, user});
+export const initSocket = socket => ({type: INIT_SOCKET, socket});
+export const closeSocket = () => ({type: CLOSE_SOCKET});
+export const setNotice = notice => ({type: SET_NOTICE, notice});
+export const clearChat = () => ({type: CLEAR_CHAT});
+export const banUser = user => ({type: BAN_USER, user});
 export const loadHistory = historyMessages => {
     let messages = [];
-    historyMessages.map(msg => messages.concat(writeMessage("other", msg.name, msg.text, msg.time, msg.color )));
-    return { type: LOAD_HISTORY, messages };
+    historyMessages.map(msg => messages.concat(writeMessage("other", msg.name, msg.text, msg.time, msg.color)));
+    return {type: LOAD_HISTORY, messages};
 }
 export const sendMessage = msg => {
-    let message = writeMessage("me", msg.name, msg.text, + new Date, msg.color);
-    return { type: SEND_MESSAGE, message };
+    let message = writeMessage("me", msg.name, msg.text, +new Date, msg.color);
+    return {type: SEND_MESSAGE, message};
 }
 export const setUserInfo = (name, color) => {
     let info = {
         name: name,
         color: color
     }
-    return { type: SET_USER_INFO, info };
+    return {type: SET_USER_INFO, info};
 }
 
 const initialState = {
@@ -57,13 +54,6 @@ const initialState = {
     socket: undefined,
     progress: 100,
     notice: '',
-    quizStart: false,
-    quizData: {
-        quizNum: 1,
-        quizText: '1번 문제 예시',
-        q1: '1번답',
-        q2: '2번답'
-    }
 }
 
 export default function chat(state = initialState, action) {
@@ -82,12 +72,14 @@ export default function chat(state = initialState, action) {
         case LOAD_HISTORY:
             return {
                 ...state,
-                messages: state.messages.concat(action.messages)
+                messages: state.messages.concat(action.messages),
             }
         case SEND_MESSAGE:
             return {
                 ...state,
-                messages: state.messages.concat(action.message)
+                messages: state.messages.concat(action.message),
+                name: action.name,
+                color: action.color
             }
         case BAN_USER:
             let newMsg = [...state.messages];
@@ -105,11 +97,6 @@ export default function chat(state = initialState, action) {
                 ...state,
                 name: action.info.name,
                 color: action.info.color
-            }
-        case SET_QUIZ_END:
-            return {
-                ...state,
-                quizStart: false
             }
         case SET_NOTICE:
             return {

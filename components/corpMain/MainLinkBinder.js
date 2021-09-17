@@ -3,11 +3,13 @@ import styled, { css } from "styled-components";
 import cartSvg from "/public/images/home/cart.svg";
 import rightArrowSvg from "/public/images/home/rightArrow.svg";
 import Router, {useRouter} from "next/router";
-import MoreButton from ".//MoreButton";
-// import * as constants from "../../utils/Constants";
+import MoreButton from "./MoreButton";
+import colors from "../../styles/colors";
+import {useSelector} from "react-redux";
+import * as constants from "../../utils/Constants";
 
-// const serverURL = constants.config.chatServer.URL;
-// const serverProtocol = constants.config.chatServer.PROTOCOL;
+const serverURL = constants.config.chatServer.URL;
+const serverProtocol = constants.config.chatServer.PROTOCOL;
 
 const LinkBinderWrapper = styled.div`
   max-width: 530px;
@@ -17,7 +19,7 @@ const LinkBinderWrapper = styled.div`
   background: #fff;
   position: relative;
   box-sizing: border-box;
-  box-shadow: 0 0 8px #E3E2E2;
+  box-shadow: 0 0 8px ${colors.shadowColor};
   transition: 0.3s;
   border: none;
   ${props => props.moreView && css`
@@ -33,6 +35,7 @@ const TitleText = styled.div`
   margin: 0 0 24px 5px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 const LinkItemBox = styled.div`
   width: 100%;
@@ -91,30 +94,50 @@ const MoveStore = styled.span`
   cursor: pointer;
 `;
 const ArrowIcon = styled.img`
-  margin: 0 0 5px 3px;
+  margin-left: 3px;
 `;
 
-const MainLinkBinder = ({linkData, corpName}) => {
+const MainLinkBinder = ({linkBinderList, corpName}) => {
     const router = useRouter();
     const [moreView, setMoreView] = useState(false);
+    const {corp_name} = useSelector(state => state.corpInfo);
 
     const onToggleMore = useCallback(() => {
         setMoreView(prevView => !prevView);
     }, []);
 
     return (
-        <LinkBinderWrapper linkLength={linkData && linkData.length} moreView={moreView}>
+        <LinkBinderWrapper linkLength={linkBinderList && linkBinderList.length} moreView={moreView}>
             <TitleText>
                 링크바인더
                 <MoveStore
-                    onClick={() => router.push(`/${corpName}/linkbinder/${corpName}`)}
+                    onClick={() => router.push(`/linkbinder/${corp_name}`)}
                 >
-                    스토어로 이동<ArrowIcon src={rightArrowSvg} />
+                    더보기<ArrowIcon src={rightArrowSvg} />
                 </MoveStore>
             </TitleText>
 
-            {/*{!moreView
-                ? linkData.slice(0, 5).sort((a,b) => a.list_index - b.list_index).map(list => {
+            {!moreView
+                ? linkBinderList.slice(0, 5).sort((a,b) => a.list_index - b.list_index).map(list => {
+                    return (
+                        <LinkItemBox
+                            key={list.link_id}
+                            onClick={() => window.open(`${list.address}`)}
+                        >
+                            <LinkItemImgBox>
+                                <LinkItemImage
+                                    src={`http://172.16.1.192:3000` + list.image_path}
+                                    // src={`${serverProtocol}${serverURL}/` + list.image_path}
+                                />
+                            </LinkItemImgBox>
+                            <LinkItemExplain>{list.title}</LinkItemExplain>
+                            <LinkButton>
+                                <CartImage src={cartSvg}/>
+                                <BuyText>BUY</BuyText>
+                            </LinkButton>
+                        </LinkItemBox>
+                    )})
+                : linkBinderList.sort((a,b) => a.list_index - b.list_index).map(list => {
                     return (
                         <LinkItemBox
                             key={list.link_id}
@@ -130,25 +153,9 @@ const MainLinkBinder = ({linkData, corpName}) => {
                             </LinkButton>
                         </LinkItemBox>
                     )})
-                : linkData.sort((a,b) => a.list_index - b.list_index).map(list => {
-                    return (
-                        <LinkItemBox
-                            key={list.link_id}
-                            onClick={() => window.open(`${list.address}`)}
-                        >
-                            <LinkItemImgBox>
-                                <LinkItemImage src={`${serverProtocol}${serverURL}/` + list.image_path} />
-                            </LinkItemImgBox>
-                            <LinkItemExplain>{list.title}</LinkItemExplain>
-                            <LinkButton>
-                                <CartImage src={cartSvg}/>
-                                <BuyText>BUY</BuyText>
-                            </LinkButton>
-                        </LinkItemBox>
-                    )})
-            }*/}
+            }
 
-            {(linkData && linkData.length) > 5 &&
+            {(linkBinderList && linkBinderList.length) > 5 &&
             <MoreButton
                 onToggle={onToggleMore}
                 moreView={moreView}

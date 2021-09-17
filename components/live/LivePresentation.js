@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import styled, { css } from "styled-components";
+import styled, {css} from "styled-components";
 import {Drawer} from "@material-ui/core";
 import {ChevronLeft, ChevronRight} from '@material-ui/icons';
 import {lighten, darken} from "polished";
 import colors from "../../styles/colors";
 import Chat from "../../share/chat/Chat";
 import QuizModal from "../../share/quizModal";
+import {useSelector} from "react-redux";
 // import ResizePanel from "react-resize-panel";
 
 const Wrapper = styled.div`
@@ -23,6 +24,11 @@ const ScreenBox = styled.div`
   position: relative;
   transition: 0.18s;
   background: ${colors.lightBlack};
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: calc(100vh - 55vh - 60px);
+  }
 `;
 const ScreenIframe = styled.iframe`
   width: 100%;
@@ -31,6 +37,20 @@ const ScreenIframe = styled.iframe`
 const ChatBox = styled(Drawer)`
   width: 400px;
   height: 100%;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
+const MobileChatBox = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: calc(100vh - 45vh);
+    position: relative;
+    display: block;
+  }
 `;
 const ChatTitle = styled.div`
   width: 100%;
@@ -79,7 +99,7 @@ const LivePresentation = () => {
                 <ToggleChat onClick={openChat} chatDrawer={!chatDrawer}>
                     <ChevronLeft/>
                 </ToggleChat>}
-                <QuizModal />
+                <QuizModal/>
                 <ScreenIframe
                     src={`https://vimeo.com/event/605039/embed?autoplay=1&title=0&byline=0&portrait=0&playsinline=1`}
                     frameBorder="0"
@@ -87,6 +107,8 @@ const LivePresentation = () => {
                     allowFullScreen
                 />
             </ScreenBox>
+
+            {/* Web */}
             <ChatBox anchor="right" open={chatDrawer} variant="persistent">
                 <ChatTitle>
                     <ToggleChat onClick={closeChat}>
@@ -96,6 +118,11 @@ const LivePresentation = () => {
                 </ChatTitle>
                 <Chat height={"calc(100vh - 110px)"}/>
             </ChatBox>
+
+            {/* Mobile */}
+            <MobileChatBox>
+                <Chat height={"100%"}/>
+            </MobileChatBox>
         </Wrapper>
     )
 }

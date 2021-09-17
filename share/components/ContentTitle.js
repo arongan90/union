@@ -10,7 +10,7 @@ const ContentTitleBox = styled.div`
   border-radius: 12px;
   position: relative;
   margin: 0 auto 8px;
-  box-shadow: 0 0 8px ${colors.lightShadowColor};
+  //box-shadow: 0 0 8px ${colors.lightShadowColor};
   background: ${colors.whiteColor};
   
   ${({ height }) => height && css`

@@ -56,7 +56,8 @@
       "nickname": "sky",
       "phone_no": "010-0000-1111",
       "recommender": "박동한",
-      "reg_dt": "2021.03.11"
+      "reg_dt": "21.03.11",
+      "approval": true
     },
     {
       "id": 2,
@@ -64,7 +65,8 @@
       "nickname": "celine",
       "phone_no": "010-3333-2222",
       "recommender": "박동한",
-      "reg_dt": "2021.04.22"
+      "reg_dt": "21.04.22",
+      "approval": false
     },
     {
       "id": 3,
@@ -72,7 +74,8 @@
       "nickname": "edgar",
       "phone_no": "010-3333-2222",
       "recommender": "박동한",
-      "reg_dt": "2021.01.31"
+      "reg_dt": "21.01.31",
+      "approval": true
     },
     {
       "id": 4,
@@ -80,15 +83,16 @@
       "nickname": "june",
       "phone_no": "010-5555-1111",
       "recommender": "임하늘",
-      "reg_dt": "2021.05.09"
+      "reg_dt": "21.05.09",
+      "approval": true
     }
   ],
   "linkbinder": [
     {
       "id": 1,
       "address": "https://www.naver.com",
-      "image_path": "http://via.placeholder.com/150/92c952",
-      "title": "네이버",
+      "image_path": "/images/testImage/꼬막정식.jpeg",
+      "title": "꼬막정식",
       "secure": 1,
       "link_count": "51",
       "link_type": "blog"
@@ -96,8 +100,8 @@
     {
       "id": 2,
       "address": "https://www.google.com",
-      "image_path": "http://via.placeholder.com/150/771796",
-      "title": "구글",
+      "image_path": "/images/testImage/뼈찜.jpeg",
+      "title": "등뼈찜",
       "secure": 0,
       "link_count": "22",
       "link_type": "shopping"
@@ -105,8 +109,8 @@
     {
       "id": 3,
       "address": "https://m.stock.naver.com/index.nhn",
-      "image_path": "http://via.placeholder.com/150/24f355",
-      "title": "증권",
+      "image_path": "/images/testImage/우럭회.jpeg",
+      "title": "우럭회",
       "secure": 0,
       "link_count": "3",
       "link_type": "contents"
@@ -164,44 +168,48 @@
   ],
   "mainSetting": [
     {
-      "id": 444,
+      "id": 1,
       "link_address": "http://www.youtube.com/watch?v=h03n0ULt_Rs",
       "mb_id": null,
       "image_path": null,
-      "link_state": "video",
-      "cp_id": 18
+      "link_type": "video",
+      "cp_id": 18,
+      "youtubeId": "h03n0ULt_Rs"
     },
     {
-      "id": 446,
+      "id": 2,
       "link_address": "http://youtu.be/nWc_IBuKsOQ",
       "mb_id": null,
       "image_path": null,
-      "link_state": "video",
-      "cp_id": 18
+      "link_type": "video",
+      "cp_id": 18,
+      "youtubeId": "nWc_IBuKsOQ"
     },
     {
-      "id": 448,
+      "id": 3,
       "link_address": null,
       "mb_id": null,
-      "image_path": "/upload/images/mainView/20210716175809_IMG_6586.jpg",
-      "link_state": "image",
+      "image_path": "/images/testImage/bateacher.jpeg",
+      "link_type": "image",
       "cp_id": 18
     },
     {
-      "id": 449,
+      "id": 4,
       "link_address": "http://www.youtube.com/watch?v=jxdmx6Cu0bY",
       "mb_id": null,
       "image_path": null,
-      "link_state": "video",
-      "cp_id": 18
+      "link_type": "video",
+      "cp_id": 18,
+      "youtubeId": "jxdmx6Cu0bY"
     },
     {
-     "id": 488,
+     "id": 5,
      "link_address": null,
      "mb_id": null,
-     "image_path": "/upload/images/mainView/20210802155807_img.png",
-     "link_state": "image",
-     "cp_id": 18
+     "image_path": "/images/testImage/paper.png",
+     "link_type": "image",
+     "cp_id": 18,
+      "youtubeId": ""
     }
   ]
 }

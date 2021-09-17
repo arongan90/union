@@ -4,7 +4,10 @@ import Link from 'next/link';
 import styled, { css } from "styled-components";
 import {message} from "antd";
 import colors from "../../styles/colors";
-// Image
+import {useSelector} from "react-redux";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import * as constants from "../../utils/constants";
 import edit from '/public/images/linkBinder/edit.png';
 import linkCopy from '/public/images/linkBinder/linkcopy.png';
 import youtubeIcon from '/public/images/linkBinder/youtubeIcon.png';
@@ -13,8 +16,15 @@ import naverIcon from '/public/images/linkBinder/naverIcon.png';
 import kakaoIcon from '/public/images/linkBinder/kakaoIcon.png';
 import noneImage from '/public/images/share/noneImage.png';
 
+const serverProtocol = constants.config.chatServer.PROTOCOL;
+const serverURL = constants.config.chatServer.URL;
+
 const Wrapper = styled.div`
   position: relative;
+  
+  .Toastify__toast-container--bottom-center {
+    bottom: 50%;
+  }
 `;
 const BackGroundImageBox = styled.div`
   width: 100%;
@@ -40,7 +50,6 @@ const ImageBox = styled.div`
   position: relative;
   margin: 0 auto;
   text-align: center;
-  border: 1px solid ${colors.lightBlack};
 `;
 const MainImage = styled.img`
   width: 100%;
@@ -83,18 +92,26 @@ const SubImage = styled.img`
 `;
 
 function ThumbNail(props) {
-    const copyBaseUrl = `http://localhost:3000/${props.corpname}/linkbinder/`;
+    const { userInfo } = useSelector(state => state.auth);
+    const { corpInfo } = useSelector(state => state);
+    const copyBaseUrl = `${serverProtocol}172.16.1.192:3000/linkbinder/${corpInfo.corp_name}`;
     // const copyBaseUrl = 'https://healingt.online/linkbinder/';
 
     // 클릭시 링크 복사
-    const copyLink = parameter => {
+    const copyLink = () => {
         var tempElem = document.createElement('textarea');
-        tempElem.value = copyBaseUrl + parameter;
+        tempElem.value = copyBaseUrl;
         document.body.appendChild(tempElem);
         tempElem.select();
         document.execCommand("copy");
         document.body.removeChild(tempElem);
-        message.info('링크복사가 완료되었습니다.', 3);
+
+        console.info(tempElem.value);
+
+        toast.info(`링크가 복사 되었습니다.`, {
+            position: "bottom-center",
+            autoClose: 2000,
+        });
     }
 
     const getSnsSite = param => {
@@ -106,25 +123,25 @@ function ThumbNail(props) {
         <Wrapper>
             <BackGroundImageBox>
                 <BackgroundCoverImage
-                    src={!!props.resource ? `${serverProtocol}${serverURL}/${props.resource.image_path}` : null}/>
+                    src={`https://cdn.univ20.com/wp-content/uploads/2016/11/08178004a38eac7bf421cf054ca79301-41.png`}
+                    // src={!!props.resource ? `${serverProtocol}${serverURL}/${props.resource.image_path}` : null}/>
+                    />
             </BackGroundImageBox>
             <ThumbNailBox>
                 <ImageBox>
                     <MainImage
-                        imgSrc={!props.resource && true}
-                        src={!!props.resource ? `${serverProtocol}${serverURL}/${props.resource.image_path}` : noneImage}
+                        imgSrc={false}
+                        src={`https://cdn.univ20.com/wp-content/uploads/2016/11/08178004a38eac7bf421cf054ca79301-41.png`}
+                        // imgSrc={!props.resource && true}
+                        // src={!!props.resource ? `${serverProtocol}${serverURL}/${props.resource.image_path}` : noneImage}
                     />
-                    <LeftBox onClick={() => copyLink(props.corpname)}>/
-                        {!!props.userInfo && props.userInfo.user_type === 'admin' ?
-                            props.userInfo && props.userInfo.nickname
-                            :
-                            props.corpname // props.postId
-                        }
+                    <LeftBox onClick={copyLink}>/
+                        {!!corpInfo && corpInfo.corp_name}
                         <SubImage src={linkCopy}/>
                     </LeftBox>
                     <RightBox>
-                        {!!props.userInfo && props.userInfo.user_type === 'admin' ?
-                            <Link href={`/${props.corpname}/linkbinder/addcover`}>
+                        {!!userInfo && userInfo.user_type === 'admin' ?
+                            <Link href={`/${corpInfo.corp_name}/linkbinder/addcover`}>
                                 <a>
                                     <SubImage src={edit}/>
                                 </a>
@@ -161,6 +178,7 @@ function ThumbNail(props) {
                     </RightBox>
                 </ImageBox>
             </ThumbNailBox>
+            <ToastContainer />
         </Wrapper>
     );
 }

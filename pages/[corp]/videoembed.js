@@ -12,19 +12,21 @@ const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
 
 
-const Videoembed = ({ videoList }) => {
+const VideoEmbed = ({ videoList }) => {
     const router = useRouter();
     const [linkList, setLinkList] = useState(videoList);
     const [editOrder, setEditOrder] = useState(false);
-    const [openModal, setOpenModal] = useState(false);
     const [linkIndex, setLinkIndex] = useState([]);
-    const [secureList, setSecureList] = useState();
+    const [copyLinkList, setCopyLinkList] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
+    const [isOpen, setIsOpen] = useState(1);
+    const [editData, setEditData] = useState(undefined);
     const [{ subject, explain, videoUrl}, onChange, onReset] = useInput({
         subject: '',
         explain: '',
         videoUrl: '',
-    })
-    const { userInfo } =useSelector(state => state.auth);
+    });
+    const { userInfo } = useSelector(state => state.auth);
     let deleteLink = [];
 
     const onSortEnd = ({oldIndex, newIndex}) => {
@@ -65,9 +67,30 @@ const Videoembed = ({ videoList }) => {
         }
     }
 
-    const handleEditOrder = () => setEditOrder(!editOrder);
+    const handleEditOpen = () => setEditOrder(true);
+    const handleEditCancel = () => {
+        setLinkList(copyLinkList);
+        setEditOrder(false);
+    }
+    const handleEditComplete = async () => {
+        let parmas = {
+            cp_id: userInfo.cp_id,
+            list_index: linkIndex
+        }
+
+        try {
+
+        } catch(e) {
+            throw new Error(e);
+        }
+
+        setCopyLinkList(linkList);
+        setEditOrder(false);
+    }
+
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
+    const handleRadioChange = e => setIsOpen(parseInt(e.target.value, 10));
 
     const onVideoUpload = () => {
         if (subject === '') {
@@ -81,22 +104,15 @@ const Videoembed = ({ videoList }) => {
         }
     }
 
-    const onChangeSecure = (secure, id) => {
-        let changeSecure;
-
-        if (secure === 1) {
-            changeSecure = 0;
-        } else {
-            changeSecure = 1;
-        }
-
-        setSecureList({
-            ...secureList,
-            [id]: changeSecure
-        });
-
-        console.info(secureList);
+    const handleUpdateOpen = async id => {
+        const res = await axios.get(`${serverProtocol}${serverURL}/videoLink/${id}`);
+        setEditData(res.data);
+        handleOpenModal(true);
     }
+
+    useEffect(() => {
+        setCopyLinkList(linkList);
+    }, []);
 
     return (
         <>
@@ -107,7 +123,9 @@ const Videoembed = ({ videoList }) => {
                 onSortEnd={onSortEnd}
                 updateOrder={updateOrder}
                 deleteCard={deleteCard}
-                handleEditOrder={handleEditOrder}
+                handleEditOpen={handleEditOpen}
+                handleEditCancel={handleEditCancel}
+                handleEditComplete={handleEditComplete}
                 openModal={openModal}
                 handleOpenModal={handleOpenModal}
                 handleCloseModal={handleCloseModal}
@@ -116,13 +134,16 @@ const Videoembed = ({ videoList }) => {
                 videoUrl={videoUrl}
                 modalInputOnChange={onChange}
                 onVideoUpload={onVideoUpload}
-                onChangeSecure={onChangeSecure}
+                handleUpdateOpen={handleUpdateOpen}
+                handleRadioChange={handleRadioChange}
+                isOpen={isOpen}
+                editData={editData}
             />
         </>
     )
 }
 
-Videoembed.getInitialProps = async (ctx) => {
+VideoEmbed.getInitialProps = async (ctx) => {
     initialize(ctx);
 
     const res = await axios.get(`${serverProtocol}${serverURL}/videoLink`);
@@ -132,4 +153,4 @@ Videoembed.getInitialProps = async (ctx) => {
     }
 }
 
-export default Videoembed;
+export default VideoEmbed;

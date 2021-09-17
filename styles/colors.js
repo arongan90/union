@@ -6,9 +6,17 @@ export default {
     // Point
     loginPoint: "#6E9ABC",
     heartColor: "#f06595",
-    activeBlue: "#1169ED",
-    activeRed: "#E12B03",
     orangeColor: "#FFC774",
+    activeRed: "#E12B03",
+
+    activePink: "#EA2F86",
+    activeOrange: "#ff7f00",
+    activeYBurgundy: "#5A1A28",
+    activeIceBlue: "#4995AE",
+    activeBlue: "#1169ED",
+    activeIndigoBlue: "#3A3C68",
+    activeViolet: "#493C9E",
+
 
     // Background
     deepGray: "#434343",
@@ -24,6 +32,7 @@ export default {
     borderLightGray: "#EEEEEE",
     loginTabBorder: "#AAAAAA",
     inputBorder: "#CCCCCC",
+    deepBlueBorder: "#1C3B6B",
 
     // Text
     skyBlue: "#1872B9",
@@ -42,6 +51,7 @@ export default {
     orangeYellow: "#FA9E15",
 
     // Button
+    deepOrange: "#e6a03e",
     deepYellow: "#FF9F0E",
     darkDeepSkyBlue: "#3B78A7",
     deepBlue: "#0C6698",

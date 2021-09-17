@@ -16,27 +16,9 @@ const LinkBinder = ({linkData, corpName}) => {
     const [linkList, setLinkList] = useState(linkData);
     const [editOrder, setEditOrder] = useState(false);
     const [linkIndex, setLinkIndex] = useState([]);
-    const [secureValue, setSecureValue] = useState(new Set());
     const [copyLinkList, setCopyLinkList] = useState([]);
     const {userInfo} = useSelector(state => state.auth);
-
-    const secureSwitchHandler = (id, isChecked) => {
-        if (isChecked) {
-            secureValue.add(id);
-            setSecureValue(secureValue);
-        } else if (!isChecked && secureValue.has(id)) {
-            secureValue.delete(id);
-            setSecureValue(secureValue);
-        }
-        console.info(':!!!!!', secureValue);
-    }
-
     let deleteLink = [];
-
-    useEffect(() => {
-        setCopyLinkList(linkList);
-
-    }, []);
 
     const goPage = async (value) => {
         let parameter = {
@@ -78,12 +60,7 @@ const LinkBinder = ({linkData, corpName}) => {
         }
     }
 
-
-
-
-    const handleEditOpen = () => {
-        setEditOrder(true);
-    }
+    const handleEditOpen = () => setEditOrder(true);
     const handleEditCancel = () => {
         setLinkList(copyLinkList);
         setEditOrder(false);
@@ -95,12 +72,16 @@ const LinkBinder = ({linkData, corpName}) => {
         }
         try {
             // await bsApi.post(`/link/updateIndex`, params);
+            setCopyLinkList(linkList);
+            setEditOrder(false);
         } catch (e) {
             throw new Error(e);
         }
-        setCopyLinkList(linkList);
-        setEditOrder(false);
     }
+
+    useEffect(() => {
+        setCopyLinkList(linkList);
+    }, []);
 
     return (
         <LinkBinderPresentation
@@ -114,7 +95,6 @@ const LinkBinder = ({linkData, corpName}) => {
             handleEditOpen={handleEditOpen}
             handleEditCancel={handleEditCancel}
             handleEditComplete={handleEditComplete}
-            secureSwitchHandler={secureSwitchHandler}
         />
     );
 }

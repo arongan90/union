@@ -3,7 +3,8 @@ import styled, {css} from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import playButton from "/public/images/home/playButton.svg";
 import PreviewModal from "../../share/modal/PreviewModal";
-import MoreButton from ".//MoreButton";
+import MoreButton from "./MoreButton";
+import colors from "../../styles/colors";
 
 const UploadVideoWrapper = styled.div`
   max-width: 530px;
@@ -13,7 +14,7 @@ const UploadVideoWrapper = styled.div`
   padding: 20px 10px 50px;
   box-sizing: border-box;
   background-color: #fff;
-  box-shadow: 0 0 8px #E3E2E2;
+  box-shadow: 0 0 8px ${colors.shadowColor};
   position: relative;
   overflow: hidden;
   transition: 0.4s;
@@ -84,7 +85,7 @@ const PlayButton = styled.img`
   transform: translate(-50%, -50%);
 `;
 
-const UploadVideo = ({embedList}) => {
+const UploadVideo = ({videoList}) => {
     const [videoModal, setVideoModal] = useState(false);
     const [youtubeId, setYoutubeId] = useState();
     const [moreView, setMoreView] = useState(false);
@@ -104,12 +105,12 @@ const UploadVideo = ({embedList}) => {
     return (
         <UploadVideoWrapper
             moreView={moreView}
-            embedLength={embedList && embedList.length}
+            embedLength={videoList && videoList.length}
         >
             <TitleText>게시영상</TitleText>
             <GirdBox container>
-                {/*{!moreView
-                    ? embedList.slice(0, 4).map((item) => {
+                {!moreView
+                    ? videoList.slice(0, 4).map((item) => {
                         return (
                             <GridItem item xs={6} key={item.embed_id} onClick={() => onClick(item.youtubeId)}>
                                 <PlayButton src={playButton} />
@@ -118,7 +119,7 @@ const UploadVideo = ({embedList}) => {
                                 <SubTitleBox>{item.title_sub}</SubTitleBox>
                             </GridItem>
                         )})
-                    : embedList.map((item) => {
+                    : videoList.map((item) => {
                         return (
                             <GridItem item xs={6} key={item.embed_id} onClick={() => onClick(item.youtubeId)}>
                                 <PlayButton src={playButton} />
@@ -127,9 +128,9 @@ const UploadVideo = ({embedList}) => {
                                 <SubTitleBox>{item.title_sub}</SubTitleBox>
                             </GridItem>
                         )})
-                }*/}
+                }
             </GirdBox>
-            {(embedList && embedList.length > 4) &&
+            {(videoList && videoList.length > 4) &&
             <MoreButton
                 onToggle={onToggleMore}
                 moreView={moreView}

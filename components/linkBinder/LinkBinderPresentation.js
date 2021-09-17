@@ -4,14 +4,13 @@ import ThumbNail from "./ThumbNail";
 import CounterInfo from "./VisitCount";
 import LinkContents from "./LinkContents";
 import colors from "../../styles/colors";
+import Footer from "../Footer";
 
 const Wrapper = styled.div`
   width: 100%;
   min-height: 100vh;
-  padding-bottom: 30px;
   background: ${colors.tabMenu};
 `;
-
 
 const LinkBinderPresentation = ({
                                     linkList,
@@ -24,7 +23,6 @@ const LinkBinderPresentation = ({
                                     handleEditOpen,
                                     handleEditCancel,
                                     handleEditComplete,
-                                    secureSwitchHandler,
                                 }) => {
     return (
         <Wrapper>
@@ -41,9 +39,9 @@ const LinkBinderPresentation = ({
                 handleEditOpen={handleEditOpen}
                 handleEditCancel={handleEditCancel}
                 handleEditComplete={handleEditComplete}
-                secureSwitchHandler={secureSwitchHandler}
             />
 
+            <Footer />
         </Wrapper>
     )
 }

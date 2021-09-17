@@ -21,6 +21,7 @@ const AppImageBox = styled.div`
 const AppImage = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
 const InfoText = styled.div`
   color: ${colors.footerText};
@@ -41,7 +42,9 @@ const Footer = () => {
     return (
         <Wrapper>
             <Logo>
-                <AppImage alt={"logo"}/>
+                <AppImage
+                    src={"http://imagescdn.gettyimagesbank.com/500/201708/a10913676.jpg"}
+                    alt={"logo"}/>
             </Logo>
             <InfoText>{corpInfo.introduction}</InfoText>
             <InfoText>대표자 : {corpInfo.owner_name}</InfoText>

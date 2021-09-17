@@ -7,25 +7,26 @@ import plus from '/public/images/linkBinder/plus.png';
 import LongButton from "../../share/components/LongButton";
 import * as constants from "../../utils/constants";
 import OrderButton from "../../share/components/OrderButton";
+import ToolTip from "../../share/components/ToolTip";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
 
 const ContentBox = styled.div`
   max-width: 530px;
-  min-height: 70vh;
-  margin: 10px auto;
+  min-height: 500px;
+  margin: 20px auto;
   padding: 24px 16px 30px;
   text-align: left;
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
-
+  background: ${colors.tabMenu};
+  box-shadow: 0 0 8px ${colors.lightShadowColor};
+  
   &::-webkit-scrollbar {
     display: none;
   }
-  
-  
 `;
 const Title = styled.div`
   font-size: 16px;
@@ -60,33 +61,6 @@ const NonePost = styled.div`
   font-weight: bold;
   background: #fff;
 `;
-const ToolTip = styled.span`
-  font-size: 16px;
-  color: ${colors.deepDarkGray};
-
-  &:hover {
-    cursor: help;
-  }
-`;
-const ToolTipBox = styled.div`
-  width: 220px;
-  font-size: 12px;
-  color: ${colors.lightBlack};
-  border-radius: 5px;
-  border: 1px solid ${colors.chatDefaultColor};
-  word-break: keep-all;
-  background: ${colors.whiteColor};
-  padding: 10px;
-  position: absolute;
-  top: 3px;
-  right: 75px;
-  z-index: 1;
-  visibility: hidden;
-
-  ${ToolTip}:hover & {
-    visibility: visible;
-  }
-`;
 
 function LinkContents({
                           linkList,
@@ -99,9 +73,7 @@ function LinkContents({
                           handleEditOpen,
                           handleEditCancel,
                           handleEditComplete,
-                          secureSwitchHandler
                       }) {
-
     return (
         <ContentBox>
             {userInfo && userInfo.user_type === 'admin' &&
@@ -120,32 +92,28 @@ function LinkContents({
                     링크수정&nbsp;
                     <SubText>(링크를 눌러 수정하세요.)
                         <ToolTip>
-                            <BsFillQuestionCircleFill/>
-                            <ToolTipBox>
-                                수정하기를 클릭 후 링크를 누르시면 수정페이지로 이동됩니다.<br/>
-                                오른쪽 위,아래 아이콘을 드래그하시면 순서가 변경됩니다.<br/>
-                                등록한 링크는 최대 10개까지 노출됩니다.
-                            </ToolTipBox>
+                            수정하기를 클릭 후 링크를 누르시면 수정페이지로 이동됩니다.<br/>
+                            오른쪽 위,아래 아이콘을 드래그하시면 순서가 변경됩니다.<br/>
+                            등록한 링크는 최대 10개까지 노출됩니다.
                         </ToolTip>
                     </SubText>
                     <ButtonGroup>
-                        {editOrder
-                            ?
+                        {editOrder ?
                             <>
                                 <OrderButton
-                                    width={100}
-                                    height={30}
-                                    fontColor={colors.whiteColor}
-                                    bgColor={colors.heartColor}
+                                    width={120}
+                                    height={25}
+                                    fontColor={colors.deepDarkBlue}
+                                    bgColor={colors.ultraLightGray}
                                     onClick={handleEditCancel}
                                 >
                                     취 소
                                 </OrderButton>
                                 <OrderButton
-                                    width={100}
-                                    height={30}
+                                    width={120}
+                                    height={25}
                                     fontColor={colors.whiteColor}
-                                    bgColor={colors.chatDefaultColor}
+                                    bgColor={colors.deepOrange}
                                     editOrder={editOrder}
                                     onClick={handleEditComplete}
                                 >
@@ -153,11 +121,11 @@ function LinkContents({
                                 </OrderButton>
                             </>
                             : <OrderButton
-                                width={100}
-                                height={30}
-                                fontColor={colors.chatDefaultColor}
+                                width={120}
+                                height={25}
+                                fontColor={colors.deepBlueBorder}
                                 bgColor={colors.whiteColor}
-                                border={`1px solid ${colors.chatDefaultColor}`}
+                                border={`1px solid ${colors.deepBlueBorder}`}
                                 editOrder={editOrder}
                                 onClick={handleEditOpen}
                             >
@@ -179,7 +147,6 @@ function LinkContents({
                         deleteCard={deleteCard}
                         onSortEnd={onSortEnd}
                         userInfo={userInfo}
-                        secureSwitchHandler={secureSwitchHandler}
                     />
                     :
                     <NonePost>등록된 포스트가 없습니다.</NonePost>

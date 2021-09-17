@@ -9,6 +9,7 @@ import QuizModal from "../../share/quizModal";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import {isMobile} from "react-device-detect";
+import {useSelector} from "react-redux";
 
 const JitsiModule = dynamic(() => import(('../../share/JitsiModule/JitsiModule')), {
     ssr: false,
@@ -29,6 +30,11 @@ const ScreenBox = styled.div`
   position: relative;
   transition: 0.18s;
   background: ${colors.lightBlack};
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: calc(100vh - 55vh - 60px);
+  }
 `;
 const ScreenIframe = styled.iframe`
   position: absolute;
@@ -41,6 +47,20 @@ const ScreenIframe = styled.iframe`
 const ChatBox = styled(Drawer)`
   width: 400px;
   height: 100%;
+  
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
+const MobileChatBox = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: calc(100vh - 45vh);
+    position: relative;
+    display: block;
+  }
 `;
 const ChatTitle = styled.div`
   width: 100%;
@@ -81,10 +101,13 @@ const ConferencePresentation = () => {
     const [chatDrawer, setChatDrawer] = useState(true);
     const openChat = () => setChatDrawer(true);
     const closeChat = () => setChatDrawer(false);
+
+    const { userInfo } = useSelector(state => state.auth);
+
     return (
         <>
             <Head>
-                <script async src="https://meet.jit.si/external_api.js"></script>
+                <script async src="https://meet.jit.si/external_api.js"/>
             </Head>
 
             <Wrapper>
@@ -96,23 +119,23 @@ const ConferencePresentation = () => {
                     <QuizModal />
                     <JitsiModule
                         roomName={'conference1'}
-                        // displayName={userInfo ? userInfo.nickname : '비회원'}
+                        displayName={userInfo ? userInfo.nickname : '비회원'}
                         onMeetingEnd={() => console.log('Meeting has ended')}
                         loadingComponent={<p>loading ...</p>}
-                        jitsiContainerStyles={isMobile ? {height: '45vh'} : {height: 400}}
-                        isMobile={isMobile}
                         errorComponent={<p>에러가 발생했습니다. 관리자에게 문의해주세요</p>}
                         options={{
                             configOverwrite: {defaultLanguage: 'jp'}
                         }}
                     />
-                    <ScreenIframe
+                    {/*<ScreenIframe
                         src={`https://meet.healingt.catbell.xyz/conference`}
                         frameBorder="0"
                         allow="camera; microphone; fullscreen; display-capture"
                         allowFullScreen
-                    />
+                    />*/}
                 </ScreenBox>
+
+                {/* Web */}
                 <ChatBox anchor="right" open={chatDrawer} variant="persistent">
                     <ChatTitle>
                         <ToggleChat onClick={closeChat}>
@@ -122,6 +145,11 @@ const ConferencePresentation = () => {
                     </ChatTitle>
                     <Chat height={"calc(100vh - 110px)"} />
                 </ChatBox>
+
+                {/* Mobile */}
+                <MobileChatBox>
+                    <Chat height={"100%"}/>
+                </MobileChatBox>
             </Wrapper>
         </>
     )

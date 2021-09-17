@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css } from "styled-components";
 import colors from "../styles/colors";
-import showPwdImage from "/public/images/union/showPwd.svg";
-import hidePwdImage from "/public/images/union/hidePwd.svg";
 import useInput from "../hooks/useInput";
 import { lighten, darken } from "polished";
 import { useRouter } from "next/router";
@@ -10,6 +8,8 @@ import { isLogin } from "../modules/auth";
 import { useDispatch, useSelector } from "react-redux";
 // Image
 import catbellImage from "/public/images/union/logo_catbellunion.svg";
+import showPwdImage from "/public/images/union/showPwd.svg";
+import hidePwdImage from "/public/images/union/hidePwd.svg";
 
 const Wrapper = styled.div`
   max-width: 350px;

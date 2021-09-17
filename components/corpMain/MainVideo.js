@@ -5,10 +5,45 @@ import PreviewModal from "../../share/modal/PreviewModal";
 import Image from "next/image";
 import noImage from '/public/images/share/noImages.png';
 import {Swiper, SwiperSlide} from 'swiper/react';
-import 'swiper/swiper.min.css';
-import SwiperCore, { Autoplay } from 'swiper';
+import SwiperCore, { Autoplay, Navigation, Pagination } from 'swiper';
+import colors from "../../styles/colors";
+import "swiper/swiper.min.css";
+import 'swiper/swiper-bundle.min.css';
 
-SwiperCore.use([Autoplay]);
+SwiperCore.use([Autoplay, Navigation, Pagination]);
+
+const SwiperWrapper = styled.div`
+  .swiper-button-next {
+    &::after {
+      position:relative;
+      left: 3px;
+    }
+  }
+  .swiper-button-prev {
+    &::after {
+      position:relative;
+      right: 3px;
+    }
+  }
+  
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    color: ${colors.whiteColor};
+    pointer-events: initial;
+  }
+
+  .swiper-pagination-bullet {
+    background: ${colors.whiteColor};
+  }
+  
+  .swiper-pagination-bullet-active {
+    background: ${colors.whiteColor};
+  }
+`;
 
 const PlayButton = styled.img`
   width: 71px;
@@ -28,7 +63,7 @@ const ThumbNailImage = styled.img`
 const PhotoImageBox = styled.div`
   width: 100%;
   height: 100%;
-  background: black;
+  background: ${colors.blackColor};
 `;
 
 const PhotoImage = styled.img`
@@ -41,17 +76,15 @@ const MainVideo = ({ mainView }) => {
     const [videoModal, setVideoModal] = useState(false);
     const [youtubeId, setYoutubeId] = useState('');
     const [imgPath, setImgPath] = useState('');
-    const handleClose = () => {
-        setVideoModal(false);
-    }
+    const handleClose = () => setVideoModal(false);
 
     return (
-        <>
+        <SwiperWrapper>
             <Swiper
-                autoplay
-                navigation
+                // autoplay
                 spaceBetween={50}
                 slidesPerView={1}
+                navigation={true}
                 pagination={{
                     "clickable": true
                 }}
@@ -60,7 +93,8 @@ const MainVideo = ({ mainView }) => {
                     height: 398,
                     margin: '10px auto',
                     overflow: 'hidden',
-                    border: '1px solid #dddddd'
+                    border: '1px solid #dddddd',
+                    boxShadow: `0 0 8px ${colors.shadowColor}`,
                 }}
             >
                 {mainView ? mainView.map((value) => {
@@ -85,6 +119,7 @@ const MainVideo = ({ mainView }) => {
                                 :
                                 <PhotoImageBox>
                                     <PhotoImage
+                                        src={`http://172.16.1.192:3000` + value.image_path}
                                         // src={`${serverProtocol}${serverURL}` + value.image_path}
                                         alt={value.image_path}
                                     />
@@ -100,7 +135,7 @@ const MainVideo = ({ mainView }) => {
                 handleClose={handleClose}
                 imagePath={imgPath}
             />
-        </>
+        </SwiperWrapper>
     )
 }
 
