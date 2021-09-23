@@ -31,7 +31,7 @@ const MainBanner = styled.div`
   @media only screen and (max-width: 960px) {
     background-position: 33%;
   }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     height: 100%;
   }
 `;
@@ -81,7 +81,7 @@ const TabBar = styled(Tabs)`
   @media only screen and (max-width: 960px) {
     margin-left: 30px;
   }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     display: none;
   }
 `;
@@ -116,10 +116,10 @@ const BannerContent = styled.div`
   align-items: center;
   
   @media only screen and (max-width: 960px) {
-    max-width: 768px;
+    max-width: 767px;
     padding: 0 10px;
   }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     flex-direction: column;
   }
 `;
@@ -129,7 +129,7 @@ const BannerTextBox = styled.div`
     margin-right: 18%;
     text-align: center;
   }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     margin: 0 0 20px 0;
   }
 `;
@@ -138,7 +138,7 @@ const BannerImage = styled.div`
   height: 60px;
   background: url(${bannerImage}) no-repeat;
   background-size: 100%;
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     width: 215px;
     height: 33px;
     margin-bottom: 10px;
@@ -148,7 +148,7 @@ const BannerText = styled.div`
   font-size: 24px;
   color: ${colors.deepSkyBlue};
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     font-size: 15px;
   }
   
@@ -189,7 +189,7 @@ const FooterBox = styled.div`
   height: 80px;
   background: ${colors.deepGray};
   
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     height: auto;
   }
 `;
@@ -201,7 +201,7 @@ const FooterContent = styled.div`
   justify-content: space-between;
   align-items: center;
   
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -222,7 +222,7 @@ const FootTitle = styled.div`
 const FooterLogo = styled.div`
   width: 132px;
   height: 58px;
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     margin-top: 24px;
   }
 `;
@@ -243,7 +243,7 @@ function Index() {
     };
 
     const isMobile = useMediaQuery({
-        query: "(min-width: 280px) and (max-width: 768px)"
+        query: "(min-width: 280px) and (max-width: 767px)"
     });
 
     const isMobileFooter = useMediaQuery({

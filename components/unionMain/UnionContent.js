@@ -31,7 +31,7 @@ const Wrapper = styled.div`
     background-size: 100% 100%;
   `}
 
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 767px) {
       height: auto;
       padding: 100px 0;
     }
@@ -49,7 +49,7 @@ const Content = styled.div`
   padding-right: ${({paddingRight}) => paddingRight ? paddingRight : 0}px;
   padding-left: ${({paddingLeft}) => paddingLeft ? paddingLeft : 0}px;
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     
   }
 `;
@@ -60,7 +60,7 @@ const SubContentBox = styled.div`
   align-items: ${({alignItems}) => alignItems ? alignItems : 'center'};
   flex-direction: ${({flexDirection}) => flexDirection ? flexDirection : 'row'};
   
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     flex-direction: ${({flexDirection}) => flexDirection ? flexDirection : 'row'};
     ${({Sec3_isMobile}) => Sec3_isMobile && css`
       max-width: 375px;
@@ -98,7 +98,7 @@ const SubContent = styled.div`
   text-align: center;
   ${({marginRight}) => marginRight ? marginRight : 0}px;
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     ${({Sec3_isMobile}) => Sec3_isMobile && css`
       margin: 0 0 55px 35px;      
     `};
@@ -123,7 +123,7 @@ const Title = styled.div`
       background: ${colors.skyGreen};
     }
   `} 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
       ${({Sec3_isMobile}) => Sec3_isMobile && css`
         font-size: 25px;
         margin-bottom: 15px;

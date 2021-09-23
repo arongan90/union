@@ -40,6 +40,12 @@ const Button = styled.button`
   & + & {
     margin-top: 10px;
   }
+
+  @media screen and (max-width: 767px) {
+    font-size: 14px;
+    margin-top: 20px;
+    height: 40px;
+  }
 `;
 
 const LongButton = ({

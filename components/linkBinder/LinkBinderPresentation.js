@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import ThumbNail from "./ThumbNail";
-import CounterInfo from "./VisitCount";
+import VisitCount from "./VisitCount";
 import LinkContents from "./LinkContents";
 import colors from "../../styles/colors";
 import Footer from "../Footer";
@@ -27,7 +27,7 @@ const LinkBinderPresentation = ({
     return (
         <Wrapper>
             <ThumbNail/>
-            <CounterInfo/>
+            <VisitCount/>
             <LinkContents
                 linkList={linkList}
                 editOrder={editOrder}

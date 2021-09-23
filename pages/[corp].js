@@ -14,8 +14,12 @@ const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
 
 const MainWrapper = styled.div`
-  padding: 25px 0;
+  padding: 25px 0 0;
   background: ${colors.tabMenu};
+  
+  @media screen and (max-width: 767px) {
+    padding: 25px 10px 0;
+  }
 `;
 const IntroductionBox = styled.div`
   max-width: 530px;

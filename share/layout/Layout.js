@@ -67,7 +67,9 @@ const Layout = ({ children }) => {
                 <ToolBox/>
                 <ToolBox>
                     <LogoBox onClick={() => router.push(`/${corpInfo.corp_name}`)} >
-                        <LogoImage src={`http://imagescdn.gettyimagesbank.com/500/201708/a10913676.jpg`} alt={"corpLogo"} />
+                        <LogoImage
+                            src={corpInfo.image_path}
+                            alt={"corpLogo"} />
                     </LogoBox>
                 </ToolBox>
                 <ToolBox justifyContent={"flex-end"}>

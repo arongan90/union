@@ -35,7 +35,7 @@ const SwiperWrapper = styled.div`
 const AppImageBox = styled.div`
   width: 100%;
   height: 100%;
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     width: 280px;
     margin: 0 auto;
   }

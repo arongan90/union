@@ -97,8 +97,7 @@ const MainVideo = ({ mainView }) => {
                     boxShadow: `0 0 8px ${colors.shadowColor}`,
                 }}
             >
-                {mainView ? mainView.map((value) => {
-                    return (
+                {mainView ? mainView.map((value) => (
                         <SwiperSlide
                             onClick={() => {
                                 console.info('click');
@@ -106,7 +105,7 @@ const MainVideo = ({ mainView }) => {
                                 setImgPath(value.image_path);
                                 (value.link_address !== null || value.image_path !== null) && setVideoModal(true);
                             }}
-                            key={value.link_id}
+                            key={value.id}
                             style={{
                                 width: '100%',
                                 height: 398,
@@ -126,8 +125,7 @@ const MainVideo = ({ mainView }) => {
                                 </PhotoImageBox>
                             }
                         </SwiperSlide>
-                    )
-                }) : <Image src={noImage} width={'1000%'} height={398}/>}
+                    )) : <Image src={noImage} width={'1000%'} height={398}/>}
             </Swiper>
             <PreviewModal
                 youtubeId={youtubeId}

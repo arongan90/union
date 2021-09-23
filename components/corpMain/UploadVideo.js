@@ -110,24 +110,22 @@ const UploadVideo = ({videoList}) => {
             <TitleText>게시영상</TitleText>
             <GirdBox container>
                 {!moreView
-                    ? videoList.slice(0, 4).map((item) => {
-                        return (
-                            <GridItem item xs={6} key={item.embed_id} onClick={() => onClick(item.youtubeId)}>
-                                <PlayButton src={playButton} />
-                                <EmbedImage src={`https://img.youtube.com/vi/${item.youtubeId}/0.jpg`} />
+                    ? videoList.slice(0, 4).map((item) => (
+                            <GridItem item xs={6} key={item.id} onClick={() => onClick(item.youtubeId)}>
+                                <PlayButton src={playButton}/>
+                                <EmbedImage src={`https://img.youtube.com/vi/${item.youtubeId}/0.jpg`}/>
                                 <TitleBox>{item.title}</TitleBox>
                                 <SubTitleBox>{item.title_sub}</SubTitleBox>
                             </GridItem>
-                        )})
-                    : videoList.map((item) => {
-                        return (
-                            <GridItem item xs={6} key={item.embed_id} onClick={() => onClick(item.youtubeId)}>
-                                <PlayButton src={playButton} />
-                                <EmbedImage src={`https://img.youtube.com/vi/${item.youtubeId}/0.jpg`} />
+                        ))
+                    : videoList.map((item) => (
+                            <GridItem item xs={6} key={item.id} onClick={() => onClick(item.youtubeId)}>
+                                <PlayButton src={playButton}/>
+                                <EmbedImage src={`https://img.youtube.com/vi/${item.youtubeId}/0.jpg`}/>
                                 <TitleBox>{item.title}</TitleBox>
                                 <SubTitleBox>{item.title_sub}</SubTitleBox>
                             </GridItem>
-                        )})
+                        ))
                 }
             </GirdBox>
             {(videoList && videoList.length > 4) &&

@@ -24,6 +24,10 @@ const Wrapper = styled.div`
   min-height: calc(100vh - 60px);
   padding-top: 60px;
   background: ${colors.tabMenu};
+
+  @media screen and (max-width: 767px) {
+   padding: 0 10px;
+  }
 `;
 const MemberListBox = styled.div`
   max-width: 530px;
@@ -31,6 +35,10 @@ const MemberListBox = styled.div`
   padding: 40px 10px 70px;
   background: #fff;
   box-shadow: 0 0 8px ${colors.lightShadowColor};
+
+  @media screen and (max-width: 767px) {
+    padding: 10px 10px 30px;
+  }
 `;
 const Title = styled.div`
   font-weight: bold;
@@ -55,7 +63,7 @@ const SearchInput = styled.input`
   border: none;
   outline: none;
   padding-left: 10px;
-  
+
   &::placeholder {
     color: ${colors.ultraLightGray}
   }
@@ -63,7 +71,6 @@ const SearchInput = styled.input`
 const MemberTable = styled.table`
   width: 100%;
   margin: 0 auto;
-  border: 1px solid #B9B9B9;
   border-radius: 2px;
 
   thead tr th {
@@ -75,11 +82,71 @@ const MemberTable = styled.table`
     height: 34px;
     color: ${colors.blackColor};
     font-size: 12px;
-    border: 1px solid #B9B9B9;
+    border: 1px solid ${colors.footerText};
     text-align: center;
     vertical-align: middle;
   }
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
+
+// Mobile
+const MobileTableBox = styled.div`
+  width: 100%;
+  margin-bottom: 10px;
+  position: relative;
+  display: none;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    top: 0;
+    right: 0;
+    border-right: 1px solid ${colors.footerText};
+  }
+  
+  @media screen and (max-width: 767px) {
+    display: flex;
+  }
+`;
+const NameBox = styled.div`
+  text-align: center;
+`;
+const InfoBox = styled.div`
+  width: 85%;
+  display: flex;
+  overflow: hidden;
+  overflow-x: scroll;
+`;
+const TableBox = styled.div`
+    margin-left: -1px;
+`;
+
+const TableTd = styled.div`
+  width: ${({width}) => width}px;
+  height: 40px;
+  text-align: center;
+  font-size: 12px;
+  color: ${colors.blackColor};
+  border: 1px solid ${colors.footerText};
+  margin-top: -1px;
+  padding: ${({padding}) => padding ? 'none' : '10px 0'};
+`;
+const TableHead = styled.div`
+  font-size: 12px;
+  height: 34px;
+  padding: 7px 0;
+  text-align: center;
+  color: ${colors.blackColor};
+  font-weight: bold;
+  border: 1px solid ${colors.footerText};
+  background: ${colors.borderLightGray};
+`;
+
 
 function Member({userData}) {
     const router = useRouter();
@@ -87,22 +154,34 @@ function Member({userData}) {
     const [{memberInfo}, onChange, onReset] = useInput({memberInfo: ''})
 
 
-    const handleSwitch = (e, name) => {
+    const handleSwitch = async (e, name) => {
         if (!e.target.checked) {
-            if(confirm(`${name} 님의 승인을 취소하시겠습니까?`)) {
-                console.info('승인 취소 ::: ');
+            if (confirm(`${name} 님의 승인을 취소하시겠습니까?`)) {
+                try {
+                    toast.info(`${name}님의 승인이 취소되었습니다.`);
+                } catch (e) {
+                    throw new Error(e);
+                }
             }
         } else {
-            toast.info(`${name}님의 가입승인이 완료되었습니다.`);
+            try {
+                toast.info(`${name}님의 가입승인이 완료되었습니다.`);
+            } catch (e) {
+                throw new Error(e);
+            }
         }
     }
 
     const searchMember = async () => {
-        try {
-            const res = await axios.get(``);
-            onReset();
-        } catch(e) {
-            throw new Error(e);
+        if (memberInfo === '') {
+            alert('검색할 회원의 정보를 입력해주세요.');
+        } else {
+            try {
+                // const res = await axios.get(``, memberInfo);
+                onReset();
+            } catch (e) {
+                throw new Error(e);
+            }
         }
     }
 
@@ -112,7 +191,6 @@ function Member({userData}) {
                 {userInfo && userInfo.user_type === 'admin'
                     ? <>
                         <Title>회원목록</Title>
-
                         <SearchBox>
                             <SearchInput
                                 type="text"
@@ -130,6 +208,67 @@ function Member({userData}) {
                                 onClick={searchMember}
                             >검색</OrderButton>
                         </SearchBox>
+
+                        <MobileTableBox>
+                            <NameBox>
+                                <TableBox>
+                                    <TableHead>이름</TableHead>
+                                    {userData.map(member => (
+                                        <TableTd key={member.id} width={80}>{member.name}</TableTd>
+
+                                    ))}
+                                </TableBox>
+                            </NameBox>
+                            <InfoBox>
+                                <TableBox>
+                                    <TableHead>닉네임</TableHead>
+                                    {userData.map(member => (
+                                        <TableTd key={member.id} width={100}>
+                                            {member.nickname}
+                                        </TableTd>
+                                    ))}
+                                </TableBox>
+                                <TableBox>
+                                    <TableHead>전화번호</TableHead>
+                                    {userData.map(member => (
+                                        <TableTd key={member.id} width={150}>
+                                            {member.phone_no}
+                                        </TableTd>
+                                    ))}
+                                </TableBox>
+                                <TableBox>
+                                    <TableHead>추천인</TableHead>
+                                    {userData.map(member => (
+                                        <TableTd key={member.id} width={80}>
+                                            {member.recommender}
+                                        </TableTd>
+                                    ))}
+                                </TableBox>
+                                <TableBox>
+                                    <TableHead>가입일</TableHead>
+                                    {userData.map(member => (
+                                        <TableTd key={member.id} width={100}>
+                                            {member.reg_dt}
+                                        </TableTd>
+                                    ))}
+                                </TableBox>
+                                <TableBox>
+                                    <TableHead>가입승인</TableHead>
+                                    {userData.map(member => (
+                                        <TableTd key={member.id} width={80} padding>
+                                            <Switch
+                                                color="primary"
+                                                name={member.id.toString()}
+                                                checked={!!member.approval}
+                                                onChange={e => handleSwitch(e, member.name)}
+                                            />
+                                        </TableTd>
+                                    ))}
+                                </TableBox>
+                            </InfoBox>
+                        </MobileTableBox>
+
+
                         <MemberTable>
                             <thead>
                             <tr>
@@ -142,7 +281,7 @@ function Member({userData}) {
                             </tr>
                             </thead>
                             <tbody>
-                            {userData.map((member, i) => {
+                            {userData.map(member => {
                                     return (
                                         <tr key={member.id}>
                                             <td>{member.name}</td>
@@ -150,16 +289,15 @@ function Member({userData}) {
                                             <td>{member.phone_no}</td>
                                             <td>{member.recommender}</td>
                                             <td>
-                                                {/*
-                                                {moment(member.reg_dt).format('MM.DD')}
-                                            */}
+                                                {/*{moment(member.reg_dt).format('MM.DD')}*/}
                                                 {member.reg_dt}
                                             </td>
                                             <td>
                                                 <Switch
                                                     color="primary"
                                                     name={member.id.toString()}
-                                                    onChange={(e) => handleSwitch(e, member.name)}
+                                                    checked={!!member.approval}
+                                                    onChange={e => handleSwitch(e, member.name)}
                                                 />
                                             </td>
                                         </tr>
@@ -169,25 +307,24 @@ function Member({userData}) {
                             </tbody>
                         </MemberTable>
                     </>
-                    : (
-                        <div>
-                            <Avatar style={{margin: '0px auto', marginBottom: 40}}>
-                                <LockOutlinedIcon/>
-                            </Avatar>
-                            <Typography component="h1" variant="h5">
-                                권한이 없습니다.
-                            </Typography>
-                        </div>
-                    )
+                    :
+                    <>
+                        <Avatar style={{margin: '0px auto', marginBottom: 40}}>
+                            <LockOutlinedIcon/>
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            권한이 없습니다.
+                        </Typography>
+                    </>
                 }
             </MemberListBox>
-            <ToastContainer autoClose={3000} />
+            <ToastContainer autoClose={3000}/>
         </Wrapper>
     );
 }
 
 Member.getInitialProps = async (ctx) => {
-    const res = await axios.get('http://localhost:4000/member');
+    const res = await axios.get(`${serverProtocol}${serverURL}/member`);
     const userData = res.data;
 
     return {

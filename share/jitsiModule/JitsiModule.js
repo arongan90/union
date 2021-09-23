@@ -12,7 +12,7 @@ const JitsiContainer = styled.div`
   
   display: ${({ loading }) => loading ? 'none' : 'block'};
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     
   }
 `;

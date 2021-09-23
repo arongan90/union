@@ -10,16 +10,20 @@ const ModalWrapper = styled(Modal)`
   width: 100%;
   height: 100%;
   position: absolute;
-  padding: 10px;  
+  padding: 10px;
 `;
 
 const ModalBox = styled.div`
   width: 1000px;
-  //width: 530px;
+  
   height: 650px;
   padding: 10px;
   background: white;
   margin: 50px auto;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 300px;
+  }
 `;
 
 const IframeBox = styled.iframe`

@@ -17,6 +17,11 @@ const Wrapper = styled.div`
   padding: 20px;
   margin: 10% auto;
   background: ${colors.whiteColor};
+  
+  @media screen and (max-width: 767px) {
+    max-width: 95%;
+    padding: 10px;
+  }
 `;
 const TitleBox = styled.div`
   font-size: 26px;
@@ -45,7 +50,7 @@ const Inputs = styled(TextField)`
   margin-top: 15px;
 `;
 const RadioBox = styled(RadioGroup)`
-  width: 50%;
+  width: 70%;
   margin: 20px auto;
   .MuiFormGroup-root {
     flex-direction: row;
@@ -54,6 +59,7 @@ const RadioBox = styled(RadioGroup)`
   .MuiRadio-colorSecondary.Mui-checked {
     color: ${colors.activeBlue};
   }
+  
 `;
 const Button = styled.button`
   width: 49%;

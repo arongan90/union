@@ -7,7 +7,7 @@ import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const ModalWrapper = styled.div`
-  width: 500px;
+  max-width: 500px;
   height: 530px;
   padding: 20px 15px;
   margin: 10% auto;
@@ -56,6 +56,14 @@ const RadioBox = styled(RadioGroup)`
   width: 55%;
   margin: 20px 10px 30px;
 
+  @media screen and (max-width: 420px) {
+    width: 80%;
+  }
+
+  @media screen and (max-width: 340px) {
+    width: 90%;
+  }
+  
   .MuiRadio-root {
     color: ${colors.inputBorder};
   }

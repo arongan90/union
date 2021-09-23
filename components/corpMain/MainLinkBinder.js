@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import styled, { css } from "styled-components";
 import cartSvg from "/public/images/home/cart.svg";
+import viewSvg from "/public/images/home/right.svg";
 import rightArrowSvg from "/public/images/home/rightArrow.svg";
 import Router, {useRouter} from "next/router";
 import MoreButton from "./MoreButton";
@@ -86,7 +87,8 @@ const CartImage = styled.img`
   font-size: 13px;
 `;
 const BuyText = styled.div`
-  color: #666666;
+  font-size: 13px;
+  color: ${colors.normalGray};
 `;
 const MoveStore = styled.span`
   font-size: 14px;
@@ -121,7 +123,7 @@ const MainLinkBinder = ({linkBinderList, corpName}) => {
                 ? linkBinderList.slice(0, 5).sort((a,b) => a.list_index - b.list_index).map(list => {
                     return (
                         <LinkItemBox
-                            key={list.link_id}
+                            key={list.id}
                             onClick={() => window.open(`${list.address}`)}
                         >
                             <LinkItemImgBox>
@@ -132,8 +134,8 @@ const MainLinkBinder = ({linkBinderList, corpName}) => {
                             </LinkItemImgBox>
                             <LinkItemExplain>{list.title}</LinkItemExplain>
                             <LinkButton>
-                                <CartImage src={cartSvg}/>
-                                <BuyText>BUY</BuyText>
+                                <CartImage src={list.link_type === 'shopping' ?  cartSvg : viewSvg}/>
+                                <BuyText>{list.link_type === 'shopping' ? 'BUY' : 'VIEW'}</BuyText>
                             </LinkButton>
                         </LinkItemBox>
                     )})
@@ -148,8 +150,8 @@ const MainLinkBinder = ({linkBinderList, corpName}) => {
                             </LinkItemImgBox>
                             <LinkItemExplain>{list.title}</LinkItemExplain>
                             <LinkButton>
-                                <CartImage src={cartSvg}/>
-                                <BuyText>BUY</BuyText>
+                                <CartImage src={list.link_type === 'shopping' ?  cartSvg : viewSvg}/>
+                                <BuyText>{list.link_type === 'shopping' ? 'BUY' : 'VIEW'}</BuyText>
                             </LinkButton>
                         </LinkItemBox>
                     )})

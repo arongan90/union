@@ -32,6 +32,10 @@ const BackGroundImageBox = styled.div`
   background: ${colors.blackColor};
   position: absolute;
   overflow: hidden;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 const BackgroundCoverImage = styled.img`
   width: 100%;
@@ -50,6 +54,9 @@ const ImageBox = styled.div`
   position: relative;
   margin: 0 auto;
   text-align: center;
+  @media screen and (max-width: 767px) {
+    height: 200px;
+  }
 `;
 const MainImage = styled.img`
   width: 100%;
@@ -106,8 +113,6 @@ function ThumbNail(props) {
         document.execCommand("copy");
         document.body.removeChild(tempElem);
 
-        console.info(tempElem.value);
-
         toast.info(`링크가 복사 되었습니다.`, {
             position: "bottom-center",
             autoClose: 2000,
@@ -141,38 +146,38 @@ function ThumbNail(props) {
                     </LeftBox>
                     <RightBox>
                         {!!userInfo && userInfo.user_type === 'admin' ?
-                            <Link href={`/${corpInfo.corp_name}/linkbinder/addcover`}>
+                            <Link href={`/linkbinder/${corpInfo.corp_name}/addcover`}>
                                 <a>
                                     <SubImage src={edit}/>
                                 </a>
                             </Link>
                             :
                             <>
-                                {/*{props.resource && props.resource.youtube_link !== ''
+                                {!!corpInfo.youtube_link
                                     ? <LinkImageBox>
-                                        <SubImage src={youtubeIcon} onClick={() => getSnsSite(props.resource.youtube_link)} />
+                                        <SubImage src={youtubeIcon} onClick={() => getSnsSite(corpInfo.youtube_link)} />
                                     </LinkImageBox>
                                     : null}
 
-                                {props.resource && props.resource.insta_link !== ''
+                                {!!corpInfo.insta_link
                                     ? <LinkImageBox>
-                                        <SubImage src={instaIcon} onClick={() => getSnsSite(props.resource.insta_link)} />
+                                        <SubImage src={instaIcon} onClick={() => getSnsSite(corpInfo.insta_link)} />
                                     </LinkImageBox>
                                     : null
                                 }
-                                {props.resource && props.resource.naver_link !== ''
+                                {!!corpInfo.blog_link
                                     ? <LinkImageBox>
-                                        <SubImage src={naverIcon} onClick={() => getSnsSite(props.resource.naver_link)} />
+                                        <SubImage src={naverIcon} onClick={() => getSnsSite(corpInfo.naver_link)} />
                                     </LinkImageBox>
                                     : null
                                 }
 
-                                {props.resource && props.resource.kakao_link !== ''
+                                {!!corpInfo.kakao_link
                                     ? <LinkImageBox>
-                                        <SubImage src={kakaoIcon} onClick={() => getSnsSite(props.resource.naver_link)} />
+                                        <SubImage src={kakaoIcon} onClick={() => getSnsSite(corpInfo.naver_link)} />
                                     </LinkImageBox>
                                     : null
-                                }*/}
+                                }
                             </>
                         }
                     </RightBox>

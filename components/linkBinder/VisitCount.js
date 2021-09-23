@@ -10,6 +10,10 @@ const CountWrapper = styled.div`
   color: ${colors.deepDarkBlue};
   background: ${colors.lightSkyBlue};  
   box-shadow: 0 1px 5px ${colors.grayShadowColor};
+  
+  @media screen and (max-width: 767px) {
+    padding: 0 15px;
+  }
 `;
 const CountBox = styled.div`
   max-width: 530px;

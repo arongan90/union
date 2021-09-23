@@ -5,7 +5,6 @@ const Live = () => {
     return (
         <>
             <LivePresentational
-
             />
         </>
     )

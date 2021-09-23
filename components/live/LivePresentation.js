@@ -45,7 +45,7 @@ const ChatBox = styled(Drawer)`
 const MobileChatBox = styled.div`
   display: none;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 100%;
     height: calc(100vh - 45vh);
     position: relative;

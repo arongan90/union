@@ -14,6 +14,10 @@ const Wrapper = styled.div`
   min-height: calc(100vh - 60px);
   padding: 16px 0 30px;
   background: ${colors.tabMenu};
+  
+  @media screen and (max-width: 767px) {
+    padding: 16px 10px 30px;
+  }
 `;
 const ContentBox = styled.div`
   max-width: 530px;
@@ -25,6 +29,10 @@ const ContentBox = styled.div`
 
   & + & {
     margin-top: 10px;
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 20px 10px;
   }
 `;
 const Subtitle = styled.div`
@@ -130,7 +138,10 @@ const SettingMainPresentation = ({
     return (
         <Wrapper>
             <ContentBox>
-                <ContentTitle padding="0 0 0 10px">
+                <ContentTitle
+                    padding="0 0 0 10px"
+                    settingMain
+                >
                     메인화면 설정
                 </ContentTitle>
                 <Subtitle>
@@ -186,7 +197,7 @@ const SettingMainPresentation = ({
                 </SortableBox>
             </ContentBox>
             <ContentBox>
-                <ContentTitle padding="0 0 0 10px">소개글</ContentTitle>
+                <ContentTitle padding="0 0 0 10px" settingMain>소개글</ContentTitle>
                 <Subtitle>소개글을 등록하시면 메인화면에 보여집니다. (300자 이내)</Subtitle>
                 <TextArea
                     name="introduction"
@@ -199,7 +210,7 @@ const SettingMainPresentation = ({
             </ContentBox>
 
             <ContentBox>
-                <ContentTitle padding="0 0 0 10px">로고이미지 설정</ContentTitle>
+                <ContentTitle padding="0 0 0 10px" settingMain>로고이미지 설정</ContentTitle>
                 <Subtitle>로고 이미지를 120x40px사이즈로 올려주세요. (svg, jpeg, png)</Subtitle>
                 <AddLogoLabel htmlFor="logoInput">
                     <LogoFileInput

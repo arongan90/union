@@ -13,15 +13,23 @@ const Wrapper = styled.div`
   width: 100%;
   padding: 16px 0 50px;
   background: ${colors.tabMenu};
+
+  @media screen and (max-width: 767px) {
+    padding: 16px 10px 50px;
+  }
 `;
 const UploadBox = styled.div`
-  width: 500px;
+  max-width: 500px;
   height: 578px;
   border-radius: 12px;
   margin: 0 auto;
   padding: 15px;
   box-shadow: 0 0 8px ${colors.lightShadowColor};
   background: ${colors.whiteColor};
+  
+  @media screen and (max-width: 767px) {
+    height: auto;
+  }
 `;
 const Title = styled.div`
   font-size: 18px;
@@ -112,7 +120,7 @@ const RadioBox = styled(RadioGroup)`
   }
 `;
 const ButtonBox = styled.div`
-  width: 500px;
+  max-width: 500px;
   text-align: center;
   margin: 50px auto;
 `;

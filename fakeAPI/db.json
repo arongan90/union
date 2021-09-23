@@ -39,7 +39,7 @@
     "callmodule": 1,
     "sn": "undefined",
     "register_state": "2",
-    "image_path": "upload/images/link/20210428010145_GettyImages-jv10963997.jpeg",
+    "image_path": "http://imagescdn.gettyimagesbank.com/500/201708/a10913676.jpg",
     "cp_url": "odeng",
     "cp_type": "union",
     "order": "162,136,158,154",
@@ -47,7 +47,11 @@
     "first_connect": "N",
     "main_order": "449,448,444,446,488",
     "certification": 1,
-    "introduction": "안녕하세요. 오뎅입니다."
+    "introduction": "안녕하세요. 오뎅입니다.",
+    "youtube_link": "https://www.youtube.com/watch?v=mo8ogr40m4o",
+    "facebook_link": "https://www.facebook.com/ly.non.98499",
+    "kakao_link": "",
+    "blog_link": ""
   },
   "member": [
     {

@@ -14,6 +14,10 @@ const Wrapper = styled.div`
   min-height: calc(100vh - 60px);
   padding-top: 16px;
   background: ${colors.tabMenu};
+  
+  @media screen and (max-width: 767px) {
+    padding: 10px;
+  }
 `;
 const ContentBox = styled.div`
   max-width: 500px;
@@ -23,6 +27,10 @@ const ContentBox = styled.div`
   padding: 15px;
   box-shadow: 0 0 8px ${colors.lightShadowColor};
   background: ${colors.whiteColor};
+
+  @media screen and (max-width: 767px) {
+    padding: 10px;
+  }
 `;
 const ContentTop = styled.div`
    margin: 10px 0 20px;
@@ -46,6 +54,12 @@ const NonePost = styled.div`
   color: ${colors.chatDefaultColor};
   font-weight: bold;
   background: #fff;
+`;
+const LineChange = styled.br`
+  display: none;
+  @media screen and (max-width: 767px) {
+    display: block;
+  }
 `;
 
 const VideoEmbedPresentation = ({
@@ -86,7 +100,8 @@ const VideoEmbedPresentation = ({
                 </LongButton>
             </ContentTitle>
             <ContentBox>
-                <SubTitle>영상링크를 등록하시면 메인화면에 자동으로 보여집니다.
+                <SubTitle>
+                    영상링크를 등록하시면 <LineChange /> 메인화면에 자동으로 보여집니다.
                     <ToolTip>
                         수정하기를 클릭 후 제목을 누르시면 동영상 정보를 수정하실 수 있습니다.<br/>
                         오른쪽 위,아래 아이콘을 드래그하시면 순서가 변경됩니다.<br/>

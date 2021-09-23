@@ -24,6 +24,10 @@ import {isLogout} from "../../modules/auth";
 const DrawerWrapper = styled.div`
   width: 250px;
   padding-top: 30px;
+  
+  @media screen and (max-width: 767px) {
+    padding-top: 20px;
+  }
 `;
 
 const DrawerBox = styled.div`
@@ -50,6 +54,10 @@ const DrawerLinkBox = styled(ListItem)`
     font-weight: 700;
     cursor: Default;
   `}
+
+  @media screen and (max-width: 767px) {
+    padding: 10px 0 10px 25px;
+  }
 `;
 const LinkTitle = styled.div`
   padding: 13px 0 13px 30px;

@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
        width: auto;
        opacity: 1;
        visibility: visible;

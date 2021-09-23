@@ -46,6 +46,10 @@ const DeleteIconBox = styled.div`
   ${({sort}) => sort && css`
     transform: rotateY(180deg);
   `}
+  @media screen and (max-width: 767px) {
+    width: 25px;
+    height: 25px;
+  }
 `;
 const SortIconBox = styled.div`
   width: 30px;
@@ -59,7 +63,11 @@ const SortIconBox = styled.div`
   transform: rotateY(-180deg);
   ${({sort}) => sort && css`
     transform: rotateY(0);
-  `}
+  `} 
+  @media screen and (max-width: 767px) {
+    width: 25px;
+    height: 25px;
+  }
 `;
 const SortIconImage = styled.img`
   width: 100%;
@@ -85,10 +93,18 @@ const LinkTitleBox = styled.div`
   align-items: center;
   padding-right: 20px;
   color: ${colors.chatDefaultColor};
+
+  @media screen and (max-width: 767px) {
+    padding-right: 10px;
+  }
 `;
 const LinkTitle = styled.div`
   font-size: 15px;
   color: ${colors.chatDefaultColor};
+
+  @media screen and (max-width: 767px) {
+    font-size: 14px;
+  }
 `;
 const ViewCountBox = styled.div`
   font-size: 12px;
@@ -152,10 +168,11 @@ const SortableItem = SortableElement((props) => {
 
         return (
             <SortableBox id={list.id}>
-                <ToastContainer autoClose={3000} />
+                <ToastContainer autoClose={3000}/>
                 <ImageBox>
-                    <EmbedImage src={`${list.image_path ? 'http://172.16.1.192:3000' + list.image_path : 'http://img.youtube.com/vi/' + list.youtubeId + '/0.jpg'}`}
-                                alt="image"/>
+                    <EmbedImage
+                        src={`${list.image_path ? 'http://172.16.1.192:3000' + list.image_path : 'http://img.youtube.com/vi/' + list.youtubeId + '/0.jpg'}`}
+                        alt="image"/>
                     {/*<EmbedImage src={`${serverProtocol}/${serverURL}/${list.image_path}`} alt="Image" />*/}
                 </ImageBox>
 
@@ -185,7 +202,7 @@ const SortableItem = SortableElement((props) => {
                     </>
                     :
                     <VideoTitleBox>
-                        <LinkTitle onClick={() => sort &&  handleUpdateOpen(list.id)}>
+                        <LinkTitle onClick={() => sort && handleUpdateOpen(list.id)}>
                             {list.title}
                         </LinkTitle>
                         <ViewCountBox>

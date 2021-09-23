@@ -35,14 +35,30 @@ const ContentTitleBox = styled.div`
 
     background: ${colors.orangeColor};
   }
+  
+  @media screen and (max-width: 767px) {
+    font-size: 18px;
+    padding: 10px 20px;
+    height: auto;
+    ${({settingMain}) => settingMain && css`
+      padding: 5px 10px;
+    `}
+    &:before {
+      ${({beforePosition}) => beforePosition && css`
+        top: 12px;
+        left: 10px;
+    `}
+    }
+  }
 `;
 
-const ContentTitle = ({ children, height, padding, beforePosition }) => {
+const ContentTitle = ({ children, height, padding, beforePosition, settingMain }) => {
     return (
         <ContentTitleBox
             height={height}
             padding={padding}
             beforePosition={beforePosition}
+            settingMain={settingMain}
         >
             {children}
         </ContentTitleBox>

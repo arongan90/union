@@ -27,11 +27,14 @@ const ContentBox = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+
+  @media screen and (max-width: 767px) {
+    padding: 10px;
+  }
 `;
 const Title = styled.div`
   font-size: 16px;
   color: ${colors.chatDefaultColor};
-  position: relative;
   margin-bottom: 10px;
 `;
 const SubText = styled.span`
@@ -39,10 +42,9 @@ const SubText = styled.span`
   color: ${colors.normalGray};
 `;
 const ButtonGroup = styled.div`
-  display: inline-block;
-  position: absolute;
-  right: 0;
-  top: -5px;
+  display: block;
+  text-align: right;
+  margin-top: 10px;
 `;
 const IconSvg = styled.img`
   margin: 0 5px;

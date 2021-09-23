@@ -125,7 +125,7 @@ const Chat = ({notice, height}) => {
     const [paletteOpen, setPaletteOpen] = useState(false);
     const [choiceColor, setChoiceColor] = useState(colors.chatDefaultColor);
     const [{message}, onChange, onReset] = useInput({ message: '' });
-    const { isMobile } = useSelector(state => state.isMobile);
+
     const onSendMessage = useCallback(() => {
         if (message.length < 1) {
             return false;

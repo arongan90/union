@@ -44,7 +44,7 @@ const AddLink = ({ userInfo, corpInfo }) => {
             linkUrl = 'https://' + linkUrl;
         }
 
-        console.info('::: ', linkUrl);
+        console.info('linkUrl ::: ', linkUrl);
 
         //
         // if (fileUpload.file === undefined) {
