@@ -75,9 +75,9 @@ const Drawer = () => {
         <DrawerMenu onKeyDown={toggleDrawer(false)}>
             <DrawerTop>
                 <LogoBox>
-                    <AppImage src={logoImage} />
+                    <AppImage src={logoImage} alt="logo" />
                 </LogoBox>
-                <AppImage width={17} height={17} src={closeImage} close onClick={toggleDrawer(false)} />
+                <AppImage width={17} height={17} src={closeImage} close onClick={toggleDrawer(false)} alt="close" />
             </DrawerTop>
             <TabMenu>
                 화상회의

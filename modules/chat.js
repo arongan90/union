@@ -2,6 +2,7 @@ const INIT_SOCKET = "chat/INIT_SOCKET";
 const CLOSE_SOCKET = "chat/CLOSE_SOCKET";
 const LOAD_HISTORY = "chat/LOAD_HISTORY";
 const SEND_MESSAGE = "chat/SEND_MESSAGE";
+const RECEIVE_MESSAGE = "chat/RECEIVE_MESSAGE";
 const BAN_USER = "chat/BAN_USER";
 const SET_USER_INFO = "chat/SET_USER_INFO";
 const SET_NOTICE = "chat/SET_NOTICE";
@@ -38,6 +39,10 @@ export const sendMessage = msg => {
     let message = writeMessage("me", msg.name, msg.text, +new Date, msg.color);
     return {type: SEND_MESSAGE, message};
 }
+export const receiveMessage = msg => {
+    let message = writeMessage("me", msg.name, msg.text, +new Date, msg.color);
+    return {type: RECEIVE_MESSAGE, message};
+}
 export const setUserInfo = (name, color) => {
     let info = {
         name: name,
@@ -67,7 +72,7 @@ export default function chat(state = initialState, action) {
             if (state.socket) state.socket.disconnect();
             return {
                 ...state,
-                socket: undefined,
+                socket: {},
             }
         case LOAD_HISTORY:
             return {
@@ -80,6 +85,13 @@ export default function chat(state = initialState, action) {
                 messages: state.messages.concat(action.message),
                 name: action.name,
                 color: action.color
+            }
+        case RECEIVE_MESSAGE:
+            return{
+                ...state,
+                messages: state.messages.concat(action.message),
+                name: action.name,
+                color: action.color,
             }
         case BAN_USER:
             let newMsg = [...state.messages];

@@ -3,7 +3,6 @@ import styled, {css} from "styled-components";
 import colors from "../../styles/colors";
 import Link from 'next/link';
 import { useSelector } from "react-redux";
-// Image
 import content1_1 from "/public/images/union/화상회의.svg";
 import content1_2 from "/public/images/union/product_recommendations.svg";
 import content1_3 from "/public/images/union/shoppingmall.svg";
@@ -40,6 +39,7 @@ const Wrapper = styled.div`
       display: none;
     `}
 `;
+
 const Content = styled.div`
   width: ${({width}) => width ? width : 1000}px;
   display: flex;
@@ -193,7 +193,7 @@ const UnionContent = ({isMobile}) => {
                     </Title>
                     <SubContentBox flexDirection={isMobile && 'column'}>
                         <SubContent>
-                            <ImageBox width={'200px'} height={150}>
+                            <ImageBox width={'200px'} height={'150px'}>
                                 <AppImage src={content1_1}/>
                             </ImageBox>
                             <SubTitle fontcolor={colors.gray}>
@@ -237,7 +237,7 @@ const UnionContent = ({isMobile}) => {
                 </Content>
             </Wrapper>
             }
-            {isMobile && <MobileSwiperSection />}
+            <MobileSwiperSection />
 
 
             {/* Section 3 */}

@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   height: 36px;
   border-radius: 20px;
   position: absolute;
-  z-index: 100;
+  z-index: 5;
   top: 20px;
   left: 20px;
   overflow: hidden;

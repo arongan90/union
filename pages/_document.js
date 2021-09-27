@@ -2,12 +2,14 @@ import React from 'react';
 import Document, {Html, Head, Main, NextScript} from 'next/document';
 import {ServerStyleSheets} from '@material-ui/styles';
 import {ServerStyleSheet, createGlobalStyle} from 'styled-components'
+import colors from "../styles/colors";
 
 const GlobalStyles = createGlobalStyle`
   html, body {
     height: 100%;
     margin: 0 !important;
     padding: 0;
+    background: ${colors.whiteColor};
 
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -15,6 +17,10 @@ const GlobalStyles = createGlobalStyle`
     &::-webkit-scrollbar {
       display: none;
     }
+  }
+
+  .Toastify__toast-container--bottom-center {
+    bottom: 45%;
   }
 
   button {

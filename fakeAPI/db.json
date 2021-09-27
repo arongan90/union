@@ -178,7 +178,8 @@
       "image_path": null,
       "link_type": "video",
       "cp_id": 18,
-      "youtubeId": "h03n0ULt_Rs"
+      "youtubeId": "h03n0ULt_Rs",
+      "secure": 0
     },
     {
       "id": 2,
@@ -187,7 +188,8 @@
       "image_path": null,
       "link_type": "video",
       "cp_id": 18,
-      "youtubeId": "nWc_IBuKsOQ"
+      "youtubeId": "nWc_IBuKsOQ",
+      "secure": 1
     },
     {
       "id": 3,
@@ -195,7 +197,8 @@
       "mb_id": null,
       "image_path": "/images/testImage/bateacher.jpeg",
       "link_type": "image",
-      "cp_id": 18
+      "cp_id": 18,
+      "secure": 1
     },
     {
       "id": 4,
@@ -204,16 +207,18 @@
       "image_path": null,
       "link_type": "video",
       "cp_id": 18,
-      "youtubeId": "jxdmx6Cu0bY"
+      "youtubeId": "jxdmx6Cu0bY",
+      "secure": 0
     },
     {
-     "id": 5,
-     "link_address": null,
-     "mb_id": null,
-     "image_path": "/images/testImage/paper.png",
-     "link_type": "image",
-     "cp_id": 18,
-      "youtubeId": ""
+      "id": 5,
+      "link_address": null,
+      "mb_id": null,
+      "image_path": "/images/testImage/paper.png",
+      "link_type": "image",
+      "cp_id": 18,
+      "youtubeId": "",
+      "secure": 0
     }
   ]
 }

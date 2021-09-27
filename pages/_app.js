@@ -7,7 +7,7 @@ import {isMobile} from "react-device-detect";
 import {wrapper} from "../modules/store";
 import {mobileVersion, webVersion} from "../modules/isMobile";
 import Layout from "../share/layout/Layout";
-import { CookiesProvider } from 'react-cookie';
+import {CookiesProvider} from 'react-cookie';
 import '../resources/css/floatingHeart.css';
 import styled from "styled-components";
 import initialize from "../utils/initialize";
@@ -16,6 +16,7 @@ import {removeCookie} from "../utils/cookie";
 import axios from "axios";
 import {setCorp} from "../modules/corpInfo";
 import * as constants from "../utils/constants";
+import {ToastContainer} from "react-toastify";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
@@ -38,13 +39,13 @@ const MyApp = ({Component, pageProps, mobile, userInfo, corpInfo}) => {
         <>
             <Head>
                 <meta charSet="utf-8"/>
-                <meta name="viewport" content="minimum-scale=1.0, initial-scale=1.0, width=device-width, shrink-to-fit=no"/>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <meta name="viewport"
+                      content="minimum-scale=1.0, initial-scale=1.0, width=device-width, shrink-to-fit=no, maximum-scale=1"/>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css"/>
             </Head>
 
-            <StylesProvider injectFirst>
-                <CookiesProvider>
+            <CookiesProvider>
+                <StylesProvider injectFirst>
                     <CssBaseline/>
                     {corpInfo ?
                         <Layout>
@@ -56,19 +57,20 @@ const MyApp = ({Component, pageProps, mobile, userInfo, corpInfo}) => {
                                     corpInfo={corpInfo}
                                 />
                             </ComponentWrapper>
+                            <ToastContainer autoClose={3000}/>
                         </Layout>
                         :
-                        <Component {...pageProps} isMobile={mobile} />
+                        <Component {...pageProps} isMobile={mobile}/>
                     }
-                </CookiesProvider>
-            </StylesProvider>
+                </StylesProvider>
+            </CookiesProvider>
 
         </>
     );
 }
 
 // 모든 해당 컴포넌트를 열때 store 값을 전달하기위한 메서드
-MyApp.getInitialProps = async ({ Component, ctx }) => {
+MyApp.getInitialProps = async ({Component, ctx}) => {
     initialize(ctx);
 
     const dispatch = ctx.store.dispatch;

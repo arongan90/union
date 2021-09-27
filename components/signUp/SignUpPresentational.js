@@ -17,17 +17,19 @@ import closeIcon from "/public/images/layout/closeIcon.svg";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  padding: 30px 0 60px;
+  background: ${colors.deepWhite};
 `;
 const Title = styled.h1`
   font-size: 30px;
-  margin: 30px auto 10px;
+  margin: 0 auto 10px;
   text-align: center;
 `;
 const Form = styled.form`
   max-width: 400px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0 20px;
+  box-sizing: border-box;
 `;
 const InputBox = styled.div`
   margin: 0 auto 40px;
@@ -39,7 +41,11 @@ const InputBox = styled.div`
 `;
 const Inputs = styled(TextField)`
   width: 100%;
-  height: 50px;
+  
+  input {
+    border-radius: 4px;
+    background: ${colors.whiteColor};
+  }
 `;
 const PostModal = styled(Modal)`
   width: 500px;

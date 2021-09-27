@@ -23,6 +23,7 @@ const LinkBinderPresentation = ({
                                     handleEditOpen,
                                     handleEditCancel,
                                     handleEditComplete,
+                                    toggleVisible,
                                 }) => {
     return (
         <Wrapper>
@@ -39,8 +40,8 @@ const LinkBinderPresentation = ({
                 handleEditOpen={handleEditOpen}
                 handleEditCancel={handleEditCancel}
                 handleEditComplete={handleEditComplete}
+                toggleVisible={toggleVisible}
             />
-
             <Footer />
         </Wrapper>
     )

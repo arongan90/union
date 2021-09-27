@@ -1,6 +1,6 @@
 import axios from "axios";
 import Router from "next/router";
-import {setCookie, removeCookie} from "../utils/cookie";
+import {setCookie, removeCookie, getCookie} from "../utils/cookie";
 import * as constants from "../utils/constants";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
@@ -23,6 +23,7 @@ export const isLogin = loginInfo => async dispatch => {
             email: loginInfo.userId,
             password: loginInfo.password
         });
+        const userInfo = await axios.get(`${serverProtocol}${serverURL}/user`);
 
         if (res.status === 200) {
             dispatch({
@@ -32,8 +33,9 @@ export const isLogin = loginInfo => async dispatch => {
                 }
             });
             setCookie('token', res.data);
-            setUserInfo(res.data);
-            await Router.push(`/odeng`);
+            await Router.push(`${userInfo.data.corp_name}`);
+        } else {
+            alert('아이디와 비밀번호가 일치하지 않습니다.');
         }
     } catch (e) {
         throw new Error(e);
@@ -55,7 +57,7 @@ export const setUserInfo = token => async dispatch => {
     }
 
     try {
-        let res = await axios.get(`${serverProtocol}${serverURL}/user`);
+        const res = await axios.get(`${serverProtocol}${serverURL}/user`);
         dispatch({type: SET_USER_INFO, userInfo: res.data});
     } catch (e) {
         throw new Error(e);

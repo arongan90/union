@@ -25,7 +25,7 @@ export const getCookie = (name, req) => {
 
 export const removeCookie = name => {
     if (process.browser) {
-        cookie.remove(name, {
+        cookie.remove('token', {
             expires: 1
         });
     }

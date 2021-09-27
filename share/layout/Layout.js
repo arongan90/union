@@ -7,8 +7,8 @@ import {useRouter} from "next/router";
 import hamburgerImage from "/public/images/layout/TopHamburger.svg";
 import topLockImage from "/public/images/layout/TopLock.svg";
 import topUnlockImage from "/public/images/layout/TopUnlock.svg";
-import {Router} from "next/router";
 import {isLogout} from "../../modules/auth";
+import colors from "../../styles/colors";
 
 const HeaderTop = styled.div`
   width: 100%;
@@ -16,7 +16,7 @@ const HeaderTop = styled.div`
   position: fixed;
   z-index: 100;
   background-color: #fff;
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid ${colors.borderLightGray};
   display: flex;
 `;
 const ToolBox = styled.div`
@@ -61,6 +61,11 @@ const Layout = ({ children }) => {
         setDrawerOpen(true);
     };
 
+    const onLogout = () => {
+        alert('정상적으로 로그아웃 되었습니다.');
+        dispatch(isLogout());
+    };
+
     return (
         <>
             <HeaderTop>
@@ -75,11 +80,11 @@ const Layout = ({ children }) => {
                 <ToolBox justifyContent={"flex-end"}>
                     {!!token
                         ?
-                        <NavIconBox onClick={() => router.push(`/login`)}>
+                        <NavIconBox onClick={onLogout}>
                             <NavIconImg src={topLockImage}/>
                         </NavIconBox>
                         :
-                        <NavIconBox onClick={() => dispatch(isLogout())}>
+                        <NavIconBox onClick={() => router.push(`/login`)}>
                             <NavIconImg src={topUnlockImage}/>
                         </NavIconBox>
                     }

@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import {message} from "antd";
 import colors from "../../styles/colors";
 import {useSelector} from "react-redux";
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as constants from "../../utils/constants";
 import edit from '/public/images/linkBinder/edit.png';
@@ -33,7 +33,7 @@ const BackGroundImageBox = styled.div`
   position: absolute;
   overflow: hidden;
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 530px) {
     display: none;
   }
 `;
@@ -54,7 +54,7 @@ const ImageBox = styled.div`
   position: relative;
   margin: 0 auto;
   text-align: center;
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 530px) {
     height: 200px;
   }
 `;
@@ -183,7 +183,6 @@ function ThumbNail(props) {
                     </RightBox>
                 </ImageBox>
             </ThumbNailBox>
-            <ToastContainer />
         </Wrapper>
     );
 }

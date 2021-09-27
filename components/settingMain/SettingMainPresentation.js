@@ -131,6 +131,7 @@ const SettingMainPresentation = ({
                                      handleEditCancel,
                                      handleEditComplete,
 
+                                     toggleVisible,
 
                                      handleMainSettingComplete,
                                  }) => {
@@ -193,6 +194,7 @@ const SettingMainPresentation = ({
                         itemList={settingList}
                         sort={editOrder}
                         onSortEnd={onSortEnd}
+                        toggleVisible={toggleVisible}
                     />
                 </SortableBox>
             </ContentBox>

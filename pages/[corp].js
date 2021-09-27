@@ -15,7 +15,7 @@ const serverURL = constants.config.chatServer.URL;
 
 const MainWrapper = styled.div`
   padding: 25px 0 0;
-  background: ${colors.tabMenu};
+  background: ${colors.whiteColor};
   
   @media screen and (max-width: 767px) {
     padding: 25px 10px 0;
@@ -26,7 +26,8 @@ const IntroductionBox = styled.div`
   margin: 10px auto;
   padding: 15px 10px;
   background: ${colors.whiteColor};
-  box-shadow: 0 0 8px ${colors.shadowColor};
+  border: 1px solid ${colors.corpMainBorder};
+  box-shadow: 0 0 10px ${colors.ultraLightGray};
 `;
 const Introduction = styled.div`
   min-height: 90px;
@@ -65,8 +66,6 @@ const Corp = ({ corpInfo, mainView, videoList, linkBinderList }) => {
 
 Corp.getInitialProps = async (ctx) => {
     initialize(ctx);
-
-
 
     const mainRes = await axios.get(`${serverProtocol}${serverURL}/mainSetting`);
     const videoRes = await axios.get(`${serverProtocol}${serverURL}/videoLink`);

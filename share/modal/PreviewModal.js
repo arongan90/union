@@ -11,18 +11,22 @@ const ModalWrapper = styled(Modal)`
   height: 100%;
   position: absolute;
   padding: 10px;
+  
+  //@media screen and (max-width: 767px) {
+  //  width: 320px;
+  //  margin: 0 auto;
+  //}
 `;
 
 const ModalBox = styled.div`
-  width: 1000px;
-  
-  height: 650px;
+  max-width: 80vw;
   padding: 10px;
   background: white;
   margin: 50px auto;
-  @media screen and (max-width: 768px) {
+  
+  @media screen and (max-width: 767px) {
     width: 100%;
-    height: 300px;
+    max-width: 90vw;
   }
 `;
 

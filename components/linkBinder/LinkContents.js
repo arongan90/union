@@ -75,6 +75,7 @@ function LinkContents({
                           handleEditOpen,
                           handleEditCancel,
                           handleEditComplete,
+                          toggleVisible
                       }) {
     return (
         <ContentBox>
@@ -82,6 +83,7 @@ function LinkContents({
             <>
                 <Title>링크추가</Title>
                 <LongButton
+                    height={54}
                     fontSize={14}
                     marginBottom={40}
                     costumeBgColor="linear-gradient(94.85deg, #2054A5 -10.42%, #1B3A6A 94.56%)"
@@ -149,6 +151,7 @@ function LinkContents({
                         deleteCard={deleteCard}
                         onSortEnd={onSortEnd}
                         userInfo={userInfo}
+                        toggleVisible={toggleVisible}
                     />
                     :
                     <NonePost>등록된 포스트가 없습니다.</NonePost>

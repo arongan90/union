@@ -125,6 +125,22 @@ const Chat = ({notice, height}) => {
     const [paletteOpen, setPaletteOpen] = useState(false);
     const [choiceColor, setChoiceColor] = useState(colors.chatDefaultColor);
     const [{message}, onChange, onReset] = useInput({ message: '' });
+    const { socket } = chat;
+
+    useEffect(() => {
+        console.info('Chat socket : ', chat);
+
+        if (!!socket) {
+            socket.on("connection", (data) => {
+                console.info('연결성공 ?', data);
+            });
+
+            socket.on("recMsg", data => {
+                console.info('데이터 ::: ', data);
+            });
+        }
+    }, [chat]);
+
 
     const onSendMessage = useCallback(() => {
         if (message.length < 1) {
@@ -138,6 +154,16 @@ const Chat = ({notice, height}) => {
                 color: choiceColor,
             }
             dispatch(sendMessage(msg));
+
+            if (!!socket) {
+                socket.emit("msg", {
+                    user_id: userInfo.id,
+                    name: userInfo.nickname,
+                    comment: message,
+                    color: choiceColor,
+                    cp_id: userInfo.cp_id,
+                });
+            }
             onReset();
         }
     }, [message, dispatch, onReset]);

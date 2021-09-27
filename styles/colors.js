@@ -9,13 +9,13 @@ export default {
     orangeColor: "#FFC774",
     activeRed: "#E12B03",
 
-    activePink: "#EA2F86",
-    activeOrange: "#ff7f00",
-    activeYBurgundy: "#5A1A28",
-    activeIceBlue: "#4995AE",
-    activeBlue: "#1169ED",
-    activeIndigoBlue: "#3A3C68",
-    activeViolet: "#493C9E",
+    activePink: "#D77373",
+    activeGreen: "#35AA22",
+    // activeYBurgundy: "#5A1A28",
+    // activeIceBlue: "#4995AE",
+    // activeBlue: "#1169ED",
+    // activeIndigoBlue: "#3A3C68",
+    // activeViolet: "#493C9E",
 
 
     // Background
@@ -23,7 +23,6 @@ export default {
     deepWhite: "#F7F9FB",
     tabMenu: "#F3F5F7",
     footerBackground: "#2F2F2F",
-    // linkBgColor: "#E5E5E5",
     lightSkyBlue: "#DCE4ED",
     deepDarkGray: "#555555",
 
@@ -33,6 +32,7 @@ export default {
     loginTabBorder: "#AAAAAA",
     inputBorder: "#CCCCCC",
     deepBlueBorder: "#1C3B6B",
+    corpMainBorder: "#DCDCDC",
 
     // Text
     skyBlue: "#1872B9",

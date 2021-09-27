@@ -7,12 +7,11 @@ import * as constants from "../../utils/Constants";
 import colors from "../../styles/colors";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import deleteSvg from "/public/images/share/delete.svg";
 import sortSvg from "/public/images/share/sort.svg";
-import viewIcon from "/public/images/share/viewIcon.png";
 import cartSvg from "/public/images/share/cart.svg";
+import viewIcon from "/public/images/share/viewIcon.png";
 
 const serverURL = constants.config.chatServer.URL;
 const serverProtocol = constants.config.chatServer.PROTOCOL;
@@ -45,11 +44,10 @@ const DeleteIconBox = styled.div`
 
   ${({sort}) => sort && css`
     transform: rotateY(180deg);
-  `}
-  @media screen and (max-width: 767px) {
-    width: 25px;
-    height: 25px;
-  }
+  `} @media screen and(max-width: 767 px) {
+  width: 25px;
+  height: 25px;
+}
 `;
 const SortIconBox = styled.div`
   width: 30px;
@@ -63,11 +61,10 @@ const SortIconBox = styled.div`
   transform: rotateY(-180deg);
   ${({sort}) => sort && css`
     transform: rotateY(0);
-  `} 
-  @media screen and (max-width: 767px) {
-    width: 25px;
-    height: 25px;
-  }
+  `} @media screen and(max-width: 767 px) {
+  width: 25px;
+  height: 25px;
+}
 `;
 const SortIconImage = styled.img`
   width: 100%;
@@ -113,13 +110,11 @@ const VisibleIcon = styled.span`
   font-size: 16px;
   color: ${colors.loginDefaultFont};
   vertical-align: middle;
-  margin-right: 10px;
+  margin: 0 10px;
+
+  color: ${({secure}) => secure ? colors.activeGreen : colors.activePink};
 
   ${({userType}) => userType && css`
-    &:hover {
-      color: ${colors.loginPoint};
-    }
-
     cursor: pointer;
   `}
 `;
@@ -154,21 +149,10 @@ const VideoTitleBox = styled.div`
 
 const DragHandle = SortableHandle(() => <SortIconImage src={sortSvg}/>);
 const SortableItem = SortableElement((props) => {
-        const {list, sort, deleteCard, corpName, userInfo, router, linkBinder, handleUpdateOpen} = props;
-
-        const [testSecure, setTestSecure] = useState(false);
-        const handleClick = () => {
-            if (testSecure) {
-                toast.info("비공개로 설정 되었습니다.");
-            } else {
-                toast.info("공개로 설정 되었습니다.");
-            }
-            setTestSecure(!testSecure);
-        }
+        const {list, sort, deleteCard, corpName, userInfo, router, linkBinder, handleUpdateOpen, toggleVisible} = props;
 
         return (
             <SortableBox id={list.id}>
-                <ToastContainer autoClose={3000}/>
                 <ImageBox>
                     <EmbedImage
                         src={`${list.image_path ? 'http://172.16.1.192:3000' + list.image_path : 'http://img.youtube.com/vi/' + list.youtubeId + '/0.jpg'}`}
@@ -187,16 +171,16 @@ const SortableItem = SortableElement((props) => {
                                 </a>
                             </Link>
                             <ViewCountBox>
+                                {list.link_count}
                                 {userInfo && userInfo.user_type === 'admin'
-                                    ? <VisibleIcon userType={userInfo.user_type} onClick={() => handleClick(list.secure)}>
-                                        {testSecure ? <VisibilityIcon/> : <VisibilityOffIcon/>}
-                                        {/*{list.secure ? <VisibilityIcon/> : <VisibilityOffIcon/>}*/}
+                                    ? <VisibleIcon userType={userInfo.user_type} onClick={() => toggleVisible(list.secure)}
+                                                   secure={list.secure}>
+                                        {list.secure ? <VisibilityIcon/> : <VisibilityOffIcon/>}
                                     </VisibleIcon>
-                                    : <VisibleIcon>
-                                        <VisibilityIcon/>
+                                    : <VisibleIcon secure={list.secure}>
+                                        {list.secure ? <VisibilityIcon/> : <VisibilityOffIcon/>}
                                     </VisibleIcon>
                                 }
-                                {list.link_count}
                             </ViewCountBox>
                         </LinkTitleBox>
                     </>
@@ -207,11 +191,11 @@ const SortableItem = SortableElement((props) => {
                         </LinkTitle>
                         <ViewCountBox>
                             {userInfo && userInfo.user_type === 'admin'
-                                ? <VisibleIcon userType={userInfo.user_type} onClick={() => handleClick(list.secure)}>
-                                    {testSecure ? <VisibilityIcon/> : <VisibilityOffIcon/>}
-                                    {/*{list.secure ? <VisibilityIcon/> : <VisibilityOffIcon/>}*/}
+                                ? <VisibleIcon userType={userInfo.user_type} onClick={() => toggleVisible(list.secure)}
+                                               secure={list.secure}>
+                                    {list.secure ? <VisibilityIcon/> : <VisibilityOffIcon/>}
                                 </VisibleIcon>
-                                : <VisibleIcon>
+                                : <VisibleIcon secure={list.secure}>
                                     <VisibilityIcon/>
                                 </VisibleIcon>
                             }
@@ -249,30 +233,58 @@ const SortableContainerBox = SortableContainer(({
                                                     router,
                                                     linkBinder,
                                                     handleUpdateOpen,
+                                                    toggleVisible,
                                                 }) => {
+        let visibleItemList = [];
+        itemList.map(list => {
+            if (list.secure === 1) {
+                visibleItemList.push(list);
+            }
+        });
+
         return (
             <div>
-                {itemList.map((list, index) => (
-                    <SortableItem
-                        key={`item-${index}`}
-                        list={list}
-                        sort={sort}
-                        index={index}
-                        deleteCard={deleteCard}
-                        corpName={corpName}
-                        userInfo={userInfo}
-                        router={router}
-                        linkBinder={linkBinder}
-                        handleUpdateOpen={handleUpdateOpen}
-                    />
-                ))}
+                {userInfo && userInfo.user_type === 'admin'
+                    ?
+                    itemList.map((list, index) => (
+                        <SortableItem
+                            key={`item-${index}`}
+                            list={list}
+                            sort={sort}
+                            index={index}
+                            deleteCard={deleteCard}
+                            corpName={corpName}
+                            userInfo={userInfo}
+                            router={router}
+                            linkBinder={linkBinder}
+                            handleUpdateOpen={handleUpdateOpen}
+                            toggleVisible={toggleVisible}
+                        />
+                    ))
+                    :
+                    visibleItemList.map((list, index) => (
+                        <SortableItem
+                            key={`item-${index}`}
+                            list={list}
+                            sort={sort}
+                            index={index}
+                            deleteCard={deleteCard}
+                            corpName={corpName}
+                            userInfo={userInfo}
+                            router={router}
+                            linkBinder={linkBinder}
+                            handleUpdateOpen={handleUpdateOpen}
+                            toggleVisible={toggleVisible}
+                        />
+                    ))
+                }
             </div>
         )
     }
 );
 
 const LinkSortable = (props) => {
-    const {itemList, onSortEnd, sort, deleteCard, userInfo, linkBinder, handleUpdateOpen} = props;
+    const {itemList, onSortEnd, sort, deleteCard, userInfo, linkBinder, handleUpdateOpen, toggleVisible} = props;
 
     return (
         <SortableWrap>
@@ -287,6 +299,7 @@ const LinkSortable = (props) => {
                 router={Router}
                 linkBinder={linkBinder}
                 handleUpdateOpen={handleUpdateOpen && handleUpdateOpen}
+                toggleVisible={toggleVisible}
             />
         </SortableWrap>
     )

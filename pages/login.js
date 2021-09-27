@@ -123,7 +123,6 @@ const Button = styled.button`
 const Login = () => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const { userInfo } = useSelector(state => state.auth);
     const [visible, setVisible] = useState(true);
     const [tabActive, setTabActive] = useState({
         login: true,
@@ -148,25 +147,21 @@ const Login = () => {
         corpInput: ''
     });
 
-    const moveCorpHome = () => {
-        console.info('moveCorpHome', userInfo);
-        if (!!userInfo) {
-            router.push(`/${userInfo.corp_name}`)
-        }
-    }
     const handleVisible = () => setVisible(visible => !visible);
     const goBack = () => router.back();
+
     const onLogin = async () => {
-        let loginInfo = {};
         if (userId === '' || password === '') {
            alert('아이디와 비밀번호를 입력해주세요.');
         } else {
-            loginInfo = {
-                userId: userId,
-                password: password,
+            try {
+                dispatch(isLogin({
+                    userId: userId,
+                    password: password,
+                }));
+            } catch(e) {
+                throw new Error(e);
             }
-            dispatch(isLogin(loginInfo));
-            moveCorpHome();
         }
     }
 

@@ -13,6 +13,12 @@ import 'swiper/swiper-bundle.min.css';
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
 const SwiperWrapper = styled.div`
+  max-width: 530px;
+  height: 398px;
+  margin: 10px auto;
+  border: 1px solid ${colors.corpMainBorder};
+  box-shadow: 0 0 10px ${colors.ultraLightGray};
+  
   .swiper-button-next {
     &::after {
       position:relative;
@@ -81,20 +87,12 @@ const MainVideo = ({ mainView }) => {
     return (
         <SwiperWrapper>
             <Swiper
-                // autoplay
+                autoplay
                 spaceBetween={50}
                 slidesPerView={1}
                 navigation={true}
                 pagination={{
                     "clickable": true
-                }}
-                style={{
-                    maxWidth: 530,
-                    height: 398,
-                    margin: '10px auto',
-                    overflow: 'hidden',
-                    border: '1px solid #dddddd',
-                    boxShadow: `0 0 8px ${colors.shadowColor}`,
                 }}
             >
                 {mainView ? mainView.map((value) => (

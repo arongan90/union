@@ -5,7 +5,7 @@ import {darken, lighten} from "polished";
 import colors from "../styles/colors";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import UnionContent from "../components/unionMain/UnionContent";
+import UnionContents from "../components/unionMain/UnionContents";
 import Drawer from "../components/unionMain/Drawer";
 import { useMediaQuery } from "react-responsive";
 import { useRouter } from "next/router";
@@ -238,9 +238,6 @@ function Index() {
     const dispatch = useDispatch();
     const { userInfo } = useSelector(state => state.auth);
 
-    const handleTabChange = (event, newValue) => {
-        setTabValue(newValue);
-    };
 
     const isMobile = useMediaQuery({
         query: "(min-width: 280px) and (max-width: 767px)"
@@ -250,20 +247,9 @@ function Index() {
         query: "(min-width: 280px) and (max-width: 400px)"
     });
 
+    const handleTabChange = (event, newValue) => setTabValue(newValue);
     const onLogin = () => router.push(`/login`);
-    const onLogout = () => {
-        dispatch(isLogout());
-    }
-
-    const handleScrollClick = useCallback(() => {
-        console.info('윈도우 ?:: ', window.scrollTo)
-        window.scrollTo(0, 3000);
-    }, []);
-
-    useEffect(() => {
-        window.addEventListener('scroll', handleScrollClick);
-        return () => window.removeEventListener('scroll', handleScrollClick);
-    }, [handleScrollClick]);
+    const onLogout = () => dispatch(isLogout());
 
     return (
         <div>
@@ -278,7 +264,7 @@ function Index() {
                 <MainBanner>
                     <HeaderBox>
                         <HeaderLeft>
-                            <CatBellLogo src={catbellLogo} alt={"catbell"}/>
+                            <CatBellLogo src={catbellLogo} alt="logo"/>
                             <TabBar
                                 value={tabValue}
                                 onChange={handleTabChange}
@@ -286,19 +272,19 @@ function Index() {
                                 textColor="primary"
                                 centered
                             >
-                                <TabMenu label="화상회의" onClick={handleScrollClick} />
-                                <TabMenu label="On Air" onClick={handleScrollClick} />
-                                <TabMenu label="링크바인더" onClick={handleScrollClick} />
-                                <TabMenu label="게시영상" onClick={handleScrollClick} />
-                                <TabMenu label="쇼핑몰" onClick={handleScrollClick} />
+                                <TabMenu label="화상회의" />
+                                <TabMenu label="On Air" />
+                                <TabMenu label="링크바인더" />
+                                <TabMenu label="게시영상" />
+                                <TabMenu label="쇼핑몰" />
                             </TabBar>
                         </HeaderLeft>
                         <HeaderRight>
-                            {userInfo
+                            {!!userInfo
                                 ? <LoginButton bgColor={colors.activeRed} onClick={onLogout}>LOGOUT</LoginButton>
                                 : <LoginButton bgColor={colors.deepYellow} onClick={onLogin}>LOGIN</LoginButton>
                             }
-                            <Drawer isMobile={isMobile} />
+                            <Drawer />
                         </HeaderRight>
                     </HeaderBox>
 
@@ -319,7 +305,7 @@ function Index() {
                     </MoveArrow>
                 </MainBanner>
 
-                <UnionContent
+                <UnionContents
                     isMobile={isMobile}
                 />
 

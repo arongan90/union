@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import LinkBinderPresentation from "../../components/linkBinder/LinkBinderPresentation";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
@@ -7,6 +7,7 @@ import {useRouter} from "next/router";
 import * as constants from "../../utils/constants";
 import initialize from "../../utils/initialize";
 import {setCorp} from "../../modules/corpInfo";
+import {toast} from "react-toastify";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
@@ -31,6 +32,14 @@ const LinkBinder = ({linkData, corpName}) => {
         }
         window.open(`${value.address}`);
     }
+
+    const toggleVisible = useCallback(secure => {
+        if (secure) {
+            toast.info("비공개로 설정 되었습니다.");
+        } else {
+            toast.info("공개로 설정 되었습니다.");
+        }
+    }, []);
 
     const onSortEnd = ({oldIndex, newIndex}) => {
         setCopyLinkList(linkList);
@@ -95,6 +104,7 @@ const LinkBinder = ({linkData, corpName}) => {
             handleEditOpen={handleEditOpen}
             handleEditCancel={handleEditCancel}
             handleEditComplete={handleEditComplete}
+            toggleVisible={toggleVisible}
         />
     );
 }

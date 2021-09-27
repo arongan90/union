@@ -17,6 +17,8 @@ SwiperCore.use([Navigation, Autoplay, Scrollbar, Pagination]);
 
 const SwiperWrapper = styled.div`
   width: 100%;
+  display: none;
+  
   .swiper-container {
     height: 100%;
     overflow-y: visible;
@@ -31,10 +33,15 @@ const SwiperWrapper = styled.div`
   .swiper-slide {
     width: 100%;
   }
+
+  @media only screen and (max-width: 767px) {
+    display: block;
+  }
 `;
 const AppImageBox = styled.div`
   width: 100%;
   height: 100%;
+  
   @media only screen and (max-width: 767px) {
     width: 280px;
     margin: 0 auto;

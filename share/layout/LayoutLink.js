@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import Link from 'next/link';
 import styled, {css} from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
@@ -6,7 +7,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import {useRouter} from "next/router";
 import colors from "../../styles/colors";
-
 import unlockSvg from "/public/images/layout/TopUnlock.svg";
 import lockSvg from "/public/images/layout/lock.svg";
 import memberSvg from "/public/images/layout/member.svg";
@@ -65,6 +65,11 @@ const LinkTitle = styled.div`
   font-size: 15px;
   font-weight: 500;
 `;
+const UserName = styled.span`
+  font-size: 14px;
+  margin: 3px 3px 0 10px;
+  color: ${colors.gray};
+`;
 
 const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo}) => {
     const dispatch = useDispatch();
@@ -80,7 +85,6 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo}) => {
 
     return (
         <>
-
             <DrawerWrapper>
                 <DrawerIcon src={closeSvg} position onClick={() => setDrawerOpen(false)}/>
                 <DrawerBox
@@ -94,18 +98,14 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo}) => {
                     {!!userInfo ?
                         <DrawerLinkBox button onClick={onLogout}>
                             <ListItemIcon>
-                                {!!token ?
                                     <DrawerIcon src={lockSvg}/>
-                                    :
-                                    <DrawerIcon src={unlockSvg}/>
-                                }
                             </ListItemIcon>
-                            로그아웃
+                            로그아웃 <UserName>{userInfo.name}</UserName> 님
                         </DrawerLinkBox>
                         :
                         <DrawerLinkBox onClick={() => router.push(`/login`)}>
                             <ListItemIcon>
-                                <DrawerIcon src={lockSvg}/>
+                                <DrawerIcon src={unlockSvg}/>
                             </ListItemIcon>
                             로그인
                         </DrawerLinkBox>

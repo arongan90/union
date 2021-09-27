@@ -7,6 +7,7 @@ import {useRouter} from "next/router";
 import * as constants from "../../utils/constants";
 import arrayMove from "array-move";
 import {useSelector} from "react-redux";
+import {toast} from "react-toastify";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
@@ -87,6 +88,14 @@ const SettingMain = ({settingData}) => {
             throw new Error(e);
         }
     }
+
+    const toggleVisible = useCallback(secure => {
+        if (secure) {
+            toast.info("비공개로 설정 되었습니다.");
+        } else {
+            toast.info("공개로 설정 되었습니다.");
+        }
+    }, []);
 
     const handleUploadImage = useCallback(e => {
         let reader = new FileReader();
@@ -218,13 +227,13 @@ const SettingMain = ({settingData}) => {
                 logoFile={logoFile}
                 handleLogoUpload={handleLogoUpload}
 
-                //
                 editOrder={editOrder}
                 onSortEnd={onSortEnd}
                 handleEditOpen={handleEditOpen}
                 handleEditCancel={handleEditCancel}
                 handleEditComplete={handleEditComplete}
 
+                toggleVisible={toggleVisible}
 
                 handleMainSettingComplete={handleMainSettingComplete}
             />

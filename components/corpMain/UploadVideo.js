@@ -13,8 +13,9 @@ const UploadVideoWrapper = styled.div`
   margin: 0 auto;
   padding: 20px 10px 50px;
   box-sizing: border-box;
-  background-color: #fff;
-  box-shadow: 0 0 8px ${colors.shadowColor};
+  background-color: ${colors.whiteColor};
+  border: 1px solid ${colors.corpMainBorder};
+  box-shadow: 0 0 10px ${colors.ultraLightGray};
   position: relative;
   overflow: hidden;
   transition: 0.4s;
@@ -81,7 +82,7 @@ const PlayButton = styled.img`
   position: absolute;
   top: 30%;
   left: 52%;
-  z-index: 10;
+  z-index: 5;
   transform: translate(-50%, -50%);
 `;
 

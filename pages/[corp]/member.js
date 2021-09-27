@@ -318,7 +318,6 @@ function Member({userData}) {
                     </>
                 }
             </MemberListBox>
-            <ToastContainer autoClose={3000}/>
         </Wrapper>
     );
 }

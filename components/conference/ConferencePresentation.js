@@ -23,6 +23,12 @@ const Wrapper = styled.div`
     padding-top: 60px;
     width: 400px;
   }
+
+  @media screen and (max-width: 767px) {
+    .MuiDrawer-paper {
+      width: 250px;
+    }
+  }
 `;
 const ScreenBox = styled.div`
   width: ${({chatDrawer}) => chatDrawer ? 'calc(100vw - 400px)' : '100vw'};
@@ -31,7 +37,11 @@ const ScreenBox = styled.div`
   transition: 0.18s;
   background: ${colors.lightBlack};
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
+    width: ${({chatDrawer}) => chatDrawer ? 'calc(100vw - 200px)' : '100vw'};
+  }
+
+  @media screen and (max-width: 420px) {
     width: 100%;
     height: calc(100vh - 55vh - 60px);
   }
@@ -47,15 +57,19 @@ const ScreenIframe = styled.iframe`
 const ChatBox = styled(Drawer)`
   width: 400px;
   height: 100%;
-  
-  @media screen and (max-width: 768px) {
+
+  @media screen and (max-width: 767px) {
+    max-width: 200px;
+  }
+
+  @media screen and (max-width: 420px) {
     display: none;
   }
 `;
 const MobileChatBox = styled.div`
   display: none;
 
-  @media (max-width: 768px) {
+  @media (max-width: 420px) {
     width: 100%;
     height: calc(100vh - 45vh);
     position: relative;
