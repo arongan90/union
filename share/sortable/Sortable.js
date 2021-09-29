@@ -96,8 +96,10 @@ const LinkTitleBox = styled.div`
   }
 `;
 const LinkTitle = styled.div`
+  width: 100%;
   font-size: 15px;
   color: ${colors.chatDefaultColor};
+  cursor: pointer;
 
   @media screen and (max-width: 767px) {
     font-size: 14px;
@@ -186,7 +188,7 @@ const SortableItem = SortableElement((props) => {
                     </>
                     :
                     <VideoTitleBox>
-                        <LinkTitle onClick={() => sort && handleUpdateOpen(list.id)}>
+                        <LinkTitle onClick={() => sort ? handleUpdateOpen(list.id) : window.open(list.link)}>
                             {list.title}
                         </LinkTitle>
                         <ViewCountBox>

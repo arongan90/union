@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import { useRouter } from "next/router";
 import useInput from "../../../../hooks/useInput";
-import UpdateLinkPresentation from "../../../../components/linkBinder/UpdateLinkPresentation";
+import UpdateLinkPresentational from "../../../../components/linkBinder/UpdateLinkPresentational";
 import {useSelector} from "react-redux";
 import initialize from "../../../../utils/initialize";
 import axios from "axios";
@@ -84,7 +84,7 @@ const LinkId = ({ linkData }) => {
 
     return (
         <>
-            <UpdateLinkPresentation
+            <UpdateLinkPresentational
                 isOpen={isOpen}
                 handleSelected={handleSelected}
                 handleRadioChange={handleRadioChange}

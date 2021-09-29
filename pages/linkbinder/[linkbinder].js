@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import LinkBinderPresentation from "../../components/linkBinder/LinkBinderPresentation";
+import LinkBinderPresentational from "../../components/linkBinder/LinkBinderPresentational";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import arrayMove from "array-move";
@@ -93,7 +93,7 @@ const LinkBinder = ({linkData, corpName}) => {
     }, []);
 
     return (
-        <LinkBinderPresentation
+        <LinkBinderPresentational
             linkList={linkList}
             editOrder={editOrder}
             userInfo={userInfo}

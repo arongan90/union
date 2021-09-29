@@ -7,46 +7,29 @@ import Radio from "@material-ui/core/Radio";
 import FileUpload from "../../share/fileUpload/FileUpload";
 import selectArrowImage from "/public/images/share/selectArrow.svg";
 import {darken, lighten} from "polished";
-
+import ContentTitle from "../../share/components/ContentTitle";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
-  padding-top: 16px;
+  padding: 16px 0 50px;
   background: ${colors.tabMenu};
-`;
-const ContentTitle = styled.div`
-  max-width: 500px;
-  height: 80px;
-  color: ${colors.deepDarkBlue};
-  font-size: 24px;
-  font-weight: bold;
-  border-radius: 12px;
-  position: relative;
-  margin: 0 auto 8px;
-  padding: 20px 30px;
-  box-shadow: 0 0 8px ${colors.lightShadowColor};
-  background: ${colors.whiteColor};
 
-  &:before {
-    content: "";
-    width: 4px;
-    height: 24px;
-    position: absolute;
-    top: 26px;
-    left: 15px;
-    background: ${colors.orangeColor};
+  @media screen and (max-width: 767px) {
+    padding: 16px 10px 50px;
   }
 `;
-
 const UploadBox = styled.div`
-  width: 500px;
+  max-width: 500px;
   height: 578px;
   border-radius: 12px;
   margin: 0 auto;
   padding: 15px;
   box-shadow: 0 0 8px ${colors.lightShadowColor};
   background: ${colors.whiteColor};
+  
+  @media screen and (max-width: 767px) {
+    height: auto;
+  }
 `;
 const Title = styled.div`
   font-size: 18px;
@@ -137,7 +120,7 @@ const RadioBox = styled(RadioGroup)`
   }
 `;
 const ButtonBox = styled.div`
-  width: 500px;
+  max-width: 500px;
   text-align: center;
   margin: 50px auto;
 `;
@@ -164,28 +147,28 @@ const Button = styled.button`
   & + & {
     margin-left: 10px;
   }
+
 `;
 
-const UpdateLinkPresentation = ({
-                                    handleSelected,
-                                    handleRadioChange,
-                                    isOpen,
-                                    linkTitle,
-                                    linkUrl,
-                                    handleInputChange,
-                                    onCancel,
-                                    onRegister,
-                                    fileUpload,
-                                    handleFileUpload,
-                                    linkData
-                                }) => {
+const AddLinkPresentational = ({
+                                 handleSelected,
+                                 handleRadioChange,
+                                 isOpen,
+                                 linkTitle,
+                                 linkUrl,
+                                 handleInputChange,
+                                 onCancel,
+                                 onRegister,
+                                 fileUpload,
+                                 handleFileUpload,
+                             }) => {
     return (
         <Wrapper>
             <ContentTitle
                 height="80px"
                 padding="20px 30px"
                 beforePosition
-            >포스트 수정하기</ContentTitle>
+            >포스트 추가하기</ContentTitle>
             <UploadBox>
                 <Title>링크 등록하기</Title>
                 <SubTitle star>이미지 등록</SubTitle>
@@ -198,13 +181,12 @@ const UpdateLinkPresentation = ({
                 <SubTitle star>링크 종류</SubTitle>
                 <SelectBox
                     onChange={handleSelected}
-                    value={linkData.link_type}
                 >
                     <option value="selected">선택하기</option>
                     <option value="shopping">쇼핑</option>
                     <option value="blog">블로그</option>
                     <option value="contents">컨텐츠</option>
-                    <option value="info" >정보</option>
+                    <option value="info">정보</option>
                     <option value="etc">기타</option>
                 </SelectBox>
                 <SubTitle star>링크제목</SubTitle>
@@ -249,4 +231,4 @@ const UpdateLinkPresentation = ({
     );
 }
 
-export default UpdateLinkPresentation;
+export default AddLinkPresentational;

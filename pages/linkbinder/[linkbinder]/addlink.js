@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import useInput from "../../../hooks/useInput";
 import {useSelector} from "react-redux";
-import AddLinkPresentation from "../../../components/linkBinder/AddLinkPresentation";
+import AddLinkPresentational from "../../../components/linkBinder/AddLinkPresentational";
 import * as constants from "../../../utils/Constants";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
@@ -87,7 +87,7 @@ const AddLink = ({ userInfo, corpInfo }) => {
 
 
     return (
-        <AddLinkPresentation
+        <AddLinkPresentational
             isOpen={isOpen}
             handleSelected={handleSelected}
             handleRadioChange={handleRadioChange}

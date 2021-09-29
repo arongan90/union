@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import SettingMainPresentation from "../../components/settingMain/SettingMainPresentation";
+import MainSettingPresentational from "../../components/mainSetting/MainSettingPresentational";
 import initialize from "../../utils/initialize";
 import axios from "axios";
 import useInput from "../../hooks/useInput";
@@ -12,7 +12,7 @@ import {toast} from "react-toastify";
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
 
-const SettingMain = ({settingData}) => {
+const MainsSetting = ({settingData}) => {
     const router = useRouter();
     const { userInfo } = useSelector(state => state.auth);
     const [settingList, setSettingList] = useState(settingData);
@@ -26,32 +26,42 @@ const SettingMain = ({settingData}) => {
         image: true,
         video: false
     });
-    //* -------------------------------
-    const [{videoUrl_1, videoUrl_2, videoUrl_3}, onVideoUrlChange, onReset, setForm] = useInput({
-        videoUrl_1: '',
-        videoUrl_2: '',
-        videoUrl_3: ''
-    }); /*/
-    const [videoUrl, setVideoUrl] = useState({
-        videoUrl_1: '',
-        videoUrl_2: '',
-        videoUrl_3: ''
-    });
-    const onVideoUrlChange = e => {
-        setVideoUrl({...videoUrl, [e.target.name]: e.target.value});
-    }
-    const { videoUrl_1,videoUrl_2,videoUrl_3 } = videoUrl;
-    const onReset = () => setVideoUrl({
-        videoUrl_1: '',
-        videoUrl_2: '',
-        videoUrl_3: ''
-    });// */
     const [fileList, setFileList] = useState({
         file: [],
         previewUrl: [],
         videoList: [],
     });
     const {file, previewUrl, videoList} = fileList;
+    /* -------------------------------
+    const [{videoUrl_1, videoUrl_2, videoUrl_3}, onVideoUrlChange, onReset, setForm] = useInput({
+        videoUrl_1: '',
+        videoUrl_2: '',
+        videoUrl_3: ''
+    });
+    useEffect(() => {
+        setForm({
+            videoUrl_1: videoList[0] ? videoList[0].link_address : '',
+            videoUrl_2: videoList[1] ? videoList[1].link_address : '',
+            videoUrl_3: videoList[2] ? videoList[2].link_address : '',
+        });
+    }, [videoList]);
+    /*/
+    const [videoUrl, setVideoUrl] = useState({
+        videoUrl_1: '',
+        videoUrl_2: '',
+        videoUrl_3: ''
+    });
+    const { videoUrl_1,videoUrl_2,videoUrl_3 } = videoUrl;
+    const onVideoUrlChange = e => setVideoUrl({...videoUrl, [e.target.name]: e.target.value});
+
+    useEffect(() => {
+        setVideoUrl({
+            videoUrl_1: videoList[0] ? videoList[0].link_address : '',
+            videoUrl_2: videoList[1] ? videoList[1].link_address : '',
+            videoUrl_3: videoList[2] ? videoList[2].link_address : '',
+        });
+    }, [videoList]);
+    // */
 
     const handleAddLinkOpen = () => setAddLinkOpen(true);
     const handleAddLinkClose = () => setAddLinkOpen(false);
@@ -122,37 +132,58 @@ const SettingMain = ({settingData}) => {
     }, [logoFile]);
 
     const handleDeleteImage = image => {
-        const deleteFile = file.filter(item => item.name !== image.name);
         setFileList({
             ...fileList,
-            file: deleteFile
+            file: file.filter(item => item.id !== image.id),
         });
     }
 
     const handleImageUpload = () => {
         const formData = new FormData();
 
-        // formData.append('image', imageFileList.file[0]);
-        console.info('image data: ');
+        formData.append('image_0',fileList.file[0] && fileList.file[0]);
+        formData.append('image_1',fileList.file[1] && fileList.file[1]);
+        formData.append('image_2',fileList.file[2] && fileList.file[2]);
+
         handleAddLinkClose();
     }
 
     const handleVideoUpload = () => {
-        let params = {
-            videoUrl_1: videoUrl_1,
-            videoUrl_2: videoUrl_2,
-            videoUrl_3: videoUrl_3,
+        let regExp = /^.*(youtu.be\/|v\/|embed\/|watch\?|youtube.com\/user\/[^#]*#([^\/]*?\/)*)\??v?=?([^#\&\?]*).*/;
+        let youtubeId_1 = videoUrl_1 && videoUrl_1.match(regExp) && videoUrl_1.match(regExp)[3];
+        let youtubeId_2 = videoUrl_2 && videoUrl_2.match(regExp) && videoUrl_2.match(regExp)[3];
+        let youtubeId_3 = videoUrl_3 && videoUrl_3.match(regExp) &&  videoUrl_3.match(regExp)[3];
+        let params = {};
+
+        if (videoUrl_2 === "" && videoUrl_3 === "") {
+            params = {
+                videoUrl_1: videoUrl_1 && videoUrl_1,
+                youtubeId_1: youtubeId_1,
+            }
+        } else if (videoUrl_1 !== "" && videoUrl_2 !== "" && videoUrl_3 === "") {
+            params = {
+                videoUrl_1: videoUrl_1,
+                videoUrl_2: videoUrl_2,
+                youtubeId_1: youtubeId_1,
+                youtubeId_2: youtubeId_2,
+            }
+        } else {
+            params = {
+                videoUrl_1: videoUrl_1,
+                videoUrl_2: videoUrl_2,
+                videoUrl_3: videoUrl_3,
+                youtubeId_1: youtubeId_1,
+                youtubeId_2: youtubeId_2,
+                youtubeId_3: youtubeId_3
+            }
         }
+
         console.info('url data: ', params);
         // handleAddLinkClose();
     }
 
     const handleDeleteUrl = index => {
-        videoList.map((url, i) => {
-            console.info(i, ':::',url);
-        })
         let deleteUrl = videoList.filter((url, i) => i !== index);
-        console.info('삭제된 후: ', deleteUrl)
         setFileList({
             ...fileList,
             videoList: deleteUrl
@@ -171,8 +202,8 @@ const SettingMain = ({settingData}) => {
         settingData.forEach(list => {
             if (list.link_type === "video") {
                 newVideoList = newVideoList.concat(list);
-            }
-            if (list.link_type === "image") {
+            } else if (list.link_type === "image") {
+                newFile = newFile.concat(list);
                 newPreviewUrl = newPreviewUrl.concat(list);
             }
         });
@@ -184,22 +215,17 @@ const SettingMain = ({settingData}) => {
         });
     }, [settingData]);
 
+    useEffect(() => {setCopySettingList(settingList)}, []);
     useEffect(() => {
-        setForm({
-            videoUrl_1: videoList[0] ? videoList[0].link_address : '',
-            videoUrl_2: videoList[1] ? videoList[1].link_address : '',
-            videoUrl_3: videoList[2] ? videoList[2].link_address : '',
-        });
-    }, [videoList]);
-
-    useEffect(() => {
-        setCopySettingList(settingList);
-    }, []);
+        if (!userInfo || (userInfo && userInfo.user_type !== "admin")) {
+            router.push(`/`);
+        }
+    }, [userInfo]);
 
 
     return (
         <>
-            <SettingMainPresentation
+            <MainSettingPresentational
                 userInfo={userInfo}
                 settingList={settingList}
                 addLinkOpen={addLinkOpen}
@@ -217,7 +243,6 @@ const SettingMain = ({settingData}) => {
                 videoUrl_2={videoUrl_2}
                 videoUrl_3={videoUrl_3}
                 onVideoUrlChange={onVideoUrlChange}
-                onReset={onReset}
 
                 handleImageUpload={handleImageUpload}
                 handleVideoUpload={handleVideoUpload}
@@ -241,7 +266,7 @@ const SettingMain = ({settingData}) => {
     )
 }
 
-SettingMain.getInitialProps = async ctx => {
+MainsSetting.getInitialProps = async ctx => {
     initialize(ctx);
 
     const res = await axios.get(`${serverProtocol}${serverURL}/mainSetting`);
@@ -251,4 +276,4 @@ SettingMain.getInitialProps = async ctx => {
     }
 }
 
-export default SettingMain;
+export default MainsSetting;

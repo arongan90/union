@@ -15,7 +15,7 @@ const Button = styled.button`
     background: ${bgColor};
 
     &:hover {
-      background: ${lighten(0.1, bgColor)};
+      background: ${lighten(0.05, bgColor)};
     }
 
     &:active {

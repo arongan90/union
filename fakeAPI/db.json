@@ -220,5 +220,28 @@
       "youtubeId": "",
       "secure": 0
     }
+  ],
+  "boardSetting": [
+    {
+      "id": 1,
+      "image_path": "/images/testImage/pasta.jpeg",
+      "subject": "09월 이벤트 입니다.",
+      "content": "Mauris sed a adipiscing cursus montes. Vestibulum non sollicitudin ut tempus. Aliquet faucibus at nam aliquam sed sit quis posuere. Phasellus viverra nunc, at tellus morbi. Mauris, malesuada faucibus sit lacus praesent vitae mattis et aliquet. Ullamcorper lectus feugiat et amet, dui. Sem fringilla et viverra mattis vitae magnis. Ut mauris vulputate nulla suspendisse amet, blandit sed nunc. Eros eu suspendisse vulputate sollicitudin at donec nulla vestibulum. Vitae gravida faucibus at massa.",
+      "date": "21.08.30"
+    },
+    {
+      "id": 2,
+      "image_path": "/images/testImage/link_cover.png",
+      "subject": "추석맞이 이벤트 입니다.",
+      "content": "추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석 추석  ",
+      "date": "21.08.30"
+    },
+    {
+      "id": 3,
+      "image_path": "/images/testImage/뼈찜.jpeg",
+      "subject": "뼈찜 이벤트 입니다.",
+      "content": "뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 뼈찜 ",
+      "date": "21.08.30"
+    }
   ]
 }

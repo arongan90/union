@@ -7,11 +7,14 @@ const Button = styled.button`
   border-radius: 7px;
   display: ${({display}) => display ? display : 'block'};
   width: ${({width}) => width ? width : '100%'};
+  max-width: ${({maxWidth}) => maxWidth}px;
   height: ${({height}) => height ? height : 50}px;
   color: ${({fontColor}) => fontColor};
   font-size: ${({fontSize}) => fontSize ? fontSize : 16}px;
   font-weight: ${({fontWeight}) => fontWeight ? fontWeight : 500};
   border: ${({border}) => border ? border : 'none'};
+  margin: ${({margin}) => margin};
+   
 
   ${({marginTop}) => marginTop && css`
     margin-top: ${marginTop}px;
@@ -50,6 +53,7 @@ const Button = styled.button`
 
 const LongButton = ({
                         width,
+                        maxWidth,
                         height,
                         display,
                         fontColor,
@@ -61,11 +65,13 @@ const LongButton = ({
                         onClick,
                         costumeBgColor,
                         marginBottom,
-                        marginTop
+                        marginTop,
+                        margin
                     }) => {
     return (
         <Button
             width={width}
+            maxWidth={maxWidth}
             height={height}
             display={display}
             fontColor={fontColor}
@@ -77,6 +83,7 @@ const LongButton = ({
             costumeBgColor={costumeBgColor}
             marginBottom={marginBottom}
             marginTop={marginTop}
+            margin={margin}
         >
             {children}
         </Button>

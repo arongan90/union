@@ -10,7 +10,7 @@ const JitsiContainer = styled.div`
   width: 100%;
   height: 100%;
   
-  display: ${({ loading }) => loading ? 'none' : 'block'};
+  display: ${({ loading }) => loading ? loading : 'block'};
 
   @media screen and (max-width: 767px) {
     
@@ -45,7 +45,7 @@ const JitsiModule = ({
             {!error && loading && (loadingComponent || <p>Loading ...</p>)}
             <JitsiContainer
                 id='jitsi-container'
-                loading={loading}
+                loading={loading ? 'none' : null}
                 style={{...jitsiContainerStyles}}
             />
         </JitsiWrapper>

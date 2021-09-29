@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import LivePresentational from "../../components/live/LivePresentation";
+import LivePresentational from "../../components/live/LivePresentational";
 import socketIO from "socket.io-client";
 import {useDispatch, useSelector} from "react-redux";
 import {initSocket, closeSocket} from "../../modules/chat";
@@ -17,10 +17,7 @@ const Live = () => {
     useEffect(() => {
         dispatch(initSocket(socketIO(`ws://172.16.1.192:5050`)));
 
-        return () => {
-            console.info('언마운트 ::: ');
-            closeSocket();
-        }
+        return () => closeSocket();
     }, [dispatch]);
 
     return (

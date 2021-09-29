@@ -165,6 +165,17 @@ const Login = () => {
         }
     }
 
+    const onStore = async corpName => {
+        try {
+
+            // const res = await axios.get(``);
+
+            await router.push(`${corpName}`);
+        } catch(e) {
+
+        }
+    }
+
     return (
         <Wrapper>
             <AppImageBox width={'142px'} height={'63px'}>
@@ -212,7 +223,7 @@ const Login = () => {
                     </InputLabel>
                 </>
             }
-            <Button bgColor={colors.loginPoint} onClick={onLogin}>
+            <Button bgColor={colors.loginPoint} onClick={tabActive.login ? onLogin : onStore}>
                 {tabActive.login ? '로그인' : '바로가기' }
             </Button>
             <Button bgColor={colors.whiteColor} border fontColor={colors.loginPoint} onClick={goBack}>

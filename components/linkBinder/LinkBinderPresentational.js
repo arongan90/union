@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   background: ${colors.tabMenu};
 `;
 
-const LinkBinderPresentation = ({
+const LinkBinderPresentational = ({
                                     linkList,
                                     editOrder,
                                     userInfo,
@@ -47,4 +47,4 @@ const LinkBinderPresentation = ({
     )
 }
 
-export default LinkBinderPresentation;
+export default LinkBinderPresentational;

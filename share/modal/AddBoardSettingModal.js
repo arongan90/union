@@ -2,13 +2,10 @@ import React from 'react';
 import styled from "styled-components";
 import colors from "../../styles/colors";
 import LongButton from "../components/LongButton";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const ModalWrapper = styled.div`
   max-width: 500px;
-  height: 530px;
+  height: 630px;
   padding: 20px 15px;
   margin: 10% auto;
   background: ${colors.whiteColor};
@@ -20,12 +17,12 @@ const Title = styled.div`
   font-weight: bold;
   position: relative;
   padding-left: 10px;
-  margin: 15px 0 20px;
+  margin: 15px 0 30px;
   border-bottom: 1px solid ${colors.footerText};
-
+  
   &:after {
     content: "";
-    width: 150px;
+    width: 115px;
     height: 3px;
     background: ${colors.deepDarkBlue};
     opacity: 0.5;
@@ -52,34 +49,15 @@ const Inputs = styled.input`
   border: none;
   outline: none;
 `;
-const RadioBox = styled(RadioGroup)`
-  width: 55%;
-  margin: 20px 10px 30px;
-
-  @media screen and (max-width: 420px) {
-    width: 80%;
-  }
-
-  @media screen and (max-width: 340px) {
-    width: 90%;
-  }
-  
-  .MuiRadio-root {
-    color: ${colors.inputBorder};
-  }
-
-  .MuiFormGroup-root {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .MuiRadio-colorSecondary.Mui-checked {
-    color: ${colors.deepDarkBlue};
-  }
-
-  .MuiTypography-body1 {
-    font-size: 14px;
-  }
+const TextArea = styled.textarea`
+  width: 100%;
+  height: 260px;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid ${colors.ultraLightGray};
+  resize: none;
+  outline: none;
 `;
 const ButtonGroup = styled.div`
   display: flex;
@@ -87,22 +65,18 @@ const ButtonGroup = styled.div`
   align-items: flex-end;
 `;
 
-const AddVideoEmbedModal = ({
+const AddBoardSettingModal = ({
                                 subject,
-                                explain,
-                                videoUrl,
-                                handleCloseModal,
+                                handleAddBoardClose,
                                 modalInputOnChange,
                                 onVideoUpload,
-                                handleRadioChange,
                                 isOpen,
                                 editOrder,
                                 editData
                             }) => {
     return (
         <ModalWrapper>
-            <Title>동영상 링크 추가</Title>
-            <SubTitle>제목</SubTitle>
+            <Title>게시물 등록</Title>
             <InputBox>
                 <Inputs
                     type="text"
@@ -112,32 +86,12 @@ const AddVideoEmbedModal = ({
                     placeholder="제목을 입력해주세요."
                 />
             </InputBox>
-            <SubTitle>설명 내용</SubTitle>
-            <InputBox>
-                <Inputs
-                    type="text"
-                    name="explain"
-                    value={editOrder ? editData.title_sub : explain}
-                    onChange={modalInputOnChange}
-                    placeholder="설명을 간단히 입력해주세요."
-                />
-            </InputBox>
-            <SubTitle>동영상 링크 주소</SubTitle>
-            <InputBox>
-                <Inputs
-                    type="text"
-                    name="videoUrl"
-                    value={editOrder ? editData.link : videoUrl}
-                    onChange={modalInputOnChange}
-                    placeholder="동영상 url주소를 입력해주세요."
-                />
-            </InputBox>
-            <RadioBox>
-                <RadioGroup onChange={handleRadioChange} value={editOrder ? editData.secure : isOpen} name="isOpen">
-                    <FormControlLabel value={1} control={<Radio/>} label="공개(ON)"/>
-                    <FormControlLabel value={0} control={<Radio/>} label="비공개(OFF)"/>
-                </RadioGroup>
-            </RadioBox>
+
+            <TextArea placeholder="내용을 입력해주세요.">
+
+            </TextArea>
+
+
             <ButtonGroup>
                 <LongButton
                     width="48%"
@@ -146,7 +100,7 @@ const AddVideoEmbedModal = ({
                     fontSize={18}
                     bgColor={colors.whiteColor}
                     border={`1px solid ${colors.footerText}`}
-                    onClick={handleCloseModal}
+                    onClick={handleAddBoardClose}
                 >취 소
                 </LongButton>
                 <LongButton
@@ -163,4 +117,4 @@ const AddVideoEmbedModal = ({
     )
 }
 
-export default AddVideoEmbedModal;
+export default AddBoardSettingModal;

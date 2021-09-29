@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 const useJitsi = ({
-                      domain = 'meet.healingt.catbell.xyz',
+                      domain = 'https://meet.healingt.catbell.xyz/conference',
                       parentNode,
                       subject,
                       password,

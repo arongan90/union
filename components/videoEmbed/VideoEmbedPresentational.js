@@ -62,7 +62,7 @@ const LineChange = styled.br`
   }
 `;
 
-const VideoEmbedPresentation = ({
+const VideoEmbedPresentational = ({
                                     videoList,
                                     editOrder,
                                     deleteCard,
@@ -187,4 +187,4 @@ const VideoEmbedPresentation = ({
     )
 }
 
-export default VideoEmbedPresentation;
+export default VideoEmbedPresentational;

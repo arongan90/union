@@ -8,8 +8,9 @@ export default {
     heartColor: "#f06595",
     orangeColor: "#FFC774",
     activeRed: "#E12B03",
+    activeOrange: "#F28F1B",
 
-    activePink: "#D77373",
+    activeChecked: "#C3DAFD",
     activeGreen: "#35AA22",
     // activeYBurgundy: "#5A1A28",
     // activeIceBlue: "#4995AE",

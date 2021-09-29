@@ -1,10 +1,10 @@
 import React from 'react';
-import ConferencePresentation from "../../components/conference/ConferencePresentation";
+import ConferencePresentational from "../../components/conference/ConferencePresentational";
 
 const Conference = () => {
     return (
         <>
-            <ConferencePresentation />
+            <ConferencePresentational />
         </>
     )
 }

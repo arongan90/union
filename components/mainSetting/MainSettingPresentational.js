@@ -100,7 +100,7 @@ const ButtonGroup = styled.div`
   text-align: right;
 `;
 
-const SettingMainPresentation = ({
+const MainSettingPresentational = ({
                                      userInfo,
                                      settingList,
                                      addLinkOpen,
@@ -117,7 +117,6 @@ const SettingMainPresentation = ({
                                      videoUrl_2,
                                      videoUrl_3,
                                      onVideoUrlChange,
-                                     onReset,
                                      handleImageUpload,
                                      handleVideoUpload,
                                      introduction,
@@ -199,7 +198,7 @@ const SettingMainPresentation = ({
                 </SortableBox>
             </ContentBox>
             <ContentBox>
-                <ContentTitle padding="0 0 0 10px" settingMain>소개글</ContentTitle>
+                <ContentTitle padding="0 0 0 10px" setting>소개글</ContentTitle>
                 <Subtitle>소개글을 등록하시면 메인화면에 보여집니다. (300자 이내)</Subtitle>
                 <TextArea
                     name="introduction"
@@ -212,7 +211,7 @@ const SettingMainPresentation = ({
             </ContentBox>
 
             <ContentBox>
-                <ContentTitle padding="0 0 0 10px" settingMain>로고이미지 설정</ContentTitle>
+                <ContentTitle padding="0 0 0 10px" setting>로고이미지 설정</ContentTitle>
                 <Subtitle>로고 이미지를 120x40px사이즈로 올려주세요. (svg, jpeg, png)</Subtitle>
                 <AddLogoLabel htmlFor="logoInput">
                     <LogoFileInput
@@ -255,7 +254,6 @@ const SettingMainPresentation = ({
                         videoUrl_2={videoUrl_2}
                         videoUrl_3={videoUrl_3}
                         onVideoUrlChange={onVideoUrlChange}
-                        onReset={onReset}
                         handleImageUpload={handleImageUpload}
                         handleVideoUpload={handleVideoUpload}
                     />
@@ -265,4 +263,4 @@ const SettingMainPresentation = ({
     )
 }
 
-export default SettingMainPresentation;
+export default MainSettingPresentational;

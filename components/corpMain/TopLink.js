@@ -24,16 +24,22 @@ const Wrapper = styled.div`
 `;
 const NavLink = styled.div`
   width: 33%;
+  height: 100%;
   flex-grow: 1;
   color: ${colors.whiteColor};
   font-weight: bold;
   font-size: 18px;
-  text-align: center;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 
   a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: ${colors.whiteColor};
   }
 
@@ -42,7 +48,14 @@ const NavLink = styled.div`
   }
   
   ${({ border }) => border && css`
-    border-right: 1px solid ${colors.inputBorder};
+    &:after {
+      content: "";
+      position: absolute;
+      width: 1px;
+      height: 20px;
+      right: -1px;
+      background:${colors.inputBorder};
+    }
   `}
 `;
 

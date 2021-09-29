@@ -180,8 +180,6 @@ const AddMainSettingModal = ({
         });
     }, []);
 
-    // console.info('프리뷰 유알엘 : ', videoList);
-
     return (
         <Wrapper>
             <TabMenuBox active={tabActive}>
@@ -196,7 +194,7 @@ const AddMainSettingModal = ({
                             file={file[index]}
                         >
                             <PreviewBox>
-                                {file[index] && <PreviewImage src={previewUrl[index]}/>}
+                                {file[index] && <PreviewImage src={file[index].image_path}/>}
                             </PreviewBox>
                             {file[index] ?
                                 <>

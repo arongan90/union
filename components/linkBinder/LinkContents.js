@@ -81,7 +81,6 @@ function LinkContents({
         <ContentBox>
             {userInfo && userInfo.user_type === 'admin' &&
             <>
-                <Title>링크추가</Title>
                 <LongButton
                     height={54}
                     fontSize={14}

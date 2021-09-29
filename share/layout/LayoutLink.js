@@ -17,6 +17,7 @@ import conferenceSvg from "/public/images/layout/conferenceNav.svg";
 import linkBinderSvg from "/public/images/layout/linkBinder.svg";
 import closeSvg from "/public/images/layout/closeIcon.svg";
 import mainSettingSvg from "/public/images/layout/mainSetting.svg";
+import boardSettingSvg from "/public/images/layout/boardSetting.svg";
 import videoEmbedSvg from "/public/images/layout/videoEmbed.svg";
 import usersSvg from "/public/images/layout/users.svg";
 import {isLogout} from "../../modules/auth";
@@ -87,6 +88,7 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo}) => {
         <>
             <DrawerWrapper>
                 <DrawerIcon src={closeSvg} position onClick={() => setDrawerOpen(false)}/>
+                <UserName>{userInfo.name}</UserName> 님
                 <DrawerBox
                     onClick={() => {
                         toggleDrawer();
@@ -97,10 +99,11 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo}) => {
                     {/*<List>*/}
                     {!!userInfo ?
                         <DrawerLinkBox button onClick={onLogout}>
+
                             <ListItemIcon>
                                     <DrawerIcon src={lockSvg}/>
                             </ListItemIcon>
-                            로그아웃 <UserName>{userInfo.name}</UserName> 님
+                            로그아웃
                         </DrawerLinkBox>
                         :
                         <DrawerLinkBox onClick={() => router.push(`/login`)}>
@@ -214,13 +217,23 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo}) => {
                                     </DrawerLinkBox>
                                 </a>
                             </Link>
-                            <Link href={`/${corpName}/settingmain`}>
+                            <Link href={`/${corpName}/mainsetting`}>
                                 <a>
                                     <DrawerLinkBox button>
                                         <ListItemIcon>
                                             <DrawerIcon src={mainSettingSvg}/>
                                         </ListItemIcon>
                                         메인화면 관리
+                                    </DrawerLinkBox>
+                                </a>
+                            </Link>
+                            <Link href={`/${corpName}/boardsetting`}>
+                                <a>
+                                    <DrawerLinkBox button>
+                                        <ListItemIcon>
+                                            <DrawerIcon src={boardSettingSvg}/>
+                                        </ListItemIcon>
+                                        게시판 관리
                                     </DrawerLinkBox>
                                 </a>
                             </Link>

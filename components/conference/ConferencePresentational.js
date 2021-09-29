@@ -24,7 +24,7 @@ const Wrapper = styled.div`
     width: 400px;
   }
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 768px) {
     .MuiDrawer-paper {
       width: 250px;
     }
@@ -37,11 +37,11 @@ const ScreenBox = styled.div`
   transition: 0.18s;
   background: ${colors.lightBlack};
 
-  @media screen and (max-width: 767px) {
-    width: ${({chatDrawer}) => chatDrawer ? 'calc(100vw - 200px)' : '100vw'};
-  }
+  // @media screen and (max-width: 768px) {
+  //   width: ${({chatDrawer}) => chatDrawer ? 'calc(100vw - 200px)' : '100vw'};
+  // }
 
-  @media screen and (max-width: 420px) {
+  @media screen and (max-width: 768px) {
     width: 100%;
     height: calc(100vh - 55vh - 60px);
   }
@@ -58,18 +58,18 @@ const ChatBox = styled(Drawer)`
   width: 400px;
   height: 100%;
 
-  @media screen and (max-width: 767px) {
-    max-width: 200px;
-  }
+  //@media screen and (max-width: 768px) {
+  //  max-width: 200px;
+  //}
 
-  @media screen and (max-width: 420px) {
+  @media screen and (max-width: 768px) {
     display: none;
   }
 `;
 const MobileChatBox = styled.div`
   display: none;
 
-  @media (max-width: 420px) {
+  @media (max-width: 768px) {
     width: 100%;
     height: calc(100vh - 45vh);
     position: relative;
@@ -111,7 +111,7 @@ const ToggleChat = styled.div`
   `}
 `;
 
-const ConferencePresentation = () => {
+const ConferencePresentational = () => {
     const [chatDrawer, setChatDrawer] = useState(true);
     const openChat = () => setChatDrawer(true);
     const closeChat = () => setChatDrawer(false);
@@ -169,4 +169,4 @@ const ConferencePresentation = () => {
     )
 }
 
-export default ConferencePresentation;
+export default ConferencePresentational;

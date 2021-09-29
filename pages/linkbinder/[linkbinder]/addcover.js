@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import AddCoverPresentation from "../../../components/linkBinder/AddCoverPresentation";
+import AddCoverPresentation from "../../../components/linkBinder/AddCoverPresentational";
 import useInput from "../../../hooks/useInput";
 import {useRouter} from "next/router";
 

@@ -40,7 +40,7 @@ const ContentTitleBox = styled.div`
     font-size: 18px;
     padding: 10px 20px;
     height: auto;
-    ${({settingMain}) => settingMain && css`
+    ${({setting}) => setting && css`
       padding: 5px 10px;
     `}
     &:before {
@@ -52,13 +52,13 @@ const ContentTitleBox = styled.div`
   }
 `;
 
-const ContentTitle = ({ children, height, padding, beforePosition, settingMain }) => {
+const ContentTitle = ({ children, height, padding, beforePosition, setting }) => {
     return (
         <ContentTitleBox
             height={height}
             padding={padding}
             beforePosition={beforePosition}
-            settingMain={settingMain}
+            setting={setting}
         >
             {children}
         </ContentTitleBox>

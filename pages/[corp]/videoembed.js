@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import VideoEmbedPresentation from "../../components/videoEmbed/VideoEmbedPresentation";
+import VideoEmbedPresentational from "../../components/videoEmbed/VideoEmbedPresentational";
 import initialize from "../../utils/initialize";
 import axios from "axios";
 import {useSelector} from "react-redux";
@@ -91,6 +91,11 @@ const VideoEmbed = ({ videoList }) => {
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
     const handleRadioChange = e => setIsOpen(parseInt(e.target.value, 10));
+    const handleUpdateOpen = async id => {
+        const res = await axios.get(`${serverProtocol}${serverURL}/videoLink/${id}`);
+        setEditData(res.data);
+        handleOpenModal(true);
+    }
 
     const onVideoUpload = () => {
         if (subject === '') {
@@ -100,14 +105,18 @@ const VideoEmbed = ({ videoList }) => {
         } else if (videoUrl === '') {
             alert('동영상 링크 주소를 입력해주세요.');
         } else {
-            console.info(subject, explain, videoUrl);
-        }
-    }
+            let regExp = /^.*(youtu.be\/|v\/|embed\/|watch\?|youtube.com\/user\/[^#]*#([^\/]*?\/)*)\??v?=?([^#\&\?]*).*/;
+            let youtubeId = videoUrl.match(regExp)[3];
 
-    const handleUpdateOpen = async id => {
-        const res = await axios.get(`${serverProtocol}${serverURL}/videoLink/${id}`);
-        setEditData(res.data);
-        handleOpenModal(true);
+            let params = {
+                subject: subject,
+                explain: explain,
+                videoUrl: videoUrl,
+                youtubeId: youtubeId,
+            }
+            console.info('업로드 data : ', params);
+
+        }
     }
 
     useEffect(() => {
@@ -116,7 +125,7 @@ const VideoEmbed = ({ videoList }) => {
 
     return (
         <>
-            <VideoEmbedPresentation
+            <VideoEmbedPresentational
                 videoList={linkList}
                 editOrder={editOrder}
                 userInfo={userInfo}

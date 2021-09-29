@@ -32,12 +32,29 @@ const Form = styled.form`
   box-sizing: border-box;
 `;
 const InputBox = styled.div`
-  margin: 0 auto 40px;
+  margin: 0 auto 20px;
   ${({term}) => term && css`
     display: flex;
     justify-content: space-between;
     align-items: center;
   `}
+  
+  ${({ valid }) => valid && css`
+    .MuiFormLabel-root {
+      color: blue;
+    }
+    .MuiOutlinedInput-notchedOutline {
+      border-color: blue;
+    }
+  `}
+  
+  //.MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+  //  border-color: blue;
+  //}
+  //.MuiFormLabel-root.Mui-error,
+  //.MuiFormLabel-asterisk.Mui-error {
+  //  color: blue;
+  //}
 `;
 const Inputs = styled(TextField)`
   width: 100%;
@@ -97,12 +114,7 @@ const DialogClose = styled.div`
 
 
 const SignUpPresentational = ({
-                                  submitted,
-                                  setSubmitted,
-                                  signUpSuccess,
-                                  setSignUpSuccess,
                                   validate,
-                                  setValidate,
                                   helperText,
                                   setHelperText,
                                   data,
@@ -110,38 +122,30 @@ const SignUpPresentational = ({
                                   emailDomains,
                                   autoHyphenPhone,
                                   validateData,
-                                  onInputChange
+                                  openAddress,
+                                  setOpenAddress,
+                                  handleAddressComplete,
+                                  openTerm,
+                                  setOpenTerm,
+                                  onSubmit
                               }) => {
-    const [openAddress, setOpenAddress] = useState(false);
-    const [openTerm, setOpenTerm] = useState(false);
-    const handleAddressComplete = (addrData) => {
-        // let tmpData = {...data, cpId : cpData.id};
-        // let tmpValid = {...validate};
-        // tmpData.region = `${addrData.sido} ${addrData.sigungu}`;
-        // tmpValid.region = true;
-        // setData(tmpData);
-        // setValidate(tmpValid);
-        // setOpenAddressApi(false);
-    };
-
     return (
         <Wrapper>
             <Title>회원가입</Title>
             <Form noValidate>
-                <InputBox>
+                <InputBox valid={validate.email}>
                     <Inputs
                         id="email"
                         name="email"
                         label="Email"
                         variant="outlined"
                         autoComplete="email"
-                        fullWidth
                         required
                         helperText={helperText.email}
                         onChange={e => validateData(e, 'email')}
                     />
                 </InputBox>
-                <InputBox>
+                <InputBox valid={validate.password}>
                     <Inputs
                         id="password"
                         name="email"
@@ -149,75 +153,67 @@ const SignUpPresentational = ({
                         type="password"
                         variant="outlined"
                         autoComplete="current-password"
-                        fullWidth
                         required
                         helperText={helperText.password}
                         onChange={e => validateData(e, 'password')}
                     />
                 </InputBox>
-                <InputBox>
+                <InputBox valid={validate.password2}>
                     <Inputs
                         id="password2"
                         name="password2"
                         label="비밀번호 확인"
                         type="password"
                         variant="outlined"
-                        fullWidth
                         required
                         helperText={helperText.password2}
                         onChange={e => validateData(e, 'password2')}
                     />
                 </InputBox>
-                <InputBox>
+                <InputBox valid={validate.name}>
                     <Inputs
                         id="name"
                         name="name"
                         label="이름"
                         variant="outlined"
                         autoComplete="name"
-                        fullWidth
                         required
                         helperText={helperText.name}
-                        onChange={e => onInputChange(e, validate, data, setData, setValidate)}
+                        onChange={e => validateData(e, 'name')}
                     />
                 </InputBox>
-                <InputBox>
+                <InputBox valid={validate.phoneNo}>
                     <Inputs
                         id="phoneNo"
                         name="phoneNo"
                         label="전화번호"
                         variant="outlined"
                         autoComplete="phoneNo"
-                        fullWidth
                         required
                         helperText={helperText.phoneNo}
                         onKeyUp={autoHyphenPhone}
                     />
                 </InputBox>
-                <InputBox>
+                <InputBox valid={validate.nickname}>
                     <Inputs
                         id="nickname"
                         name="nickname"
                         label="닉네임"
                         variant="outlined"
                         autoComplete="nickname"
-                        fullWidth
                         required
                         helperText={helperText.nickname}
                         onInput={e => e.target.value = e.target.value.slice(0, 12)}
                         onChange={e => validateData(e, 'nickname')}
                     />
                 </InputBox>
-                <InputBox>
+                <InputBox valid={validate.region}>
                     <Inputs
                         id="region"
                         name="region"
                         label="생활지역 (시, 군, 구단위)"
                         variant="outlined"
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        fullWidth
+                        InputProps={{readOnly: true}}
                         required
                         onClick={() => setOpenAddress(true)}
                         helperText={validate.region ? '' : helperText.region}
@@ -228,34 +224,46 @@ const SignUpPresentational = ({
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
                     >
-                        <DaumPostcode onComplete={handleAddressComplete}/>
+                        <DaumPostcode onComplete={handleAddressComplete} />
                     </PostModal>
                 </InputBox>
-                <InputBox>
+                <InputBox valid={validate.snsUrl}>
                     <Inputs
                         id="snsUrl"
                         name="snsUrl"
                         label="개인 SNS주소"
                         variant="outlined"
                         autoComplete="sns"
-                        fullWidth
                         required
                         helperText={helperText.snsUrl}
                         onInput={e => e.target.value = e.target.value.slice(0, 255)}
-                        onChange={e => onInputChange(e, validate, data, setData, setValidate)}
+                        onChange={e => {
+                            validateData(e, 'snsUrl');
+                            //     let newValidate = {...validate};
+                            //     if (e.target.value.length > 0) {
+                            //         let tmp = {...data};
+                            //         tmp.name = e.target.value;
+                            //         newValidate.name = true;
+                            //         setData(tmp);
+                            //     } else {
+                            //         newValidate.name = false;
+                            //     }
+                            //     setValidate(newValidate);
+                        }
+                        }
                     />
                 </InputBox>
-                <InputBox>
+                <InputBox valid={validate.recommender}>
                     <Inputs
                         id="recommender"
                         name="recommender"
                         label="추천인 이름"
                         variant="outlined"
-                        fullWidth
                         required
                         helperText={helperText.recommender}
                     />
                 </InputBox>
+
                 <InputBox term>
                     <AgreeLabel
                         control={<AgreeCheckBox name="agree"/>}
@@ -281,7 +289,7 @@ const SignUpPresentational = ({
                     </Dialog>
                 </InputBox>
                 <InputBox>
-                    <Button type="button">회원가입</Button>
+                    <Button type="button" onClick={onSubmit}>회원가입</Button>
                 </InputBox>
             </Form>
         </Wrapper>

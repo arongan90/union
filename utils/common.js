@@ -103,19 +103,6 @@ export const levenshteinenator = function(a, b) {
     return r[m][n];
 }
 
-export const onInputChange = (e, validate, data, setData, setValidate) => {
-    let newValidate = { ...validate };
-    if (e.target.value.length > 0) {
-        let tmp = { ...data };
-        tmp.snsUrl = e.target.value;
-        newValidate.snsUrl = true;
-        setData(tmp);
-    } else {
-        newValidate.snsUrl = false;
-    }
-    setValidate(newValidate);
-}
-
 // return the smallest of the three values passed in
 const minimator = function(x,y,z) {
     if (x < y && x < z) return x;
