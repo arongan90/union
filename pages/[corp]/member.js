@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from "@material-ui/core/Typography";
@@ -58,15 +58,23 @@ const SearchBox = styled.div`
   border: 1px solid ${colors.loginTabBorder}
 `;
 const SearchInput = styled.input`
-  width: 90%;
+  width: 77%;
   height: 100%;
   border: none;
   outline: none;
   padding-left: 10px;
 
   &::placeholder {
-    color: ${colors.ultraLightGray}
+    color: ${colors.loginDefaultFont}
   }
+`;
+const ResetImage = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  background: darkseagreen;
+  border-radius: 50%;
 `;
 const MemberTable = styled.table`
   width: 100%;
@@ -151,8 +159,8 @@ const TableHead = styled.div`
 function Member({userData}) {
     const router = useRouter();
     const {userInfo} = useSelector(state => state.auth);
-    const [{memberInfo}, onChange, onReset] = useInput({memberInfo: ''})
-
+    const [{memberInfo}, onChange, onReset] = useInput({memberInfo: ''});
+    const [searchMember, setSearchMember] = useState([]);
 
     const handleSwitch = async (e, name) => {
         if (!e.target.checked) {
@@ -172,18 +180,21 @@ function Member({userData}) {
         }
     }
 
-    const searchMember = async () => {
+    const onSearchMember = () => {
         if (memberInfo === '') {
             alert('검색할 회원의 정보를 입력해주세요.');
         } else {
-            try {
-                // const res = await axios.get(``, memberInfo);
-                onReset();
-            } catch (e) {
-                throw new Error(e);
+            let result = userData.find(user => user.name === memberInfo || user.nickname === memberInfo);
+            if (result === undefined) {
+                alert('입력한 회원의 정보가 없습니다.');
+            } else {
+                setSearchMember([result]);
             }
+            onReset();
         }
     }
+
+    const onSearchReset = () => setSearchMember([]);
 
     return (
         <Wrapper>
@@ -195,17 +206,19 @@ function Member({userData}) {
                             <SearchInput
                                 type="text"
                                 name="memberInfo"
-                                placeholder="회원을 검색해주세요."
+                                placeholder="이름 또는 닉네임을 입력해주세요."
                                 value={memberInfo}
                                 onChange={onChange}
+                                onKeyPress={e => e.key === "Enter" && onSearchMember()}
                             />
+                            <ResetImage src="" onClick={onSearchReset} />
                             <OrderButton
                                 width={85}
                                 height={37}
                                 bgColor={colors.loginPoint}
                                 fontColor={colors.whiteColor}
                                 borderRadius="2px"
-                                onClick={searchMember}
+                                // onClick={onSearchMember}
                             >검색</OrderButton>
                         </SearchBox>
 
@@ -281,7 +294,31 @@ function Member({userData}) {
                             </tr>
                             </thead>
                             <tbody>
-                            {userData.map(member => {
+                            {searchMember.length > 0
+                                ?
+                                searchMember.map(member => {
+                                    return (
+                                        <tr key={member.id}>
+                                            <td>{member.name}</td>
+                                            <td>{member.nickname}</td>
+                                            <td>{member.phone_no}</td>
+                                            <td>{member.recommender}</td>
+                                            <td>
+                                                {/*{moment(member.reg_dt).format('MM.DD')}*/}
+                                                {member.reg_dt}
+                                            </td>
+                                            <td>
+                                                <Switch
+                                                    color="primary"
+                                                    name={member.id.toString()}
+                                                    checked={!!member.approval}
+                                                    onChange={e => handleSwitch(e, member.name)}
+                                                />
+                                            </td>
+                                        </tr>
+                                    )})
+                                :
+                                userData.map(member => {
                                     return (
                                         <tr key={member.id}>
                                             <td>{member.name}</td>

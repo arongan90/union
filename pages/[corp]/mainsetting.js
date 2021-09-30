@@ -8,6 +8,7 @@ import * as constants from "../../utils/constants";
 import arrayMove from "array-move";
 import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
+import {urlChecker} from "../../utils/common";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
@@ -21,7 +22,7 @@ const MainsSetting = ({settingData}) => {
     const [settingIndex, setSettingIndex] = useState([]);
     const [addLinkOpen, setAddLinkOpen] = useState(false);
     const [{introduction}, onIntroductionChange] = useInput('');
-    const [logoFile, setLogoFile] = useState(undefined);
+    const [logoFile, setLogoFile] = useState(null);
     const [tabActive, setTabActive] = useState({
         image: true,
         video: false
@@ -150,6 +151,7 @@ const MainsSetting = ({settingData}) => {
 
     const handleVideoUpload = () => {
         let regExp = /^.*(youtu.be\/|v\/|embed\/|watch\?|youtube.com\/user\/[^#]*#([^\/]*?\/)*)\??v?=?([^#\&\?]*).*/;
+
         let youtubeId_1 = videoUrl_1 && videoUrl_1.match(regExp) && videoUrl_1.match(regExp)[3];
         let youtubeId_2 = videoUrl_2 && videoUrl_2.match(regExp) && videoUrl_2.match(regExp)[3];
         let youtubeId_3 = videoUrl_3 && videoUrl_3.match(regExp) &&  videoUrl_3.match(regExp)[3];
@@ -157,21 +159,21 @@ const MainsSetting = ({settingData}) => {
 
         if (videoUrl_2 === "" && videoUrl_3 === "") {
             params = {
-                videoUrl_1: videoUrl_1 && videoUrl_1,
+                videoUrl_1: videoUrl_1 && urlChecker(videoUrl_1),
                 youtubeId_1: youtubeId_1,
             }
         } else if (videoUrl_1 !== "" && videoUrl_2 !== "" && videoUrl_3 === "") {
             params = {
-                videoUrl_1: videoUrl_1,
-                videoUrl_2: videoUrl_2,
+                videoUrl_1: urlChecker(videoUrl_1),
+                videoUrl_2: urlChecker(videoUrl_2),
                 youtubeId_1: youtubeId_1,
                 youtubeId_2: youtubeId_2,
             }
         } else {
             params = {
-                videoUrl_1: videoUrl_1,
-                videoUrl_2: videoUrl_2,
-                videoUrl_3: videoUrl_3,
+                videoUrl_1: urlChecker(videoUrl_1),
+                videoUrl_2: urlChecker(videoUrl_2),
+                videoUrl_3: urlChecker(videoUrl_3),
                 youtubeId_1: youtubeId_1,
                 youtubeId_2: youtubeId_2,
                 youtubeId_3: youtubeId_3

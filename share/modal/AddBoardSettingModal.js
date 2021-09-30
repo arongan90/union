@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import colors from "../../styles/colors";
 import LongButton from "../components/LongButton";
 
@@ -19,7 +19,7 @@ const Title = styled.div`
   padding-left: 10px;
   margin: 15px 0 30px;
   border-bottom: 1px solid ${colors.footerText};
-  
+
   &:after {
     content: "";
     width: 115px;
@@ -59,6 +59,74 @@ const TextArea = styled.textarea`
   resize: none;
   outline: none;
 `;
+
+const UploadBox = styled.div`
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px 15px 15px;
+  border-radius: 12px;
+  border: 1px solid ${colors.ultraLightGray};
+
+  ${({file}) => file && css`
+    background: ${colors.borderLightGray};
+  `};
+
+  & + & {
+    margin-top: 10px;
+  }
+`;
+const PreviewBox = styled.div`
+  width: 70px;
+  height: 70px;
+  border-radius: 7px;
+  position: relative;
+  overflow: hidden;
+  background: ${colors.borderLightGray};
+  border: 1px solid lightgray;
+`;
+const PreviewImage = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+const FileInput = styled.input`
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+`;
+const FileTitle = styled.div`
+  width: 70%;
+  font-size: 16px;
+  color: ${colors.deepGray}
+`;
+const Placeholder = styled.div`
+  width: 80%;
+  height: 100%;
+  position: relative;
+  line-height: 3.6;
+  color: ${colors.inputBorder};
+`;
+const DeleteButton = styled.div`
+  width: 25px;
+  height: 30px;
+  cursor: pointer;
+  position: relative;
+
+  &:after {
+    content: "";
+    width: 14px;
+    height: 2px;
+    position: absolute;
+    top: 50%;
+    background: ${colors.deepDarkGray};
+  }
+`;
 const ButtonGroup = styled.div`
   display: flex;
   justify-content: space-between;
@@ -66,14 +134,17 @@ const ButtonGroup = styled.div`
 `;
 
 const AddBoardSettingModal = ({
-                                subject,
-                                handleAddBoardClose,
-                                modalInputOnChange,
-                                onVideoUpload,
-                                isOpen,
-                                editOrder,
-                                editData
-                            }) => {
+                                  subject,
+                                  handleAddBoardClose,
+                                  modalInputOnChange,
+                                  onVideoUpload,
+                                  isOpen,
+                                  editOrder,
+                                  editData,
+                                  imageFile,
+                                  onImageUpload,
+                                  onImageDelete,
+                              }) => {
     return (
         <ModalWrapper>
             <Title>게시물 등록</Title>
@@ -91,6 +162,29 @@ const AddBoardSettingModal = ({
 
             </TextArea>
 
+            <UploadBox>
+                <PreviewBox>
+                    {imageFile && <PreviewImage src={!!imageFile && imageFile}/>}
+                </PreviewBox>
+                {imageFile ?
+                    <>
+                        <FileTitle>
+                            {imageFile.name}
+                        </FileTitle>
+                        <DeleteButton onClick={onImageDelete} />
+                    </>
+                    :
+                    <Placeholder>
+                        이미지 업로드 하기
+                        <FileInput
+                            type="file"
+                            accept="image/*"
+                            onChange={onImageUpload}
+                        />
+                    </Placeholder>
+
+                }
+            </UploadBox>
 
             <ButtonGroup>
                 <LongButton

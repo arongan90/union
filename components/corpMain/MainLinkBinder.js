@@ -168,10 +168,10 @@ const MainLinkBinder = ({linkBinderList, corpName}) => {
             }
 
             {(linkBinderList && linkBinderList.length) > 5 &&
-            <MoreButton
-                onToggle={onToggleMore}
-                moreView={moreView}
-            />}
+                <MoreButton
+                    onToggle={onToggleMore}
+                    moreView={moreView}
+                />}
 
             <PreviewModal
                 videoModal={modalOpen}

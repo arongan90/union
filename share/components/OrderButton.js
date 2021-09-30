@@ -10,7 +10,7 @@ const Button = styled.button`
   display: inline-block;
   color: ${({fontColor}) => fontColor};
   border: ${({border}) => border ? border : 'none'};
-
+  
   ${({bgColor}) => bgColor && css`
     background: ${bgColor};
 
@@ -40,6 +40,7 @@ const Button = styled.button`
 `;
 
 const OrderButton = ({ children, width, height, bgColor, fontColor, border, editOrder, borderRadius, onClick }) => {
+
     return (
         <Button
             width={width}

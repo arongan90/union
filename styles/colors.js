@@ -11,6 +11,7 @@ export default {
     activeOrange: "#F28F1B",
 
     activeChecked: "#C3DAFD",
+    activePink: "#EC7F70",
     activeGreen: "#35AA22",
     // activeYBurgundy: "#5A1A28",
     // activeIceBlue: "#4995AE",

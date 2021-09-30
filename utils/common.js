@@ -110,3 +110,18 @@ const minimator = function(x,y,z) {
     return z;
 }
 
+// https url checker
+export const urlChecker = url => {
+    let expHttpsUrl = /^https\:\/\//i;
+    let expHttpUrl = /^http\:\/\//i;
+
+    if (!expHttpsUrl.test(url)) {
+        if (expHttpUrl.test(url)) {
+            url = 'https://' + url.substr(7);
+        } else {
+            url = 'https://' + url;
+        }
+    }
+    return url;
+}
+

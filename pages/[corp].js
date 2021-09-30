@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from "styled-components";
+import React, {useState} from 'react';
+import styled, {css} from "styled-components";
 import TopLink from "../components/corpMain/TopLink";
 import MainVideo from "../components/corpMain/MainVideo";
 import UploadVideo from "../components/corpMain/UploadVideo";
@@ -9,6 +9,8 @@ import colors from "../styles/colors";
 import initialize from "../utils/initialize";
 import * as constants from "../utils/constants";
 import axios from "axios";
+import Board from "../share/components/Board";
+import plusSvg from "/public/images/share/plus.svg";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
@@ -16,7 +18,7 @@ const serverURL = constants.config.chatServer.URL;
 const MainWrapper = styled.div`
   padding: 25px 0 0;
   background: ${colors.whiteColor};
-  
+
   @media screen and (max-width: 767px) {
     padding: 25px 10px 0;
   }
@@ -37,9 +39,47 @@ const Introduction = styled.div`
   border-top: 1px solid ${colors.loginTabBorder};
   border-bottom: 1px solid ${colors.loginTabBorder};
 `;
+const MainBoardBox = styled.div`
+  max-width: 530px;
+  overflow: hidden;
+  margin: 10px auto;
+  border: 1px solid ${colors.corpMainBorder};
+  box-shadow: 0 0 10px ${colors.ultraLightGray};
+  padding: 10px;
+`;
 
-const Corp = ({ corpInfo, mainView, videoList, linkBinderList }) => {
-    const { corp_name } = corpInfo;
+const BoardTitle = styled.div`
+  font-size: 18px;
+  font-weight: 700;
+  color: ${colors.chatDefaultColor};
+`;
+const MoreButton = styled.div`
+  font-size: 14px;
+  color: ${colors.loginDefaultFont};
+  margin: 28px 0 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const PlusImage = styled.img`
+  width: 20px;
+  height: 20px;
+`;
+
+const Corp = ({corpInfo, mainView, videoList, linkBinderList, userInfo, settingBoardData}) => {
+    const {corp_name} = corpInfo;
+
+    const [toggleClicked, setToggleClicked] = useState(false);
+    const [boardMoreView, setBoardMoreView] = useState(false);
+
+    const toggleVisible = id => {
+        if (toggleClicked === id) return setToggleClicked(null);
+        setToggleClicked(id);
+    }
+
+    const toggleMoreView = () => setBoardMoreView(!boardMoreView);
+
     return (
         <MainWrapper>
             <TopLink
@@ -53,6 +93,22 @@ const Corp = ({ corpInfo, mainView, videoList, linkBinderList }) => {
                     {corpInfo.introduction}
                 </Introduction>
             </IntroductionBox>
+
+            <MainBoardBox>
+                <BoardTitle>게시판</BoardTitle>
+                <Board
+                    userInfo={userInfo}
+                    boardData={settingBoardData}
+                    toggleClicked={toggleClicked}
+                    toggleVisible={toggleVisible}
+                    mainComponent
+                    boardMoreView={boardMoreView}
+                    toggleMoreView={toggleMoreView}
+                />
+
+                <MoreButton onClick={toggleMoreView}>더보기<PlusImage src={plusSvg}/></MoreButton>
+            </MainBoardBox>
+
             <UploadVideo
                 videoList={videoList}
             />
@@ -70,11 +126,13 @@ Corp.getInitialProps = async (ctx) => {
     const mainRes = await axios.get(`${serverProtocol}${serverURL}/mainSetting`);
     const videoRes = await axios.get(`${serverProtocol}${serverURL}/videoLink`);
     const linkRes = await axios.get(`${serverProtocol}${serverURL}/linkbinder`);
+    const res = await axios.get(`${serverProtocol}${serverURL}/boardSetting`);
 
     return {
         mainView: mainRes.data,
         videoList: videoRes.data,
         linkBinderList: linkRes.data,
+        settingBoardData: res.data,
     }
 
 }

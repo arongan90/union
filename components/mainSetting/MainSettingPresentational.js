@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import colors from "../../styles/colors";
 import ContentTitle from "../../share/components/ContentTitle";
 import LongButton from "../../share/components/LongButton";
@@ -65,6 +65,10 @@ const AddLogoLabel = styled.label`
   border-radius: 7px;
   position: relative;
   background: url(${addImageSvg}) no-repeat 50% 40%;
+  
+  ${({ logoFile }) => logoFile && css`
+    background: none;
+  `}
 
   &:after {
     content: "로고 이미지 추가";
@@ -82,7 +86,7 @@ const LogoPreviewBox = styled.img`
   height: 100px;
   margin: 10px auto;
   display: block;
-  object-fit: cover;
+  object-fit: fill;
 `;
 const LogoFileInput = styled.input`
   width: 100%;
@@ -212,8 +216,8 @@ const MainSettingPresentational = ({
 
             <ContentBox>
                 <ContentTitle padding="0 0 0 10px" setting>로고이미지 설정</ContentTitle>
-                <Subtitle>로고 이미지를 120x40px사이즈로 올려주세요. (svg, jpeg, png)</Subtitle>
-                <AddLogoLabel htmlFor="logoInput">
+                <Subtitle>로고 이미지를 120x40px사이즈로 올려주세요. (gif 제외)</Subtitle>
+                <AddLogoLabel htmlFor="logoInput" logoFile={!!logoFile}>
                     <LogoFileInput
                         id="logoInput"
                         type="file"

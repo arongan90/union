@@ -7,6 +7,7 @@ import arrayMove from "array-move";
 import {useRouter} from "next/router";
 import useInput from "../../hooks/useInput";
 import * as constants from "../../utils/constants";
+import {urlChecker} from "../../utils/common";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
@@ -111,7 +112,7 @@ const VideoEmbed = ({ videoList }) => {
             let params = {
                 subject: subject,
                 explain: explain,
-                videoUrl: videoUrl,
+                videoUrl: urlChecker(videoUrl),
                 youtubeId: youtubeId,
             }
             console.info('업로드 data : ', params);

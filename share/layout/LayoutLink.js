@@ -24,7 +24,7 @@ import {isLogout} from "../../modules/auth";
 
 const DrawerWrapper = styled.div`
   width: 250px;
-  padding-top: 30px;
+  padding-top: 25px;
   
   @media screen and (max-width: 767px) {
     padding-top: 20px;
@@ -38,7 +38,7 @@ const DrawerBox = styled.div`
 const DrawerIcon = styled.img`
   ${({position}) => position && css`
     position: relative;
-    top: -10px;
+    top: 0;
     left: 210px;
     cursor: pointer;
   `}
@@ -66,7 +66,10 @@ const LinkTitle = styled.div`
   font-size: 15px;
   font-weight: 500;
 `;
-const UserName = styled.span`
+const NameBox= styled.div`
+  padding: 0 0 5px 30px;
+`;
+const LittleText = styled.span`
   font-size: 14px;
   margin: 3px 3px 0 10px;
   color: ${colors.gray};
@@ -88,7 +91,7 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo}) => {
         <>
             <DrawerWrapper>
                 <DrawerIcon src={closeSvg} position onClick={() => setDrawerOpen(false)}/>
-                <UserName>{userInfo.name}</UserName> 님
+                <NameBox>{userInfo.name}<LittleText>님</LittleText></NameBox>
                 <DrawerBox
                     onClick={() => {
                         toggleDrawer();
