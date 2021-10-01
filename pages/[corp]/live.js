@@ -3,7 +3,7 @@ import LivePresentational from "../../components/live/LivePresentational";
 import socketIO from "socket.io-client";
 import {useDispatch, useSelector} from "react-redux";
 import {initSocket, closeSocket} from "../../modules/chat";
-import * as constants from "../../utils/Constants";
+import * as constants from "../../utils/constants";
 
 const serverURL = constants.config.chatServer.URL;
 const serverProtocol = constants.config.chatServer.PROTOCOL;

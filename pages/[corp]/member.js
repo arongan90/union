@@ -13,6 +13,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import OrderButton from "../../share/components/OrderButton";
 import useInput from "../../hooks/useInput";
+import inputCloseSvg from "/public/images/share/inputClose.svg";
 // import moment from 'moment';
 
 
@@ -73,8 +74,6 @@ const ResetImage = styled.img`
   height: 20px;
   margin-right: 10px;
   cursor: pointer;
-  background: darkseagreen;
-  border-radius: 50%;
 `;
 const MemberTable = styled.table`
   width: 100%;
@@ -196,6 +195,13 @@ function Member({userData}) {
 
     const onSearchReset = () => setSearchMember([]);
 
+    useEffect(() => {
+        if (!userInfo || (userInfo && userInfo.user_type !== "admin")) {
+            alert('접근 권한이 없습니다.');
+            router.push(`/`);
+        }
+    }, [userInfo]);
+
     return (
         <Wrapper>
             <MemberListBox>
@@ -211,7 +217,7 @@ function Member({userData}) {
                                 onChange={onChange}
                                 onKeyPress={e => e.key === "Enter" && onSearchMember()}
                             />
-                            <ResetImage src="" onClick={onSearchReset} />
+                            <ResetImage src={inputCloseSvg} onClick={onSearchReset} />
                             <OrderButton
                                 width={85}
                                 height={37}

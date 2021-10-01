@@ -15,8 +15,8 @@ import {setUserInfo} from "../modules/auth";
 import {removeCookie} from "../utils/cookie";
 import axios from "axios";
 import {setCorp} from "../modules/corpInfo";
-import * as constants from "../utils/constants";
 import {ToastContainer} from "react-toastify";
+import * as constants from "../utils/constants";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
@@ -35,12 +35,18 @@ const MyApp = ({Component, pageProps, mobile, userInfo, corpInfo}) => {
         // return () => removeCookie('token');
     }, []);
 
+    const stopScrolling = (e) => e.preventDefault();
+    useEffect(() => {
+        document.addEventListener('touchstart', stopScrolling, false);
+        document.addEventListener('touchmove', stopScrolling, false);
+    }, []);
+
+
     return (
         <>
             <Head>
                 <meta charSet="utf-8"/>
-                <meta name="viewport"
-                      content="minimum-scale=1.0, initial-scale=1.0, width=device-width, shrink-to-fit=no, maximum-scale=1"/>
+                <meta name="viewport" content="minimum-scale=1.0, initial-scale=1.0, width=device-width, shrink-to-fit=no, maximum-scale=1, user-scalable=no"/>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css"/>
             </Head>
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from '@material-ui/core/Modal';
 import styled from "styled-components";
-// import * as constants from "../../utils/Constants";
+// import * as constants from "../../utils/constants";
 
 // const serverURL = constants.config.chatServer.URL;
 // const serverProtocol = constants.config.chatServer.PROTOCOL;

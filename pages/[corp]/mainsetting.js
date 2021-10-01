@@ -4,11 +4,11 @@ import initialize from "../../utils/initialize";
 import axios from "axios";
 import useInput from "../../hooks/useInput";
 import {useRouter} from "next/router";
-import * as constants from "../../utils/constants";
 import arrayMove from "array-move";
 import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import {urlChecker} from "../../utils/common";
+import * as constants from "../../utils/constants";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
@@ -220,6 +220,7 @@ const MainsSetting = ({settingData}) => {
     useEffect(() => {setCopySettingList(settingList)}, []);
     useEffect(() => {
         if (!userInfo || (userInfo && userInfo.user_type !== "admin")) {
+            alert('접근 권한이 없습니다.');
             router.push(`/`);
         }
     }, [userInfo]);

@@ -11,6 +11,7 @@ import * as constants from "../utils/constants";
 import axios from "axios";
 import Board from "../share/components/Board";
 import plusSvg from "/public/images/share/plus.svg";
+import minusSvg from "/public/images/share/minusIcon.svg";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
@@ -101,12 +102,14 @@ const Corp = ({corpInfo, mainView, videoList, linkBinderList, userInfo, settingB
                     boardData={settingBoardData}
                     toggleClicked={toggleClicked}
                     toggleVisible={toggleVisible}
-                    mainComponent
                     boardMoreView={boardMoreView}
                     toggleMoreView={toggleMoreView}
+                    mainComponent
                 />
 
-                <MoreButton onClick={toggleMoreView}>더보기<PlusImage src={plusSvg}/></MoreButton>
+                <MoreButton onClick={toggleMoreView}>더보기
+                    {boardMoreView ? <PlusImage src={minusSvg} /> : <PlusImage src={plusSvg}/>}
+                </MoreButton>
             </MainBoardBox>
 
             <UploadVideo

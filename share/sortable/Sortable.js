@@ -3,7 +3,7 @@ import styled, {css} from "styled-components";
 import {SortableContainer, SortableElement, SortableHandle} from "react-sortable-hoc";
 import Link from 'next/link';
 import Router from "next/router";
-import * as constants from "../../utils/Constants";
+import * as constants from "../../utils/constants";
 import colors from "../../styles/colors";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';

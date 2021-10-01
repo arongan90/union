@@ -12,6 +12,8 @@ import useInput from "../../hooks/useInput";
 import {useDispatch, useSelector} from "react-redux";
 import {sendMessage} from "../../modules/chat";
 import { ChromePicker } from "react-color";
+import { CustomPicker } from "react-color";
+import CustomColorPalette from "../components/CustomColorPalette";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -177,9 +179,9 @@ const Chat = ({notice, height}) => {
     }, [scrollRef, autoScroll]);
 
     const toggleScroll = useCallback(() => setAutoScroll(!autoScroll), [autoScroll]);
-    const togglePalette = useCallback(() => {
-        setPaletteOpen(!paletteOpen)
-    },[paletteOpen]);
+    const togglePalette = useCallback(() => setPaletteOpen(!paletteOpen),[paletteOpen]);
+    const closePalette = useCallback(() => setPaletteOpen(false),[paletteOpen]);
+
 
     const handleColorPicker = async color => {
         setChoiceColor(color);
@@ -231,10 +233,15 @@ const Chat = ({notice, height}) => {
                     />
                     {paletteOpen &&
                         <ColorPalette paletteOpen={paletteOpen}>
-                            <ChromePicker
+                            <CustomColorPalette
                                 color={choiceColor}
                                 onChange={color => handleColorPicker(color.hex)}
+                                closePalette={closePalette}
                             />
+                            {/*<ChromePicker
+                                color={choiceColor}
+                                onChange={color => handleColorPicker(color.hex)}
+                            />*/}
                         </ColorPalette>
                     }
                 </ColorPaletteBox>

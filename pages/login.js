@@ -167,9 +167,7 @@ const Login = () => {
 
     const onStore = async corpName => {
         try {
-
             // const res = await axios.get(``);
-
             await router.push(`${corpName}`);
         } catch(e) {
 
@@ -223,7 +221,7 @@ const Login = () => {
                     </InputLabel>
                 </>
             }
-            <Button bgColor={colors.loginPoint} onClick={tabActive.login ? onLogin : onStore}>
+            <Button bgColor={colors.loginPoint} onClick={() => tabActive.login ? onLogin() : onStore(corpInput)}>
                 {tabActive.login ? '로그인' : '바로가기' }
             </Button>
             <Button bgColor={colors.whiteColor} border fontColor={colors.loginPoint} onClick={goBack}>

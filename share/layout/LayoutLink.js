@@ -91,7 +91,7 @@ const LayoutLink = ({toggleDrawer, setDrawerOpen, corpInfo}) => {
         <>
             <DrawerWrapper>
                 <DrawerIcon src={closeSvg} position onClick={() => setDrawerOpen(false)}/>
-                <NameBox>{userInfo.name}<LittleText>님</LittleText></NameBox>
+                {userInfo && <NameBox>{userInfo.name}<LittleText>님</LittleText></NameBox>}
                 <DrawerBox
                     onClick={() => {
                         toggleDrawer();

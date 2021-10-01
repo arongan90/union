@@ -3,12 +3,25 @@ import Document, {Html, Head, Main, NextScript} from 'next/document';
 import {ServerStyleSheets} from '@material-ui/styles';
 import {ServerStyleSheet, createGlobalStyle} from 'styled-components'
 import colors from "../styles/colors";
+import * as constants from "../utils/constants";
+
+const serverProtocol = constants.config.chatServer.PROTOCOL;
+const serverURL = constants.config.chatServer.URL;
+
 
 const GlobalStyles = createGlobalStyle`
+  @font-face {
+    font-family: 'Noto Sans KR';
+    src: url(${serverProtocol}${serverURL}'/public/font/NotoSansKR-Medium.otf');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
   html, body {
     height: 100%;
     margin: 0 !important;
     padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
     background: ${colors.whiteColor};
 
     -ms-overflow-style: none;

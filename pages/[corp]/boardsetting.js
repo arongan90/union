@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import BoardSettingPresentational from "../../components/boardSetting/BoardSettingPresentational";
 import axios from "axios";
 import * as constants from "../../utils/constants";
+import {useRouter} from "next/router";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
 
 const BoardSetting = ({ settingBoardData, userInfo }) => {
+    const router = useRouter();
     const [boardData, setBoardData] = useState([]);
     const [addBoardOpen, setAddBoardOpen] = useState(false);
     const [toggleClicked, setToggleClicked] = useState(false);
@@ -70,6 +72,12 @@ const BoardSetting = ({ settingBoardData, userInfo }) => {
     }, [checked]);
 
     useEffect(() => {setBoardData(settingBoardData)}, []);
+    useEffect(() => {
+        if (!userInfo || (userInfo && userInfo.user_type !== "admin")) {
+            alert('접근 권한이 없습니다.');
+            router.push(`/`);
+        }
+    }, [userInfo]);
 
     return (
         <>

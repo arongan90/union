@@ -6,23 +6,28 @@ import OrderButton from "../../share/components/OrderButton";
 
 const BorderWrapper = styled.div`
   width: 100%;
+  max-height: 258px;
   margin: 30px 0 20px;
   padding-top: 2px;
   border-top: 3px solid ${colors.loginDefaultFont};
+  overflow-y: scroll;
+  transition: max-height 0.4s ease;
   
-  
-  ${({boardMoreView}) => boardMoreView && css`
-    transition: 0.6s;
+  ${({boardMoreView, toggleClicked}) => (boardMoreView || toggleClicked) && css`
+    height: auto;
+    max-height: 1000px;
+    transition-timing-function: ease-in;
+    transition-duration: 0.8s;
   `}
-  
+
 `;
 const BoardBox = styled.div`
   max-height: 50px;
   padding: 15px 0;
   overflow: hidden;
   border-top: 1px solid ${colors.loginTabBorder};
-  transition: 0.6s;
-  
+  transition: max-height 0.6s ease;
+
   &:last-child {
     border-bottom: 1px solid ${colors.loginTabBorder};
   }
@@ -30,7 +35,12 @@ const BoardBox = styled.div`
   ${({toggleClicked}) => toggleClicked && css`
     max-height: 800px;
     overflow-y: scroll;
+    transition-timing-function: ease-in;
   `}
+
+  @media screen and (max-width: 420px) {
+    padding-left: 5px;
+  }
 `;
 const BoardHeader = styled.div`
   display: flex;
@@ -75,15 +85,31 @@ const InfoBox = styled.span`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  ${({mainComponent}) => mainComponent && css`
+    width: 100%;
+  `}
 `;
 const UploadDate = styled.div`
   width: 20%;
   text-align: center;
   color: ${colors.loginDefaultFont};
+
+  @media screen and (max-width: 420px) {
+    font-size: 14px;
+  }
 `;
 const Title = styled.div`
   width: 72%;
   color: ${colors.chatDefaultColor};
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  white-space: nowrap;
+  
+  @media screen and (max-width: 420px) {
+    font-size: 14px;
+    padding-left: 10px;
+  }
 `;
 const ArrowBox = styled.div`
   width: 24px;
@@ -130,90 +156,47 @@ const MainBoard = ({
                        toggleClicked,
                        toggleVisible,
                        onCheckedHandler,
-                       mainComponent,
                        boardMoreView,
-                       toggleMoreView
+                       mainComponent,
                    }) => {
-    console.info(boardMoreView, 'boardMoreView');
     return (
         <>
-            <BorderWrapper boardDataLength={boardData && boardData.length} boardMoreView={boardMoreView}>
-                {!boardMoreView
-                    ?
-                    boardData.slice(0, 5).map(board => {
-                        return (
-                            <BoardBox key={board.id} toggleClicked={toggleClicked === board.id}>
-                                <BoardHeader>
-                                    {(!mainComponent && userInfo && userInfo.user_type) === 'admin' &&
-                                    <Label htmlFor={board.id}>
-                                        <CheckBox id={board.id} type="checkbox"
-                                                  onChange={e => onCheckedHandler(board.id, e)}/>
-                                    </Label>
-                                    }
+            <BorderWrapper dataLength={boardData && boardData.length} boardMoreView={boardMoreView} toggleClicked={toggleClicked}>
+                {boardData.map(board => (
+                        <BoardBox key={board.id} toggleClicked={toggleClicked === board.id}>
+                            <BoardHeader>
+                                {(!mainComponent && userInfo && userInfo.user_type) === 'admin' &&
+                                <Label htmlFor={board.id}>
+                                    <CheckBox id={board.id} type="checkbox"
+                                              onChange={e => onCheckedHandler(board.id, e)}/>
+                                </Label>
+                                }
 
-                                    <InfoBox onClick={() => toggleVisible(board.id)}>
-                                        <UploadDate>{board.date}</UploadDate>
-                                        <Title>{board.subject}</Title>
-                                        <ArrowBox toggleClicked={toggleClicked === board.id}><AppImage
-                                            src={triangleArrowSvg}/></ArrowBox>
-                                    </InfoBox>
-                                </BoardHeader>
+                                <InfoBox onClick={() => toggleVisible(board.id)} mainComponent>
+                                    <UploadDate>{board.date}</UploadDate>
+                                    <Title>{board.subject}</Title>
+                                    <ArrowBox toggleClicked={toggleClicked === board.id}><AppImage
+                                        src={triangleArrowSvg}/></ArrowBox>
+                                </InfoBox>
+                            </BoardHeader>
 
-                                <DetailBox>
-                                    {(!mainComponent && userInfo && userInfo.user_type) === 'admin' &&
-                                    <ButtonGroup justify="flex-end">
-                                        <OrderButton width={62} height={34} bgColor={colors.corpMainBorder}
-                                                     color={colors.chatDefaultColor}>수정</OrderButton>
-                                    </ButtonGroup>
-                                    }
-                                    <ImageBox>
-                                        <AppImage src={board.image_path}/>
-                                    </ImageBox>
-                                    <BoardContent>
-                                        {board.content}
-                                    </BoardContent>
-                                </DetailBox>
-                            </BoardBox>
-                        )
-                    })
-                    :
-                    boardData.map(board => {
-                        return (
-                            <BoardBox key={board.id} toggleClicked={toggleClicked === board.id}>
-                                <BoardHeader>
-                                    {(!mainComponent && userInfo && userInfo.user_type) === 'admin' &&
-                                    <Label htmlFor={board.id}>
-                                        <CheckBox id={board.id} type="checkbox"
-                                                  onChange={e => onCheckedHandler(board.id, e)}/>
-                                    </Label>
-                                    }
-
-                                    <InfoBox onClick={() => toggleVisible(board.id)}>
-                                        <UploadDate>{board.date}</UploadDate>
-                                        <Title>{board.subject}</Title>
-                                        <ArrowBox toggleClicked={toggleClicked === board.id}><AppImage
-                                            src={triangleArrowSvg}/></ArrowBox>
-                                    </InfoBox>
-                                </BoardHeader>
-
-                                <DetailBox>
-                                    {(!mainComponent && userInfo && userInfo.user_type) === 'admin' &&
-                                    <ButtonGroup justify="flex-end">
-                                        <OrderButton width={62} height={34} bgColor={colors.corpMainBorder}
-                                                     color={colors.chatDefaultColor}>수정</OrderButton>
-                                    </ButtonGroup>
-                                    }
-                                    <ImageBox>
-                                        <AppImage src={board.image_path}/>
-                                    </ImageBox>
-                                    <BoardContent>
-                                        {board.content}
-                                    </BoardContent>
-                                </DetailBox>
-                            </BoardBox>
-                        )
-                    })
-                }
+                            <DetailBox>
+                                {(!mainComponent && userInfo && userInfo.user_type) === 'admin' &&
+                                <ButtonGroup justify="flex-end">
+                                    <OrderButton width={62} height={34} bgColor={colors.corpMainBorder}
+                                                 color={colors.chatDefaultColor}>수정</OrderButton>
+                                </ButtonGroup>
+                                }
+                                <ImageBox>
+                                    <AppImage src={board.image_path}/>
+                                </ImageBox>
+                                <BoardContent>
+                                    {board.content}
+                                </BoardContent>
+                            </DetailBox>
+                        </BoardBox>
+                    )
+                )}
             </BorderWrapper>
 
         </>

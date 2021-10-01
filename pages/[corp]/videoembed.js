@@ -6,8 +6,8 @@ import {useSelector} from "react-redux";
 import arrayMove from "array-move";
 import {useRouter} from "next/router";
 import useInput from "../../hooks/useInput";
-import * as constants from "../../utils/constants";
 import {urlChecker} from "../../utils/common";
+import * as constants from "../../utils/constants";
 
 const serverProtocol = constants.config.chatServer.PROTOCOL;
 const serverURL = constants.config.chatServer.URL;
@@ -99,6 +99,7 @@ const VideoEmbed = ({ videoList }) => {
     }
 
     const onVideoUpload = () => {
+        let youtubeId = null;
         if (subject === '') {
             alert('제목을 입력해주세요.');
         } else if (explain === '') {
@@ -106,8 +107,10 @@ const VideoEmbed = ({ videoList }) => {
         } else if (videoUrl === '') {
             alert('동영상 링크 주소를 입력해주세요.');
         } else {
+            // if (videoUrl.includes('youtu')) {
             let regExp = /^.*(youtu.be\/|v\/|embed\/|watch\?|youtube.com\/user\/[^#]*#([^\/]*?\/)*)\??v?=?([^#\&\?]*).*/;
-            let youtubeId = videoUrl.match(regExp)[3];
+            youtubeId = videoUrl.match(regExp) && videoUrl.match(regExp)[3];
+            // }
 
             let params = {
                 subject: subject,
@@ -120,9 +123,13 @@ const VideoEmbed = ({ videoList }) => {
         }
     }
 
+    useEffect(() => setCopyLinkList(linkList), []);
     useEffect(() => {
-        setCopyLinkList(linkList);
-    }, []);
+        if (!userInfo || (userInfo && userInfo.user_type !== "admin")) {
+            alert('접근 권한이 없습니다.');
+            router.push(`/`);
+        }
+    }, [userInfo]);
 
     return (
         <>

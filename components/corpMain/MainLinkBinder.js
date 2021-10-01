@@ -7,7 +7,7 @@ import Router, {useRouter} from "next/router";
 import MoreButton from "./MoreButton";
 import colors from "../../styles/colors";
 import {useSelector} from "react-redux";
-import * as constants from "../../utils/Constants";
+import * as constants from "../../utils/constants";
 import PreviewModal from "../../share/modal/PreviewModal";
 
 const serverURL = constants.config.chatServer.URL;
