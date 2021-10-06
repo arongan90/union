@@ -158,6 +158,15 @@ const MainBoard = ({
                        onCheckedHandler,
                        boardMoreView,
                        mainComponent,
+
+                       addBoardOpen,
+                       handleAddBoardOpen,
+                       handleAddBoardClose,
+                       handleUpdateBoard,
+
+                       imageFile,
+                       onImageUpload,
+                       onImageDelete,
                    }) => {
     return (
         <>
@@ -183,8 +192,13 @@ const MainBoard = ({
                             <DetailBox>
                                 {(!mainComponent && userInfo && userInfo.user_type) === 'admin' &&
                                 <ButtonGroup justify="flex-end">
-                                    <OrderButton width={62} height={34} bgColor={colors.corpMainBorder}
-                                                 color={colors.chatDefaultColor}>수정</OrderButton>
+                                    <OrderButton
+                                        width={62}
+                                        height={34}
+                                        bgColor={colors.corpMainBorder}
+                                        color={colors.chatDefaultColor}
+                                        onClick={() => handleUpdateBoard(board.id)}
+                                    >수정</OrderButton>
                                 </ButtonGroup>
                                 }
                                 <ImageBox>

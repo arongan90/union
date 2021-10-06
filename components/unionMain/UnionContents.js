@@ -17,12 +17,11 @@ import content7_mobile from "/public/images/union/shoppingmall_mobile.png";
 import content8 from "/public/images/union/info_bg.png";
 import {lighten, darken} from "polished";
 import MobileSwiperSection from "./MobileSwiperSection";
+import * as PropTypes from "prop-types";
 
-const Wrapper = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-`;
 const Section = styled.div`
+  max-width: ${({maxWidth}) => maxWidth ? maxWidth : '1200px'};
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,12 +83,6 @@ const SubContent = styled.div`
   display: inline-block;
   text-align: center;
   margin-right: ${({marginRight}) => marginRight ? marginRight : 0}px;
-
-  @media only screen and (max-width: 767px) {
-    ${({Sec3_isMobile}) => Sec3_isMobile && css`
-      margin: 0 0 55px 35px;      
-    `};
-  }
 `;
 const PointText = styled.div`
   display: ${({display}) => display ? display : 'block'};
@@ -285,11 +278,11 @@ const Content_8 = styled.div`
   flex-direction: column;
 `;
 
-const UnionContent = ({isMobile}) => {
+const UnionContent = ({ isMobile }) => {
     return (
-        <Wrapper>
+        <>
             {/* Section 1 */}
-            <Section padding="120px 0 60px">
+            <Section padding="120px 0 60px" id="conference">
                 <Title fontColor={colors.lightBlack} fontSize={28} marginBottom={80} section_1>최적의 고객관리</Title>
                 <Content_1>
                     <SubContent>
@@ -339,18 +332,16 @@ const UnionContent = ({isMobile}) => {
             <Section>
                 <Content_3>
                     <div className="left">
-                        <Title fontSize={36} marginBottom={33} textAlign={"left"} Sec3_isMobile={!!isMobile}>
+                        <Title fontSize={36} marginBottom={33} textAlign={"left"}>
                             맞춤형 고객관리,<br/>
                             온라인 고객응대
                         </Title>
-                        <SubTitle fontSize={16} fontcolor={colors.normalBlack} fontWeight={400} textAlign={"left"}
-                                  Sec3_isMobile={!!isMobile}>
+                        <SubTitle fontSize={16} fontcolor={colors.normalBlack} fontWeight={400} textAlign={"left"}>
                             캣벨 유니온 솔루션에서 제공하는<br/>
                             화상 회의를 활용해보세요.
                         </SubTitle>
 
-                        <SubTitle fontSize={16} fontcolor={colors.normalBlack} fontWeight={400} textAlign={"left"}
-                                  Sec3_isMobile={!!isMobile}>
+                        <SubTitle fontSize={16} fontcolor={colors.normalBlack} fontWeight={400} textAlign={"left"}>
                             향후 마케팅 및 재구매 유도를 위한<br/>
                             지속적인 고객 관리가 가능합니다.
                         </SubTitle>
@@ -364,7 +355,7 @@ const UnionContent = ({isMobile}) => {
             </Section>
 
             {/* Section 4 */}
-            <Section>
+            <Section id="onAir">
                 <Content_4>
                     <Title fontSize={24} fontColor={colors.normalBlack2} marginBottom={40}>
                         이제 화상회의도 라이브로 스트리밍하세요!
@@ -377,7 +368,7 @@ const UnionContent = ({isMobile}) => {
             </Section>
 
             {/* Section 5 */}
-            <Section>
+            <Section id="linkBinder">
                 <Content_5>
                     <div className="left">
                         <ImageBox maxWidth={680} webImage>
@@ -406,7 +397,7 @@ const UnionContent = ({isMobile}) => {
             </Section>
 
             {/* Section 6 */}
-            <Section>
+            <Section id="uploadVideo">
                 <Content_6>
                     <div className="left">
                         <Title fontSize={36} marginBottom={33} fontColor={colors.lightBlack} textAlign={"left"}>
@@ -433,7 +424,7 @@ const UnionContent = ({isMobile}) => {
             </Section>
 
             {/* Section 7 */}
-            <Section>
+            <Section id="shoppingMall">
                 <Content_7>
                     <div className="left">
                         <ImageBox webImage>
@@ -464,12 +455,12 @@ const UnionContent = ({isMobile}) => {
             </Section>
 
             {/* Section 8 */}
-            <Section bgImage={content8}>
+            <Section bgImage={content8} maxWidth="none">
                 <Content_8>
                     <Title textAlign="center" fontSize={24} fontColor={colors.lightBlack} marginBottom={16}>
-                    CATBELL UNION<br/>
-                    솔루션 가격제안
-                </Title>
+                        CATBELL UNION<br/>
+                        솔루션 가격제안
+                    </Title>
                     <SubTitle fontSize={16} fontcolor={colors.normalBlack} marginBottom={10} content_8>
                         고객관리와 고객 응대를 위한 화상회의는 기본,<br/>
                         저렴한 비용으로 제품 홍보/마케팅 및 쇼핑몰까지 캣벨 유니온 솔루션으로 한 번에 이용해보세요.
@@ -487,8 +478,7 @@ const UnionContent = ({isMobile}) => {
                     </Link>
                 </Content_8>
             </Section>
-
-        </Wrapper>
+        </>
     )
 }
 

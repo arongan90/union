@@ -21,15 +21,23 @@ const VideoEmbed = ({ videoList }) => {
     const [copyLinkList, setCopyLinkList] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [isOpen, setIsOpen] = useState(1);
-    const [editData, setEditData] = useState(undefined);
-    const [{ subject, explain, videoUrl}, onChange, onReset] = useInput({
-        subject: '',
-        explain: '',
-        videoUrl: '',
+    const [editData, setEditData] = useState(null);
+    const [videoInputs, setVideoInputs] = useState({
+        subject: editData ? editData.title : '',
+        explain: editData ? editData.title_sub : '',
+        videoUrl: editData ? editData.link : '',
     });
     const { userInfo } = useSelector(state => state.auth);
+    const { subject, explain, videoUrl } = videoInputs;
     let deleteLink = [];
 
+    const videoInputsChange = e => {
+        const { name, value } = e.target;
+        setVideoInputs({
+            ...videoInputs,
+            [name]: value,
+        });
+    }
     const onSortEnd = ({oldIndex, newIndex}) => {
         let sortResult = arrayMove(linkList, oldIndex, newIndex);
         let reSortData = sortResult.map((value) => {
@@ -74,7 +82,7 @@ const VideoEmbed = ({ videoList }) => {
         setEditOrder(false);
     }
     const handleEditComplete = async () => {
-        let parmas = {
+        let params = {
             cp_id: userInfo.cp_id,
             list_index: linkIndex
         }
@@ -90,16 +98,31 @@ const VideoEmbed = ({ videoList }) => {
     }
 
     const handleOpenModal = () => setOpenModal(true);
-    const handleCloseModal = () => setOpenModal(false);
+    const handleCloseModal = () => {
+        setOpenModal(false);
+        setVideoInputs({
+            subject: '',
+            explain: '',
+            videoUrl: '',
+        });
+    }
     const handleRadioChange = e => setIsOpen(parseInt(e.target.value, 10));
     const handleUpdateOpen = async id => {
         const res = await axios.get(`${serverProtocol}${serverURL}/videoLink/${id}`);
         setEditData(res.data);
+        setVideoInputs({
+            subject: res.data.title,
+            explain: res.data.title_sub,
+            videoUrl: res.data.video_link
+        });
         handleOpenModal(true);
     }
 
     const onVideoUpload = () => {
         let youtubeId = null;
+
+        console.info(subject);
+
         if (subject === '') {
             alert('제목을 입력해주세요.');
         } else if (explain === '') {
@@ -119,6 +142,12 @@ const VideoEmbed = ({ videoList }) => {
                 youtubeId: youtubeId,
             }
             console.info('업로드 data : ', params);
+
+            setVideoInputs({
+                subject: '',
+                explain: '',
+                videoUrl: '',
+            });
 
         }
     }
@@ -149,7 +178,7 @@ const VideoEmbed = ({ videoList }) => {
                 subject={subject}
                 explain={explain}
                 videoUrl={videoUrl}
-                modalInputOnChange={onChange}
+                videoInputsChange={videoInputsChange}
                 onVideoUpload={onVideoUpload}
                 handleUpdateOpen={handleUpdateOpen}
                 handleRadioChange={handleRadioChange}

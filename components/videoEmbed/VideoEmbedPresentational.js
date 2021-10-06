@@ -77,7 +77,7 @@ const VideoEmbedPresentational = ({
                                     subject,
                                     explain,
                                     videoUrl,
-                                    modalInputOnChange,
+                                    videoInputsChange,
                                     onVideoUpload,
                                     handleUpdateOpen,
                                     handleRadioChange,
@@ -174,7 +174,7 @@ const VideoEmbedPresentational = ({
                         subject={subject}
                         explain={explain}
                         videoUrl={videoUrl}
-                        modalInputOnChange={modalInputOnChange}
+                        videoInputsChange={videoInputsChange}
                         onVideoUpload={onVideoUpload}
                         editOrder={editOrder}
                         handleRadioChange={handleRadioChange}

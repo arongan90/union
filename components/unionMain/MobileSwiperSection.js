@@ -17,6 +17,7 @@ SwiperCore.use([Navigation, Autoplay, Scrollbar, Pagination]);
 
 const SwiperWrapper = styled.div`
   width: 100%;
+  height: 570px;
   display: none;
   
   .swiper-container {
@@ -25,7 +26,7 @@ const SwiperWrapper = styled.div`
     overflow-x: hidden;
   }
   .swiper-pagination {
-    bottom: -15px;
+    bottom: 0;
     .swiper-pagination-bullet-active {
       background: ${colors.darkDeepSkyBlue};
     }
@@ -40,7 +41,7 @@ const SwiperWrapper = styled.div`
 `;
 const AppImageBox = styled.div`
   width: 100%;
-  height: 100%;
+  height: 540px;
   
   @media only screen and (max-width: 767px) {
     width: 280px;

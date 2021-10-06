@@ -15,10 +15,43 @@ const BoardSetting = ({ settingBoardData, userInfo }) => {
     const [checkedBoard, setCheckedBoard] = useState(new Set());
     const [checked, setChecked] = useState(false);
     const [imageFile, setImageFile] = useState(null);
+    const [modalInputs, setModalInputs] = useState({
+        subject: "",
+        content: "",
+    });
     let checkedBoardId = [];
 
     const handleAddBoardOpen = () => setAddBoardOpen(true);
-    const handleAddBoardClose = () => setAddBoardOpen(false);
+    const handleAddBoardClose = () => {
+        setAddBoardOpen(false);
+        setImageFile(null);
+        setModalInputs({
+            subject: "",
+            content: "",
+        });
+    }
+    const handleUpdateBoard = async id => {
+        handleAddBoardOpen();
+        try {
+            const res = await axios.get(`${serverProtocol}${serverURL}/boardSetting/${id}`);
+            setModalInputs({
+                subject: res.data.subject,
+                content: res.data.content,
+            });
+            setImageFile(res.data.image_path);
+        } catch(e) {
+            throw new Error();
+        }
+    }
+
+    const modalInputsChange = e => {
+        const { value, name } = e.target;
+        setModalInputs({
+            ...modalInputs,
+            [name]: value,
+        });
+    }
+
     const toggleVisible = id => {
         if (toggleClicked === id) return setToggleClicked(null);
         setToggleClicked(id);
@@ -35,7 +68,7 @@ const BoardSetting = ({ settingBoardData, userInfo }) => {
         }
     }
 
-    const deleteBoard = () => {
+    const deleteBoard = async () => {
         if (checkedBoard.size < 1) {
             alert('삭제할 게시물을 선택해주세요.');
         } else if (confirm("선택된 항목을 삭제하시겠습니까 ?")) {
@@ -52,20 +85,26 @@ const BoardSetting = ({ settingBoardData, userInfo }) => {
     const onImageUpload = e => {
         let reader = new FileReader();
         let img = e.target.files[0];
+
         const formData = new FormData();
 
         formData.append('imageFile', e.target.files[0]);
+        formData.append('subject', modalInputs.subject);
+        formData.append('content', modalInputs.content);
 
         reader.onload = () => {
             setImageFile(reader.result);
         }
-
         reader.readAsDataURL(img);
+
+        setImageFile(null);
+        setModalInputs({
+            subject: "",
+            content: "",
+        });
     }
 
-    const onImageDelete = () => {
-        setImageFile(null);
-    }
+    const onImageDelete = () => setImageFile(null);
 
     useEffect(() => {
         checkedBoard.forEach(id => checkedBoardId.push(id));
@@ -89,13 +128,17 @@ const BoardSetting = ({ settingBoardData, userInfo }) => {
                 toggleVisible={toggleVisible}
                 onCheckedHandler={onCheckedHandler}
                 deleteBoard={deleteBoard}
+                modalInputs={modalInputs}
                 imageFile={imageFile}
                 onImageUpload={onImageUpload}
                 onImageDelete={onImageDelete}
 
                 addBoardOpen={addBoardOpen}
+                modalInputsChange={modalInputsChange}
                 handleAddBoardOpen={handleAddBoardOpen}
                 handleAddBoardClose={handleAddBoardClose}
+                handleUpdateBoard={handleUpdateBoard}
+
             />
         </>
     )

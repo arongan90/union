@@ -42,13 +42,17 @@ const BoardSettingPresentational = ({
                                         toggleVisible,
                                         onCheckedHandler,
                                         deleteBoard,
+                                        modalInputs,
                                         imageFile,
                                         onImageUpload,
                                         onImageDelete,
 
                                         addBoardOpen,
+                                        modalInputsChange,
                                         handleAddBoardOpen,
-                                        handleAddBoardClose
+                                        handleAddBoardClose,
+                                        handleUpdateBoard,
+
                                     }) => {
     return (
         <Wrapper>
@@ -62,6 +66,15 @@ const BoardSettingPresentational = ({
                     toggleClicked={toggleClicked}
                     toggleVisible={toggleVisible}
                     onCheckedHandler={onCheckedHandler}
+
+                    addBoardOpen={addBoardOpen}
+                    handleAddBoardOpen={handleAddBoardOpen}
+                    handleAddBoardClose={handleAddBoardClose}
+                    handleUpdateBoard={handleUpdateBoard}
+
+                    imageFile={imageFile}
+                    onImageUpload={onImageUpload}
+                    onImageDelete={onImageDelete}
                 />
 
                 <ButtonGroup justify="space-between">
@@ -99,9 +112,12 @@ const BoardSettingPresentational = ({
                 <>
                     <AddBoardSettingModal
                         handleAddBoardClose={handleAddBoardClose}
+                        modalInputs={modalInputs}
+                        modalInputsChange={modalInputsChange}
                         imageFile={imageFile}
                         onImageUpload={onImageUpload}
                         onImageDelete={onImageDelete}
+
                     />
                 </>
             </Modal>

@@ -134,17 +134,15 @@ const ButtonGroup = styled.div`
 `;
 
 const AddBoardSettingModal = ({
-                                  subject,
                                   handleAddBoardClose,
-                                  modalInputOnChange,
+                                  modalInputsChange,
                                   onVideoUpload,
-                                  isOpen,
-                                  editOrder,
-                                  editData,
+                                  modalInputs,
                                   imageFile,
                                   onImageUpload,
                                   onImageDelete,
                               }) => {
+
     return (
         <ModalWrapper>
             <Title>게시물 등록</Title>
@@ -152,13 +150,18 @@ const AddBoardSettingModal = ({
                 <Inputs
                     type="text"
                     name="subject"
-                    value={editOrder ? editData.title : subject}
-                    onChange={modalInputOnChange}
                     placeholder="제목을 입력해주세요."
+                    value={modalInputs.subject}
+                    onChange={modalInputsChange}
                 />
             </InputBox>
 
-            <TextArea placeholder="내용을 입력해주세요.">
+            <TextArea
+                name="content"
+                placeholder="내용을 입력해주세요."
+                value={modalInputs.content}
+                onChange={modalInputsChange}
+            >
 
             </TextArea>
 

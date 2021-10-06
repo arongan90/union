@@ -1,16 +1,14 @@
 import Head from 'next/head'
-import React, {useState, useEffect, useRef, useCallback, useLayoutEffect} from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import React, {useState, useRef} from 'react';
+import styled, { css } from 'styled-components';
 import {darken, lighten} from "polished";
 import colors from "../styles/colors";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import UnionContents from "../components/unionMain/UnionContents";
 import Drawer from "../components/unionMain/Drawer";
-import { useMediaQuery } from "react-responsive";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-// Image
 import mainBgImage from "/public/images/union/Mainview_bg.png"
 import catbellLogo from "/public/images/union/logo_catbellunion.svg"
 import bannerImage from "/public/images/union/CATBELL_UNION.png";
@@ -18,6 +16,7 @@ import iphoneImage from "/public/images/union/iphoneImage.png";
 import arrowDownImage from "/public/images/union/arrow-down.svg";
 import footerImage from "/public/images/union/logo_footer.svg";
 import {isLogout} from "../modules/auth";
+import {scrollTo} from "../utils/scrollTo";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -102,6 +101,7 @@ const LoginButton = styled.button`
     background: ${bgColor};
     &:hover {
       background: lighten(0.1, bgColor);
+      
     }
     &:active {
       background: darken(0.1, bgColor);
@@ -218,6 +218,12 @@ const FootTitle = styled.div`
   word-break: keep-all;
   color: ${({fontColor}) => fontColor ? fontColor : '#BDBDBD'};
   vertical-align: ${({verticalAlign}) => verticalAlign};
+
+  @media only screen and (max-width: 767px) {
+    ${({ address }) => address && css`
+      width: 78%;
+    `}
+  }
 `;
 const FooterLogo = styled.div`
   width: 132px;
@@ -238,16 +244,8 @@ function Index() {
     const dispatch = useDispatch();
     const { userInfo } = useSelector(state => state.auth);
 
-
-    const isMobile = useMediaQuery({
-        query: "(min-width: 280px) and (max-width: 767px)"
-    });
-
-    const isMobileFooter = useMediaQuery({
-        query: "(min-width: 280px) and (max-width: 400px)"
-    });
-
     const handleTabChange = (event, newValue) => setTabValue(newValue);
+    const handleScrollMove = id => scrollTo({ id });
     const onLogin = () => router.push(`/login`);
     const onLogout = () => dispatch(isLogout());
 
@@ -272,11 +270,11 @@ function Index() {
                                 textColor="primary"
                                 centered
                             >
-                                <TabMenu label="화상회의" />
-                                <TabMenu label="On Air" />
-                                <TabMenu label="링크바인더" />
-                                <TabMenu label="게시영상" />
-                                <TabMenu label="쇼핑몰" />
+                                <TabMenu label="화상회의" onClick={() => handleScrollMove("conference" )} />
+                                <TabMenu label="On Air"  onClick={() => handleScrollMove("onAir")} />
+                                <TabMenu label="링크바인더"  onClick={() => handleScrollMove("linkBinder")} />
+                                <TabMenu label="게시영상"  onClick={() => handleScrollMove("uploadVideo")} />
+                                <TabMenu label="쇼핑몰"  onClick={() => handleScrollMove("shoppingMall")} />
                             </TabBar>
                         </HeaderLeft>
                         <HeaderRight>
@@ -297,7 +295,7 @@ function Index() {
                             </BannerText>
                         </BannerTextBox>
                         <IphoneImage>
-                            <AppImage width={226} height={437} src={iphoneImage } />
+                            <AppImage width={226} height={437} src={iphoneImage} />
                         </IphoneImage>
                     </BannerContent>
                     <MoveArrow>
@@ -305,9 +303,7 @@ function Index() {
                     </MoveArrow>
                 </MainBanner>
 
-                <UnionContents
-                    isMobile={isMobile}
-                />
+                <UnionContents />
 
                 <FooterBox>
                     <FooterContent>
@@ -316,11 +312,11 @@ function Index() {
                                 회사명 <br/>
                                 사업장주소 <br/>
                             </FootTitle>
-                            <FootTitle width={isMobileFooter ? "78%" : "auto"}>
+                            <FootTitle address>
                                 캣벨컴퍼니(주) <br/>
                                 서울특별시 성동구 뚝섬로1나길 5, G702(헤이그라운드 성수시작점)<br/>
                             </FootTitle>
-                            <FootTitle display={"block"} fontColor={"#969696"}>
+                            <FootTitle display={"block"} fontColor={colors.lightGray}>
                                 COPYRIGHT ⓒ Catbell Company. ALL RIGHTS RESERVED.
                             </FootTitle>
                         </FooterInfo>

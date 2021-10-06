@@ -92,7 +92,7 @@ const AddVideoEmbedModal = ({
                                 explain,
                                 videoUrl,
                                 handleCloseModal,
-                                modalInputOnChange,
+                                videoInputsChange,
                                 onVideoUpload,
                                 handleRadioChange,
                                 isOpen,
@@ -107,8 +107,8 @@ const AddVideoEmbedModal = ({
                 <Inputs
                     type="text"
                     name="subject"
-                    value={editOrder ? editData.title : subject}
-                    onChange={modalInputOnChange}
+                    value={subject}
+                    onChange={videoInputsChange}
                     placeholder="제목을 입력해주세요."
                 />
             </InputBox>
@@ -117,8 +117,8 @@ const AddVideoEmbedModal = ({
                 <Inputs
                     type="text"
                     name="explain"
-                    value={editOrder ? editData.title_sub : explain}
-                    onChange={modalInputOnChange}
+                    value={explain}
+                    onChange={videoInputsChange}
                     placeholder="설명을 간단히 입력해주세요."
                 />
             </InputBox>
@@ -127,8 +127,8 @@ const AddVideoEmbedModal = ({
                 <Inputs
                     type="text"
                     name="videoUrl"
-                    value={editOrder ? editData.link : videoUrl}
-                    onChange={modalInputOnChange}
+                    value={videoUrl}
+                    onChange={videoInputsChange}
                     placeholder="동영상 url주소를 입력해주세요."
                 />
             </InputBox>

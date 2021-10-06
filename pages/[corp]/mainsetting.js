@@ -146,7 +146,11 @@ const MainsSetting = ({settingData}) => {
         formData.append('image_1',fileList.file[1] && fileList.file[1]);
         formData.append('image_2',fileList.file[2] && fileList.file[2]);
 
-        handleAddLinkClose();
+        for (let pair of formData.entries()) {
+            console.info(pair[0] + ', ' + pair[1]);
+        }
+
+        // handleAddLinkClose();
     }
 
     const handleVideoUpload = () => {
